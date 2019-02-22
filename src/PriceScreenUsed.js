@@ -99,7 +99,7 @@ export default class OtherScreen extends React.Component {
                               onPress={() => this.props.navigation.navigate('Submit', {listingType: 'used'})} >
               <View style={{display: 'flex', flexDirection:'row', padding: 5}}>
                 <Icon name="ios-add-circle" size={24}  color="#4F8EF7" />
-                <Text style={{color: "#4F8EF7", fontSize: 20, fontWeight: '800'}}> Add your EV </Text>
+                <Text style={{color: "#4F8EF7", fontSize: 20, fontWeight: '800'}}> List a used EV</Text>
               </View>
             </TouchableOpacity>
             <View style={styles.separator} />
