@@ -29,30 +29,30 @@ export default class SubmitScreen extends React.Component {
   }
 
 
-  _onPress = async (name, price, email, listingType) => {
+  _onPress = async () => {
     Mixpanel.track("Email Button Pressed");
     this.setState({loading: true})
-    console.log(email)
-    if(email === '' || email === ' ' || email === null){
+    console.log(this.state.email)
+    if(this.state.email === '' || this.state.email === ' ' || this.state.email === null){
       Alert.alert('Please enter your email');
       this.setState({loading: false})
       return
     }
     else{
       this.setState({loading: true})
-      fetch('https://electrade-server.herokuapp.com/api/listings/create/'+listingType, {
+      fetch('https://electrade-server.herokuapp.com/api/listings/create/'+this.state.listingType, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            name: name,
-            price: price,
-            image: 'http://nikodunk.com',
-            link: 'mailto:'+email
+            name: this.state.name,
+            price: this.state.price,
+            image: this.state.image,
+            link: 'mailto:'+this.state.email
           }),
-      }).then(() => AsyncStorage.setItem('email', email ))
+      }).then(() => AsyncStorage.setItem('email', this.state.email ))
         .then(() => this.props.navigation.goBack())
     }
   }
@@ -64,8 +64,46 @@ export default class SubmitScreen extends React.Component {
       cropping: true
     }).then(image => {
       console.log(image);
+
+      let photo = {
+          uri: image.path,
+          type: image.mime,
+          name: image.filename,
+      };
+
+      let body = new FormData();
+      body.append('image', photo);
+      // body.append('title', 'A beautiful photo!');
+
+      let serverURL = 'https://electrade-server.herokuapp.com/upload/image'
+      // let serverURL = 'http://localhost:8080/upload/image'
+
+      let request = new XMLHttpRequest();
+
+      request.onreadystatechange = (e) => {
+        if (request.readyState !== 4) {
+          return;
+        }
+
+        if (request.status === 200) {
+          // console.log('success:', request.responseText);
+          console.log(request.responseText)
+          console.log('successfully saved to S3');
+          this.setState({image: request.responseText.substring(1, request.responseText.length-1)})
+
+        } else {
+          console.log('error:', request.responseText);
+        }
+      };
+
+      request.open('POST', serverURL );
+      request.send(body);
+
+
     });
   }
+
+
  
 
   render() {
@@ -100,6 +138,13 @@ export default class SubmitScreen extends React.Component {
                       keyboardType={'decimal-pad'}
                       onChangeText={ (text) => {  this.setState({price: text}) }}
                   />
+
+                  <Button 
+                    style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
+                    onPress={() => this._pickImage()} 
+                    title="Pick Image" />
+
+
                   <TextInput 
                       underlineColorAndroid="transparent"
                       style={styles.textInput}
@@ -109,15 +154,10 @@ export default class SubmitScreen extends React.Component {
                       onChangeText={ (text) => {  this.setState({email: text}) }}
                   />
 
-                  <Button 
-                    style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
-                    onPress={() => this._pickImage()} 
-                    title="Pick Image" />
-
 
                   <Button 
                     style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
-                    onPress={() => this._onPress(this.state.name, this.state.price, this.state.email, this.state.listingType)} 
+                    onPress={() => this._onPress()} 
                     title="Submit" />
                   {this.state.loading ? <ActivityIndicator /> : null}
                 </View>
