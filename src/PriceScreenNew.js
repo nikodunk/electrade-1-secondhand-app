@@ -23,22 +23,26 @@ export default class OtherScreen extends React.Component {
     this.state = { 
       data: null,
       images: null,
-      loading: true
+      loading: false
        };
 
     this._getData = this._getData.bind(this)
-
   }
 
 
   componentDidMount() {
-      this._getData()
-      Mixpanel.track("PriceScreenNew Loaded")
-  }
-
+      Mixpanel.track("PriceScreenNew Loaded") 
+      this.willFocusSubscription = this.props.navigation.addListener(
+        'willFocus',
+        () => {
+          this._getData()
+        }
+      );
+    }
 
 
   _getData(){
+    this.setState({loading: true})
     fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/dqChEgEi92GTiNG9a/lastExec/results?token=p7r3cZrnv5BnGn9c4kC7PpcPT')
       .then((res) => { return res.json()})
       
@@ -51,7 +55,7 @@ export default class OtherScreen extends React.Component {
                          return finalArray
                       })
 
-      // add some stuff
+      // add to URL and $
       .then(res => {  
                 let newArray = res; 
                 for (var i = 0; i < res.length; i++){ 

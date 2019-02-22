@@ -44,7 +44,9 @@ export default class DetailScreen extends React.Component {
                 <View style={{padding: 5}}>
                   {this.state.item.name ? <Text>{ this.state.item.name }</Text> : null }
                   {this.state.item.text ? <Text>{ this.state.item.text.substring(0, this.state.item.text.indexOf('http')) }</Text> : null }
-                  <Button title={`Continue at ${this.state.item.source}`} onPress={() => Linking.openURL(this.state.item.link.toString())}/>
+                  {this.state.item.source ? 
+                      <Button title={`Continue at ${this.state.item.source}`} onPress={() => Linking.openURL(this.state.item.link.toString())}/> :
+                      <Button title={`Email Owner`} onPress={() => Linking.openURL(this.state.item.link.toString())}/> }
                 </View>
            </ScrollView>
          : null }
