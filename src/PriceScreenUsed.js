@@ -20,7 +20,7 @@ export default class OtherScreen extends React.Component {
     this.state = { 
       data: null,
       images: null,
-      loading: true
+      loading: false,
        };
 
     this._getData = this._getData.bind(this)
@@ -29,13 +29,20 @@ export default class OtherScreen extends React.Component {
 
 
   componentDidMount() {
-      this._getData()
       Mixpanel.track("PriceScreenUsed Loaded")
+      this.willFocusSubscription = this.props.navigation.addListener(
+        'willFocus',
+        () => {
+          this._getData()
+        }
+      );
   }
 
 
   _getData(){
 
+    this.setState({loading: true})
+    
     // GET SCRAPED RESULTS
     fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/ssxDRduoSE3XdkzLv/lastExec/results?token=vDBYC8EeGdBZpYPrrrXLEjmwF')
       .then((res) => { return res.json()})
