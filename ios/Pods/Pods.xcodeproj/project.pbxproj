@@ -12,7 +12,6 @@
 		0782D177898401A5415CD63B04A226FD /* MPNSNumberToCGFloatValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = A71208190862D2E962F0D5205DCE4C3B /* MPNSNumberToCGFloatValueTransformer.m */; };
 		07B1690D3127F9F6D3134A1C6EBEDBA7 /* UIApplication+AutomaticTracks.m in Sources */ = {isa = PBXBuildFile; fileRef = AAE656E1FAB3047FCF636F6F2A856754 /* UIApplication+AutomaticTracks.m */; };
 		07FFC716431CE1E85BD5F927B07257FE /* RNGestureHandlerModule.h in Headers */ = {isa = PBXBuildFile; fileRef = B36AFB3D7ADA88BB99949E22FF609CA2 /* RNGestureHandlerModule.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		092BF3CD51255BE1BF58BA4F81857555 /* Yoga-internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C60B31B623310C9830C288E0B45E796 /* Yoga-internal.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		096E37C1A37673701AD7626492FAA437 /* MPTweak.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B6EB92471E2C3051EBD59D2F2B663EA /* MPTweak.m */; };
 		09EB691E35D00C5E9F1E444D3459F821 /* RNTapHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 83E8C3C127A9FCEDC183E2B26B9BC66B /* RNTapHandler.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		0AD3256E151B0FC91AD418BA9A9C0C8A /* MPTweak.h in Headers */ = {isa = PBXBuildFile; fileRef = 073235B296E0E26457A831D3F6D6F2B7 /* MPTweak.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -23,7 +22,6 @@
 		0CD6C3FFE51537ABB321D9CD43B50C69 /* MixpanelPeople.m in Sources */ = {isa = PBXBuildFile; fileRef = 444BF7B5F6F290546EFC3DD863DEB5B2 /* MixpanelPeople.m */; };
 		0D1F818B3EF64CB8B41E84DA2B728F13 /* UIImage+MPImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2981DC4C86A2226B74D72B8C56EDB9 /* UIImage+MPImageEffects.m */; };
 		0D35169B2B6CC79ABC0BAFF689F58A33 /* MPCGAffineTransformToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = F1AAADA2E1CCE2C26100D06DC75BD981 /* MPCGAffineTransformToNSDictionaryValueTransformer.m */; };
-		0DF8B78FD81376912C2767F574293AB7 /* YGNodePrint.h in Headers */ = {isa = PBXBuildFile; fileRef = 93EA34B078A2CEB6649CC23AF475C474 /* YGNodePrint.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		0E247728D29EB17BEB7B65D72C09A900 /* QBImagePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35DA30862E88A9D23E253C3B5D3ED202 /* QBImagePicker.storyboard */; };
 		0EE56DDD720E8F83018A0221725A8565 /* RSKInternalUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AB359B2ECEB7F1A1C7B87C059DA5CA /* RSKInternalUtility.m */; };
 		1115A88D660575A24B6D93BA69097A1E /* MixpanelPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 70D09DE9049F526B519AF75A3A2C518C /* MixpanelPrivate.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -32,7 +30,6 @@
 		1453677B5BF905C3944E3AEBD8D65452 /* MPObjectSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB6F393DB536E0D6E275CBDE42C03AC /* MPObjectSerializer.m */; };
 		14F43EF5E2FC050D7BD74826E037094D /* MPResources.m in Sources */ = {isa = PBXBuildFile; fileRef = 80EACFE6476FE6CDC03603BCC942E23A /* MPResources.m */; };
 		1582B5FE2F60F014AE76C3D4755A6253 /* RSKTouchView.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DF3BD9C9613830EB8724FB79DD5255C /* RSKTouchView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		16559C6308F9D6E1AD297634B0B270B3 /* YGFloatOptional.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D95949484A7B35B6B130721C0278278B /* YGFloatOptional.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		16F66846B4FC763DA5B826BF670AD77A /* Mixpanel.h in Headers */ = {isa = PBXBuildFile; fileRef = FB577C46F3031E67057184BAC011FE32 /* Mixpanel.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		18345AE0DB4396B9A92606ED533C569D /* RSKImageCropper-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AEDF309CDBE53AF27DFEFF9F69034C8 /* RSKImageCropper-dummy.m */; };
 		192FED6EC8219C042E8F32E909998595 /* UIImage+MPImageEffects.h in Headers */ = {isa = PBXBuildFile; fileRef = 797E823B8DC2477E2359D62835D7D77E /* UIImage+MPImageEffects.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -56,7 +53,6 @@
 		2916C6D0A4AE341B56B3CF2A7A7066C4 /* MPTakeoverNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 761ADB1F00EDAA657ED2EB6BFE032022 /* MPTakeoverNotification.m */; };
 		2928426616D12E08FCB420513F092C4C /* RNFlingHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 283C22A1D865982ABC70BCD78459283D /* RNFlingHandler.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		2AD39F89D30389E976BFEC261B360DF0 /* QBCheckmarkView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FAF2E2607F7A594330A289AE3FAA091 /* QBCheckmarkView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		2B9707DFC20A0A6359E6EB44BAF855E0 /* YGNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 854BBDDC4CF30DEFFFEF2155057C7E06 /* YGNode.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		2C5711825456FEFC589572E1B2FD275F /* MPABTestDesignerClearResponseMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B01265E84AD7727735481A8146646D56 /* MPABTestDesignerClearResponseMessage.m */; };
 		2E19B85D0B27E5AFDF126F4D15643C96 /* react-native-mixpanel-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E54EDBA970FC2617DA0C8627E0472E9C /* react-native-mixpanel-dummy.m */; };
 		2E2FFFBA9B17776065F329A395D3249B /* MPSequenceGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3FED23CB40EF999AA9D626C8EEF810 /* MPSequenceGenerator.m */; };
@@ -78,13 +74,11 @@
 		36CE1DBE3D0FFACBA6BC7EB77BD80B48 /* RNRotationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C8E6CB38F9A9B72FE0D615D8DEFC9AB /* RNRotationHandler.m */; };
 		37193F665F7838FEE8A71F60CD671325 /* UIApplication+RSKImageCropper.m in Sources */ = {isa = PBXBuildFile; fileRef = D63339594085CEEEBE0556EED9D1E732 /* UIApplication+RSKImageCropper.m */; };
 		37FEC825927CBFC43EAA13D11310F1CD /* MPCATransform3DToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A800444D7FF2BF542966A5EDA9779A /* MPCATransform3DToNSDictionaryValueTransformer.m */; };
-		3853B32270CE5E62D0B414E224C46A00 /* Yoga.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A3E0DDB1E5262FEDC23F874E484C02 /* Yoga.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		3A4CFF6951F00AA1C71F9CF16D55E7BC /* MPUITableViewBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = 626DB3204E424907ABEE36AB85ADF81D /* MPUITableViewBinding.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		3CB96E61501554280BDF7CE770AE2CA9 /* MPUIEdgeInsetsToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 691DD7C4AA407BD0D42791CC3BEA71A4 /* MPUIEdgeInsetsToNSDictionaryValueTransformer.m */; };
 		3D0CB0B651E24D8FE0DA8A45C6522746 /* MPCGSizeToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 64770960F84F04FFBCAC4CC70DAAFA2B /* MPCGSizeToNSDictionaryValueTransformer.m */; };
 		3D29CDAAD219D241C5EF884797973B40 /* RNGestureHandlerButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B60069286367BF2283BCF03BC36C33C9 /* RNGestureHandlerButton.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		3D40BABF6BFD0F21F8D38EFE2CF78223 /* MPABTestDesignerDeviceInfoResponseMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D3E5497848187A37801D85BF2F0E59D8 /* MPABTestDesignerDeviceInfoResponseMessage.m */; };
-		3D85B5B145AF88A128B5D0E8D6BD743F /* Yoga.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DD608E599AF3412C3F81D4FE67765F54 /* Yoga.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		3E613AD2928D31595C1185E391E01335 /* MPVariant.m in Sources */ = {isa = PBXBuildFile; fileRef = FB94FD4699D7C2A23288D408799B2704 /* MPVariant.m */; };
 		3EA6DDCEC201E472229E2DA0098805BF /* UIApplication+AutomaticTracks.h in Headers */ = {isa = PBXBuildFile; fileRef = D2A69EBE22D9FAF34734BE70B53ADAE1 /* UIApplication+AutomaticTracks.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		4185F2A3C8E55489AAE2EB22618E1F6C /* MPSwizzle.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FE6AFD582510ACA09AEF5E4806C5AE2 /* MPSwizzle.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -127,22 +121,18 @@
 		6152F78DF762F5EE70F8F8331819D66A /* AutomaticTracksConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 239673F83993DA192F95FDCFF2FE9F5D /* AutomaticTracksConstants.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		617E907AC197E8C11B94FFF1FE763482 /* QBVideoIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 214D15CEB6F35528B628ADBD750C038E /* QBVideoIndicatorView.m */; };
 		620B894ABFCD856C6828BFE72BCBC7C3 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC990F8FB5C9570555688614166AC6F7 /* Accelerate.framework */; };
-		6303FDF34DDD712E7341FBEA4FE2C927 /* YGConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 379F7E6E0CB7A757C96582CDF9877B7D /* YGConfig.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		63A59F9699CEC72FB4DCF6DC2A6BC81C /* MPEventBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A4443C250207CE1848841E66D5BA83 /* MPEventBinding.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		644F6521A046FAB365175309566CEC00 /* RNGestureHandlerState.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E364FB165F3E03BC38DD005DA4AD8BD /* RNGestureHandlerState.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		66F4E049A673274577FAA2F9F4C10032 /* MPABTestDesignerDeviceInfoRequestMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 46DD7EA9DE1CA8DDA62844919C46CD02 /* MPABTestDesignerDeviceInfoRequestMessage.m */; };
-		67E860C12B1946D629C084A351DA7FEB /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 70E6B8EE091673DC9A4492957DA6BE67 /* Utils.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		6862CFEC195779354586E68D913254E9 /* SessionMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B3914BD115E22B1B5B4917E871F7C1 /* SessionMetadata.m */; };
 		6A3A559CDDADFB9552C5C285C1F301C2 /* MPABTestDesignerTweakResponseMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C9E766D24A7B13B18EF736330CFD60F /* MPABTestDesignerTweakResponseMessage.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		704F8263B4F0C9764AF0C89A78854672 /* RSKInternalUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = BEC27E022ED0E858AB7B991AEF79E71D /* RSKInternalUtility.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		7098F36F6D9DD42F7760F12EC58EF5C8 /* MPTweakInline.h in Headers */ = {isa = PBXBuildFile; fileRef = 37D1B0143C178BBCC5DC8EA5D45552A2 /* MPTweakInline.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		72EA02D302D1A3D3A922CF064FFA1520 /* YGNode.h in Headers */ = {isa = PBXBuildFile; fileRef = BEDC2EA67376AB8066E140C65D00B64B /* YGNode.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		7490B04610E383F852F28F3FD6EDF797 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47ED8C75DD7FE1A9FB6FB3B02D90DBCE /* StoreKit.framework */; };
 		7547D25757945FFAF49A775AF21FD3A7 /* MPABTestDesignerClearResponseMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CC209512F6E879E82AA5D90CCCAA63C /* MPABTestDesignerClearResponseMessage.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		75A7752E57EF91EB372A6AC49AACB8A5 /* RNVectorIconsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = F29BFC1DEDDA2285377C9FDCB83E611F /* RNVectorIconsManager.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		765AB69BC4A0DD1B7CCBEB24B1C0CD59 /* MPABTestDesignerDisconnectMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3B1B52280778EF5F9CD5880A235814 /* MPABTestDesignerDisconnectMessage.m */; };
 		780165D38B74F9C43581B5487B4AF021 /* MPTypeDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 584D43C16CB23485F0BE806FDF1858FE /* MPTypeDescription.m */; };
-		7BD5CEDC49D91398A837DEB154E74502 /* YGStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = F11F240ED879AC0D6F0340F2AF847448 /* YGStyle.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		7C4298A7E3A0110B8CF788334385C652 /* QBSlomoIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 388C49D604ACA2A01E97F9B41DC91DE5 /* QBSlomoIconView.m */; };
 		7D554206855A6C07F973F5E8960E6450 /* ja.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 9D86A33A3CB74A6A58A6C77AFFAE8EEB /* ja.lproj */; };
 		7F09EBFAA4A9A851BF2347EF5425DEFD /* RNGestureHandlerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4317E9276D33B6BA06B9B41F43244BF8 /* RNGestureHandlerManager.m */; };
@@ -155,21 +145,17 @@
 		8742243E35B82FA1A72C9F7B66EA4897 /* NSThread+MPHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = B0642399E3080BF57840DF4D0918FAF0 /* NSThread+MPHelpers.m */; };
 		8A03C94A5B46BAB76BB53B0C302514B3 /* MPABTestDesignerDisconnectMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 993CC7E3BBC0A13354377F10ECFA68EC /* MPABTestDesignerDisconnectMessage.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		8AF5296882DC17EE80E03347F19D096D /* MPWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = CB49DFF53CDFB90697C6F77C76E59D7F /* MPWebSocket.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		8B329546B40F67F6F6CB2680AD5CCE6A /* YGLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = CCEA0CAEDB180EC98D97316AE55E3CD6 /* YGLayout.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		8B6F8D51AAC4F30F4BBA8D0599369D1B /* Mixpanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B25984DBA442060C2FE07D31D2C4291 /* Mixpanel.m */; };
 		8B8C998C3CE0648E00D2DA8A0B9EFBCC /* QBVideoIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAFCAB1F81DFEDAD8AFF25E470B1C51 /* QBVideoIconView.m */; };
 		8CD7AF045DE41E20C752FC7B3FC9568C /* RNPanHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = DDBE339CC8193A39C4BC15D8D700EE97 /* RNPanHandler.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		8E67102603F58AB2345331053E9577D8 /* RNRotationHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FA7BA378A13E56C6756063829783AA9 /* RNRotationHandler.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		8FB693EDA1B5E265D2231CB139A68D2E /* AutomaticEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 08E2ED6803750AE52A27308268FCE4EA /* AutomaticEvents.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		91845F704A9ACCC5DBFC65999D5289C5 /* YGStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7376514093B7810299BAFE2AF200CF54 /* YGStyle.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		91E7BB91E6CA260186C07AB9C74D564E /* MPSwizzler.h in Headers */ = {isa = PBXBuildFile; fileRef = 581330492C165595EAEC1C99FE89C0DD /* MPSwizzler.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		9208E7693023772540671005A2B2F7B8 /* RNPanHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = DEFFBBFC30B69DF5BAE1FA5AEF961AFD /* RNPanHandler.m */; };
 		930B8AEDAA15FFBFA2494FF6301DE1AB /* MPDesignerSessionCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = DB052B8C8952F1F24509F91B73466890 /* MPDesignerSessionCollection.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		93D848489127C713D262C62719651B73 /* CGGeometry+RSKImageCropper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E6DAAE3618DA89B2C3BFD0979A70B15 /* CGGeometry+RSKImageCropper.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		943A38377ED1F9E3D719FEEF2ADA7B53 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F613D3ED8FF43A2911C2CEEF096622A8 /* UIKit.framework */; };
 		94AA1E58ECE0736865076DFDFCF00D8D /* MPNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 5AF989EE4878EC81A02B4B46BD859BB9 /* MPNetwork.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		954FF0EE92BA6326DB4B221211BD1ACE /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 09477B41C8DA66157C828A8AEC17A8B0 /* Utils.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		98D13930B499D2539B73D2FAF6851706 /* YGFloatOptional.h in Headers */ = {isa = PBXBuildFile; fileRef = 216B1CDDF16E8D5FB5D772B935E65515 /* YGFloatOptional.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		99FDF1075F5517A3601204C1CD674185 /* MPApplicationStateSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = F37E6BC0F61153C8A7724DF94971979F /* MPApplicationStateSerializer.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		9B33B016E4F5BDB6D79AB7DA101E96BD /* Mixpanel+AutomaticTracks.h in Headers */ = {isa = PBXBuildFile; fileRef = 89DEA13E9B36001CDF65F1376EE3A4B2 /* Mixpanel+AutomaticTracks.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		9B916C86E6DB02D5E36344A24EC85BF4 /* MPNSAttributedStringToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 330905EE9E50DAFA1D5869D186A04FA8 /* MPNSAttributedStringToNSDictionaryValueTransformer.m */; };
@@ -190,14 +176,12 @@
 		A6D840F4A3938B87D926F634AEF30966 /* MPObjectSerializerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E876F5C4BF0748C5B1325E41BDAD9D /* MPObjectSerializerConfig.m */; };
 		A83A90404586DEEE7AB47E3369AB7A3E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FC1E82ADC2896906ED4ED9F12BA61CF /* Foundation.framework */; };
 		A9C519DED2A4BD995CB3764555C712EC /* MPABTestDesignerDeviceInfoRequestMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BD42058F20101D9550237A66D5746E0 /* MPABTestDesignerDeviceInfoRequestMessage.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		AA2FBFB6E9290AC0F3FB6D81424D345D /* YGLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0C727B8A8519D8537061252EE5D3900D /* YGLayout.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		AA3793675477350680647A38C7B7F078 /* RNNativeViewHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EFA0544F0DC92F712408CA402BBA15F /* RNNativeViewHandler.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		AA5EDBD055669E2D5A2AD34DA5B30744 /* UIImage+Resize.h in Headers */ = {isa = PBXBuildFile; fileRef = 9BA4F98F957E834F27524839D1E05026 /* UIImage+Resize.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		AB160E2BA2706423CB110A0EA11E985F /* MixpanelExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 69EDC0F1C5DCCAC43DAE786416E32980 /* MixpanelExceptionHandler.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		AC571E4F865A3C4F91230A3C425A9EBF /* MPDesignerTrackMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3F7F6720B81AFCE39B317AD1319E56 /* MPDesignerTrackMessage.m */; };
 		B0BEEB3CDC77257D4BC36D28FE754C71 /* Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = A76D486E3B385D517E9EBAE6BB95AB75 /* Compression.m */; };
 		B23D4D5A013740A44D3098B73960137F /* UIView+MPHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 011B6F1242F522A75232EE1A46BED125 /* UIView+MPHelpers.m */; };
-		B2A8D344AA2D415127571787776DD0C2 /* YGMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 355976ABAF135A4B115256BAC0D665A4 /* YGMacros.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		B32023FEE6DB3019CEC3EC22578388CD /* RNGestureHandlerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 425AEBC730CC59917F13E218703C3F96 /* RNGestureHandlerModule.m */; };
 		B44AFD1C6BF7641B552B4E6E96E011E4 /* MPABTestDesignerClearRequestMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9403F924FF32214C79BCC2D5B95657C8 /* MPABTestDesignerClearRequestMessage.m */; };
 		B6F38D987729A6D05A389A24BCE63622 /* MPValueTransformers.h in Headers */ = {isa = PBXBuildFile; fileRef = A370D09594D3887CC8B7C582040F2E0C /* MPValueTransformers.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -229,13 +213,11 @@
 		D01DED2DBE7857BDD82F65A8AB8D442D /* MPUIFontToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2093E263D4456DDD16516ADA6102297B /* MPUIFontToNSDictionaryValueTransformer.m */; };
 		D04DDB86E1659F466B88E85D3EAB18B6 /* Compression.h in Headers */ = {isa = PBXBuildFile; fileRef = F7A83C35457E19DAB2C645ECF1FBE35F /* Compression.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D3492EFEF9640BDD08DAC60AB8FE8AE8 /* _MPTweakBindObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = 21DCB518597F64D06223D822706FD580 /* _MPTweakBindObserver.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		D38AFB0D8A55284DE232329FA73C7D2E /* YGEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = CFD0D8E7A6C85CA99463D4D8CC88ECB0 /* YGEnums.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D39FCA4A5DA1A1C667C95A0580CA30CC /* RSKImageCropViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = F43AFD98D67C32A7E4CBA0EA20D73529 /* RSKImageCropViewController.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D3A8F51BCF527FEE9D7EE71D50D46B73 /* MPVariant.h in Headers */ = {isa = PBXBuildFile; fileRef = 2197F9A86A7E18D6294FEE6EFF4FAFC7 /* MPVariant.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D43B15CB89E17E04DF22BFCE4405B9E3 /* NSInvocation+MPHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DF8241CB32EE06061993748BDCB6B1F /* NSInvocation+MPHelpers.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D4EC3C0CE0FF39BF76FC1F5D30EFAD71 /* UIColor+MPColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC2F77D6B841711E2F3AB6098469C75 /* UIColor+MPColor.m */; };
 		D61660D384B3B7992E2333163781900D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C35A8CA27F23FF6357F79B5BACA05A0D /* SystemConfiguration.framework */; };
-		D7EEDD4A957AFD7DEDF5D08204FF2FB7 /* YGConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 56FD191806A32F3D337DF36A2E7C2431 /* YGConfig.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		D83692C85DF3E4674881D5361211CFB3 /* RSKImageCropper.h in Headers */ = {isa = PBXBuildFile; fileRef = BF7C35579516B004C9085F23CB0A434A /* RSKImageCropper.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D84CE08F43FBEA894E8395A118D45CBE /* MPObjectSerializerConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 87AEFEE9655BC565A9E7D0E8B14B673E /* MPObjectSerializerConfig.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D90115D3514E0F6A37E99B0C72BA5BBF /* UIView+MPHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = C40065F3937CC52547AB92407035309F /* UIView+MPHelpers.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -244,7 +226,6 @@
 		DBFA16785C413B0FC30E801F741DFD03 /* MPClassDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = F0E663742F0768489DA56DF049E0D798 /* MPClassDescription.m */; };
 		DBFEE16C52FB694D0DEF8A279EA25B6C /* MPABTestDesignerChangeResponseMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552FB78236B5BDB71FB330E7E66C90B /* MPABTestDesignerChangeResponseMessage.m */; };
 		DD3895B7A942C42311635C0B592A2CE1 /* RSKTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DEA05CB4D2A5063F535C5ACEE527B3 /* RSKTouchView.m */; };
-		DE54B2CDA36D079E00C89AC7A069AF7A /* yoga-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3717567425280417561EF36091CECC7D /* yoga-dummy.m */; };
 		DFD2AD9AEE5EE6E28D26A52B4C325E0D /* MPNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = F179B7F8D2A89490CA411C8A341DC968 /* MPNotification.m */; };
 		DFD75245B0AE7E9763C3FB916CA839CC /* RNGestureHandlerDirection.h in Headers */ = {isa = PBXBuildFile; fileRef = 99569D452ABDD5EA9E65E02AF16E3C96 /* RNGestureHandlerDirection.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		DFDB267757EB25F696B68654B149BA3F /* RNForceTouchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E58C571D3D562E80145B912F8D5FCF4E /* RNForceTouchHandler.m */; };
@@ -262,7 +243,6 @@
 		EB6D3883C6E49A5AAB2FD4DC6F2018C2 /* RNGestureHandlerEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F0F6A53FA92876861A884AD5E2261D /* RNGestureHandlerEvents.m */; };
 		EB87D875EDFB5C074F33002A911687CE /* RNVectorIconsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D239D7386E28B914737C2AF8B8F2C2 /* RNVectorIconsManager.m */; };
 		EC47035CB25EAC52A5B94FB09120FAF7 /* RNForceTouchHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 642C3A564D065B15104B3355EEAC707D /* RNForceTouchHandler.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		EC80C659D0916A5D9D1CA4380C40C110 /* YGNodePrint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8158B31287AA0220F2725B322D4DD75D /* YGNodePrint.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		F0B2009CE375B5409DD7D401AF9756ED /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230D6F434CDD45236AF762373D5EA803 /* Photos.framework */; };
 		F10C31A6DD91A7E949EA85C2FC444C49 /* QBImagePickerController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A0F1A84848C294E773B9476F1C8C27 /* QBImagePickerController-dummy.m */; };
 		F15BE804034BBB9964315C2CF4C41655 /* es.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 2C396512DF57F845E1097BFB463A9E12 /* es.lproj */; };
@@ -271,7 +251,6 @@
 		F416448264655D40D50C767E36729FA1 /* MPEventBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = D508C44A1159B305451B807485933997 /* MPEventBinding.m */; };
 		F455F34DF7076A1F6B270D513E5D6D6A /* MPObjectIdentityProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1127DD5533EFB9F421C47701521089 /* MPObjectIdentityProvider.m */; };
 		F83B966CF46AC37F13B3C17A956E408E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB6D16D496EFD67DEA343DF840CACC83 /* QuartzCore.framework */; };
-		FA393AD828F31C232851685F1282AC94 /* YGEnums.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AA957A0894494B8EACC5E9D56B466441 /* YGEnums.cpp */; settings = {COMPILER_FLAGS = "-fno-omit-frame-pointer -fexceptions -Wall -Werror -std=c++1y -fPIC -fno-objc-arc"; }; };
 		FA95934737325073782BC94FA56A3C23 /* RNVectorIcons-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B19E0584D3BD1DA3D615480C946AA4A9 /* RNVectorIcons-dummy.m */; };
 		FACEE41090C261E141825C033DF3EA90 /* MPCGRectToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D9869115CC97F67B302D3148A2E4FA /* MPCGRectToNSDictionaryValueTransformer.m */; };
 		FAD9337839B94644E80AFD263C331D24 /* UIImage+RSKImageCropper.m in Sources */ = {isa = PBXBuildFile; fileRef = BA1EF3FB1768E53F69078AF564F389CE /* UIImage+RSKImageCropper.m */; };
@@ -341,7 +320,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 82DF6BB75AA79CDF385489885C539CD5;
+			remoteGlobalIDString = 000000006020;
 			remoteInfo = yoga;
 		};
 		8E8AD9B7EF5C9399F47CD9E2C4195744 /* PBXContainerItemProxy */ = {
@@ -404,7 +383,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 82DF6BB75AA79CDF385489885C539CD5;
+			remoteGlobalIDString = 000000006020;
 			remoteInfo = yoga;
 		};
 /* End PBXContainerItemProxy section */
@@ -1224,13 +1203,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		66F7BAE9E5BF6B140E88B154CF642E10 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		941E88A279C9A750BA56A9F43ADF29C3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2627,24 +2599,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		029E0E55D408B9190F218C764EA74714 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				954FF0EE92BA6326DB4B221211BD1ACE /* Utils.h in Headers */,
-				6303FDF34DDD712E7341FBEA4FE2C927 /* YGConfig.h in Headers */,
-				D38AFB0D8A55284DE232329FA73C7D2E /* YGEnums.h in Headers */,
-				98D13930B499D2539B73D2FAF6851706 /* YGFloatOptional.h in Headers */,
-				8B329546B40F67F6F6CB2680AD5CCE6A /* YGLayout.h in Headers */,
-				B2A8D344AA2D415127571787776DD0C2 /* YGMacros.h in Headers */,
-				72EA02D302D1A3D3A922CF064FFA1520 /* YGNode.h in Headers */,
-				0DF8B78FD81376912C2767F574293AB7 /* YGNodePrint.h in Headers */,
-				7BD5CEDC49D91398A837DEB154E74502 /* YGStyle.h in Headers */,
-				092BF3CD51255BE1BF58BA4F81857555 /* Yoga-internal.h in Headers */,
-				3853B32270CE5E62D0B414E224C46A00 /* Yoga.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		02F6B928B70D70DF51C181D54F45BC48 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2889,23 +2843,6 @@
 			productReference = 528232D128BF8610537340322886B8A5 /* libPods-electric.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		82DF6BB75AA79CDF385489885C539CD5 /* yoga */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7EDBC9EF7304F687BE404015C15AF124 /* Build configuration list for PBXNativeTarget "yoga" */;
-			buildPhases = (
-				DA164AB15D43B91302A9927AC43982C4 /* Sources */,
-				941E88A279C9A750BA56A9F43ADF29C3 /* Frameworks */,
-				029E0E55D408B9190F218C764EA74714 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = yoga;
-			productName = yoga;
-			productReference = BD233201ED6D8E0ACDD137352B01F54B /* libyoga.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		85039A92A62EB46BAFE3043C080EB24A /* QBImagePickerController */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A3FC323AE59839E478D4B0BC08ED13EE /* Build configuration list for PBXNativeTarget "QBImagePickerController" */;
@@ -3026,7 +2963,6 @@
 				4A0711FDC3AD11A1CFFF6554811D4456 /* RNImageCropPicker */,
 				C3640AED3C0E008E93AC46215EDE35B6 /* RNVectorIcons */,
 				2DBA9A536AFB8BF4D4F54173844D9756 /* RSKImageCropper */,
-				82DF6BB75AA79CDF385489885C539CD5 /* yoga */,
 			);
 		};
 /* End PBXProject section */
@@ -3201,23 +3137,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DA164AB15D43B91302A9927AC43982C4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				67E860C12B1946D629C084A351DA7FEB /* Utils.cpp in Sources */,
-				D7EEDD4A957AFD7DEDF5D08204FF2FB7 /* YGConfig.cpp in Sources */,
-				FA393AD828F31C232851685F1282AC94 /* YGEnums.cpp in Sources */,
-				16559C6308F9D6E1AD297634B0B270B3 /* YGFloatOptional.cpp in Sources */,
-				AA2FBFB6E9290AC0F3FB6D81424D345D /* YGLayout.cpp in Sources */,
-				2B9707DFC20A0A6359E6EB44BAF855E0 /* YGNode.cpp in Sources */,
-				EC80C659D0916A5D9D1CA4380C40C110 /* YGNodePrint.cpp in Sources */,
-				91845F704A9ACCC5DBFC65999D5289C5 /* YGStyle.cpp in Sources */,
-				DE54B2CDA36D079E00C89AC7A069AF7A /* yoga-dummy.m in Sources */,
-				3D85B5B145AF88A128B5D0E8D6BD743F /* Yoga.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F0BCAA19761823ABB6D946E82B2E092B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3293,7 +3212,6 @@
 		8177AF2C847507B9AAD0A79A592CA4CC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = yoga;
-			target = 82DF6BB75AA79CDF385489885C539CD5 /* yoga */;
 			targetProxy = FF675030FFD29AE6721724554E0261AC /* PBXContainerItemProxy */;
 		};
 		88169652961736D0F2573B93DB280E8B /* PBXTargetDependency */ = {
@@ -3345,7 +3263,6 @@
 		FD6C7CBF700571B6B0487B9E0130AF57 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = yoga;
-			target = 82DF6BB75AA79CDF385489885C539CD5 /* yoga */;
 			targetProxy = 78F6CD51A4F87CAD1E4E3DF48DF1F7EB /* PBXContainerItemProxy */;
 		};
 		FFAF49C3AD73344545DE83EB4D8A2ABC /* PBXTargetDependency */ = {
@@ -3372,30 +3289,6 @@
 				PRIVATE_HEADERS_FOLDER_PATH = "";
 				PRODUCT_MODULE_NAME = RNImageCropPicker;
 				PRODUCT_NAME = RNImageCropPicker;
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		0A1A6C8DC13B8F88063F44DD77473172 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E8F711747488892973340E74865DD101 /* yoga.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/yoga/yoga-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = yoga;
-				PRODUCT_NAME = yoga;
 				PUBLIC_HEADERS_FOLDER_PATH = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -3694,29 +3587,6 @@
 			};
 			name = Debug;
 		};
-		93229EA3E2F270422058814820355CB3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E8F711747488892973340E74865DD101 /* yoga.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/yoga/yoga-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = yoga;
-				PRODUCT_NAME = yoga;
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 		9AD71F1F1EB8F2C0A25C00568B748A97 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 455081F724179C289E533F7D079D7D10 /* QBImagePickerController.xcconfig */;
@@ -3973,15 +3843,6 @@
 			buildConfigurations = (
 				333294AD32C12730215E9E2264929898 /* Debug */,
 				035535F04B5701266E3CFB9348F4E1BB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7EDBC9EF7304F687BE404015C15AF124 /* Build configuration list for PBXNativeTarget "yoga" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				93229EA3E2F270422058814820355CB3 /* Debug */,
-				0A1A6C8DC13B8F88063F44DD77473172 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
