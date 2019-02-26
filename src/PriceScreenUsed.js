@@ -93,7 +93,7 @@ export default class OtherScreen extends React.Component {
     return (
        <View>
        {!this.state.loading ?
-        <View>
+        <View style={{maxHeight: '100%'}}>
           <View style={{marginTop: 40}}>
             <TouchableOpacity style={{alignItems: 'center'}}
                               onPress={() => this.props.navigation.navigate('Submit', {listingType: 'used'})} >
@@ -105,12 +105,11 @@ export default class OtherScreen extends React.Component {
             <View style={styles.separator} />
           </View>
           
-
           <FlatList
                    data={this.state.data}
                    keyExtractor={(item, index) => index.toString()}
                    renderItem={({item, index}) => 
-                      <View>
+                      <View style={{ marginBottom: index === this.state.data.length -1 ? 80 : 0}}>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Details', {item: item} ) }>
 
                           <View style={{display: 'flex', flexDirection:'row'}}>

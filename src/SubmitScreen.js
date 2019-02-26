@@ -104,23 +104,70 @@ export default class SubmitScreen extends React.Component {
   }
 
 
+  _takeImage = () => {
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      console.log(image);
+
+      let photo = {
+          uri: image.path,
+          type: image.mime,
+          name: Date.now().toString(),
+      };
+
+      let body = new FormData();
+      body.append('image', photo);
+      // body.append('title', 'A beautiful photo!');
+
+      let serverURL = 'https://electrade-server.herokuapp.com/upload/image'
+      // let serverURL = 'http://localhost:8080/upload/image'
+
+      let request = new XMLHttpRequest();
+
+      request.onreadystatechange = (e) => {
+        if (request.readyState !== 4) {
+          return;
+        }
+
+        if (request.status === 200) {
+          // console.log('success:', request.responseText);
+          console.log(request.responseText)
+          console.log('successfully saved to S3');
+          this.setState({image: request.responseText.substring(1, request.responseText.length-1)})
+
+        } else {
+          console.log('error:', request.responseText);
+        }
+      };
+
+      request.open('POST', serverURL );
+      request.send(body);
+
+
+    });
+  }
+
+
  
 
   render() {
     return (
        <View>
 
-        <TouchableOpacity 
-              onPress={() => this.props.navigation.goBack()} 
-              style={{left: 10, marginTop: 30}}>
-          <View style={{padding: 5}}>
-            <Text style={{fontSize: 18, color: 'dodgerblue'}}>
-                Back
-            </Text>
-          </View>
-        </TouchableOpacity>
+          <TouchableOpacity 
+                onPress={() => this.props.navigation.goBack()} 
+                style={{left: 10, marginTop: 30}}>
+            <View style={{padding: 5}}>
+              <Text style={{fontSize: 18, color: 'dodgerblue'}}>
+                  Back
+              </Text>
+            </View>
+          </TouchableOpacity>
 
-          <ScrollView style={{height: '100%'}}>
+          <ScrollView>
 
                 <View style={{margin: 20}}>
                   <Text style={styles.newsTitle}>Add your EV</Text>
@@ -139,11 +186,20 @@ export default class SubmitScreen extends React.Component {
                       onChangeText={ (text) => {  this.setState({price: text}) }}
                   />
 
-                  <Button 
-                    style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
-                    onPress={() => this._pickImage()} 
-                    title="Pick Image" />
+                 {!this.state.image ?
+                  <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
+                    <Button 
+                      style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
+                      onPress={() => this._pickImage()} 
+                      title="Pick Image" />
+                    <Button 
+                      style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
+                      onPress={() => this._takeImage()} 
+                      title="Open Camera" />
+                  </View> 
+                  : null }
 
+                 {this.state.image ? <Image  style={styles.imageCar} source={{uri: this.state.image}} /> : null }
 
                   <TextInput 
                       underlineColorAndroid="transparent"

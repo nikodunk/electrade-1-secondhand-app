@@ -69,7 +69,7 @@ export default class HomeScreen extends React.Component {
                        data={this.state.data}
                        keyExtractor={(item, index) => index.toString()}
                        renderItem={({item, index}) => 
-                            <View style={[{marginTop: index === 0 ? 40 : 0}]}>
+                            <View style={{marginTop: index === 0 ? 40 : 0, marginBottom: index === this.state.data.length -1 ? 80 : 0}}>
                               <TouchableOpacity 
                                   onPress={() => this.props.navigation.navigate('Details', {item: item} ) } 
                                   style={{flexDirection: 'row', display: 'flex'}} > 
