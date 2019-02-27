@@ -41,7 +41,8 @@ export default class DetailScreen extends React.Component {
                     style={styles.imageDetail}
                     source={{uri: this.state.item.image}}
                     />
-                <View style={{padding: 5}}>
+                <View style={{padding: 20}}>
+                  {this.state.item.price ? <Text style={{fontWeight: '500', fontSize: 20}}>${ this.state.item.price }</Text> : null }
                   {this.state.item.name ? <Text>{ this.state.item.name }</Text> : null }
                   {this.state.item.text ? <Text>{ this.state.item.text.substring(0, this.state.item.text.indexOf('http')) }</Text> : null }
                   {this.state.item.source ? 

@@ -1,17 +1,15 @@
-// *
-// price leaderboard
-// *
-
-// Used EV Price Search (leaf, bolt, tesla) edmunds
 // https://www.edmunds.com/inventory/srp.html?inventorytype=used%2Ccpo&type=Electric&sort=price%3Aasc
-// https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/ssxDRduoSE3XdkzLv/lastExec/results?token=vDBYC8EeGdBZpYPrrrXLEjmwF
+
+// https://sfbay.craigslist.org/search/cta?sort=priceasc&auto_fuel_type=4
+// https://www.autotrader.com/cars-for-sale/Used+Cars/San+Francisco+CA-94117?startYear=1981&listingTypes=USED&searchRadius=50&zip=94117&endYear=2020&marketExtension=true&engineCodes=EL&sortBy=derivedpriceASC&numRecords=100&firstRecord=0
+// https://www.cars.com/for-sale/searchresults.action/?fuelTypeId=38745&page=1&perPage=20&rd=30&searchSource=SORT&shippable-dealers-checkbox=true&showMore=false&sort=price-lowest&stkTypId=28881&zc=94117&localVehicles=false
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, Linking, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Mixpanel from 'react-native-mixpanel'
-
+import * as Animatable from 'react-native-animatable';
 
 export default class OtherScreen extends React.Component {
 
@@ -29,7 +27,14 @@ export default class OtherScreen extends React.Component {
 
 
   componentDidMount() {
-      Mixpanel.track("PriceScreenUsed Loaded")
+      // get email, except if developer mode
+      AsyncStorage.getItem('email').then((res) => {
+        this.setState({email: res})
+        {this.state.email ? Mixpanel.identify(this.state.email) : null }
+        if(this.state.email !== 'niko'){Mixpanel.track("PriceScreenUsed Loaded") }
+        // if(this.state.email === 'niko'){ AsyncStorage.removeItem('remainingtrials') }
+      })
+
       this.willFocusSubscription = this.props.navigation.addListener(
         'willFocus',
         () => {
@@ -94,7 +99,7 @@ export default class OtherScreen extends React.Component {
        <View>
        {!this.state.loading ?
         <View style={{maxHeight: '100%'}}>
-          <View style={{marginTop: 40}}>
+          <View style={{marginTop: 40, backgroundColor: 'white'}} zIndex={5}>
             <TouchableOpacity style={{alignItems: 'center'}}
                               onPress={() => this.props.navigation.navigate('Submit', {listingType: 'used'})} >
               <View style={{display: 'flex', flexDirection:'row', padding: 5}}>
@@ -105,12 +110,13 @@ export default class OtherScreen extends React.Component {
             <View style={styles.separator} />
           </View>
           
-          <FlatList
+          <Animatable.View animation="slideInUp" duration={500} easing="ease-out-back">
+            <FlatList
                    data={this.state.data}
                    keyExtractor={(item, index) => index.toString()}
                    renderItem={({item, index}) => 
                       <View style={{ marginBottom: index === this.state.data.length -1 ? 80 : 0}}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Details', {item: item} ) }>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Details', {item: item} ) } delayPressIn={50} >
 
                           <View style={{display: 'flex', flexDirection:'row'}}>
                             
@@ -133,6 +139,7 @@ export default class OtherScreen extends React.Component {
                       </View>
                     }
                  />
+          </Animatable.View>
         </View>
         :
         <View style={{marginTop: 100, alignItems: 'center'}}>

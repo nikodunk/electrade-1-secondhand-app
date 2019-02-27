@@ -24,8 +24,16 @@ export default class SubmitScreen extends React.Component {
   }
 
   componentDidMount() {
-      Mixpanel.track("SubmitScreen Loaded");
+      // get email, except if developer mode
+      AsyncStorage.getItem('email').then((res) => {
+        this.setState({email: res})
+        {this.state.email ? Mixpanel.identify(this.state.email) : null }
+        if(this.state.email !== 'niko'){Mixpanel.track("SubmitScreen Loaded") }
+        // if(this.state.email === 'niko'){ AsyncStorage.removeItem('remainingtrials') }
+      })
+
       this.setState({listingType: this.props.navigation.getParam('listingType') })
+      AsyncStorage.getItem('email').then(email => this.setState({email: email}) )
   }
 
 
@@ -204,7 +212,7 @@ export default class SubmitScreen extends React.Component {
                   <TextInput 
                       underlineColorAndroid="transparent"
                       style={styles.textInput}
-                      placeholder={'Your email'}
+                      value={this.state.email}
                       autoCapitalize = 'none'
                       keyboardType={'email-address'}
                       onChangeText={ (text) => {  this.setState({email: text}) }}

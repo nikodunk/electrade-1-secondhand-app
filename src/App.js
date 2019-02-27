@@ -10,6 +10,7 @@ import DetailScreen from './Details';
 import PriceScreenNew from './PriceScreenNew';
 import PriceScreenUsed from './PriceScreenUsed';
 import SubmitScreen from './SubmitScreen';
+import VideoScreen from './VideoScreen';
 
 import styles from './styles'
 
@@ -22,11 +23,12 @@ class AuthLoadingScreen extends React.Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem('userToken');
+    const email = await AsyncStorage.getItem('email');
+    // AsyncStorage.removeItem('email');
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+    this.props.navigation.navigate(email ? 'App' : 'Auth');
   };
 
   // Render any loading content that you like here
@@ -45,9 +47,10 @@ const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 const NewsStack = createStackNavigator({ News: NewsScreen, Details: DetailScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV News', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-paper" size={20} color="#4F8EF7" /> : <Icon name="ios-paper" size={20} color="grey" /> } }) })
 const UsedStack = createStackNavigator({ Used: PriceScreenUsed, Details: DetailScreen, Submit: SubmitScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Used', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-heart" size={20} color="#4F8EF7" /> : <Icon name="ios-heart" size={20} color="grey" /> } }) })
 const NewStack = createStackNavigator({ New: PriceScreenNew, Details: DetailScreen, Submit: SubmitScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'New', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-sunny" size={25} color="#4F8EF7" /> : <Icon name="ios-sunny" size={25} color="grey" /> } })  })
+const VideoStack = createStackNavigator({ Video: VideoScreen, Details: DetailScreen}, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Videos', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-sunny" size={25} color="#4F8EF7" /> : <Icon name="ios-sunny" size={25} color="grey" /> } })  })
 
 const AppTabs = createBottomTabNavigator(
-  { NewsStack, UsedStack, NewStack },
+  { NewsStack, UsedStack, NewStack, VideoStack },
   {
     initialRouteName: 'NewsStack',
     animationEnabled: false,
