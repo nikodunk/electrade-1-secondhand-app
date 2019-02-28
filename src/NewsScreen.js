@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
-import DetailScreen from './Details';
+import Details from './DetailScreen';
 import Mixpanel from 'react-native-mixpanel'
 import * as Animatable from 'react-native-animatable';
 Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')

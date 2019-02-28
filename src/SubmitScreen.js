@@ -178,7 +178,7 @@ export default class SubmitScreen extends React.Component {
           <ScrollView>
 
                 <View style={{margin: 20}}>
-                  <Text style={styles.newsTitle}>Add your EV</Text>
+                  <Text style={styles.newsTitle}>Add your {this.state.listingType} EV</Text>
                   <TextInput 
                       underlineColorAndroid="transparent"
                       style={styles.textInput}

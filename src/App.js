@@ -5,10 +5,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import SignInScreen from './SignInScreen';
 import NewsScreen from './NewsScreen';
-import DetailScreen from './Details';
+import DetailScreen from './DetailScreen';
 
-import PriceScreenNew from './PriceScreenNew';
-import PriceScreenUsed from './PriceScreenUsed';
+import MarketplaceScreen from './MarketplaceScreen';
 import SubmitScreen from './SubmitScreen';
 import VideoScreen from './VideoScreen';
 
@@ -44,13 +43,12 @@ class AuthLoadingScreen extends React.Component {
 
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 
-const NewsStack = createStackNavigator({ News: NewsScreen, Details: DetailScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV News', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-paper" size={20} color="#4F8EF7" /> : <Icon name="ios-paper" size={20} color="grey" /> } }) })
-const UsedStack = createStackNavigator({ Used: PriceScreenUsed, Details: DetailScreen, Submit: SubmitScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Used', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-heart" size={20} color="#4F8EF7" /> : <Icon name="ios-heart" size={20} color="grey" /> } }) })
-const NewStack = createStackNavigator({ New: PriceScreenNew, Details: DetailScreen, Submit: SubmitScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'New', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-sunny" size={25} color="#4F8EF7" /> : <Icon name="ios-sunny" size={25} color="grey" /> } })  })
-const VideoStack = createStackNavigator({ Video: VideoScreen, Details: DetailScreen}, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Videos', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-sunny" size={25} color="#4F8EF7" /> : <Icon name="ios-sunny" size={25} color="grey" /> } })  })
+const NewsStack = createStackNavigator({ News: NewsScreen, Details: DetailScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Newsfeed', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-paper" size={20} color="#4F8EF7" /> : <Icon name="ios-paper" size={20} color="grey" /> } }) })
+const MarketStack = createStackNavigator({ Used: MarketplaceScreen, Details: DetailScreen, Submit: SubmitScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Marketplace', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-heart" size={20} color="#4F8EF7" /> : <Icon name="ios-heart" size={20} color="grey" /> } }) })
+const VideoStack = createStackNavigator({ Video: VideoScreen, Details: DetailScreen}, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Videofeed', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-videocam" size={25} color="#4F8EF7" /> : <Icon name="ios-videocam" size={25} color="grey" /> } })  })
 
 const AppTabs = createBottomTabNavigator(
-  { NewsStack, UsedStack, NewStack, VideoStack },
+  { NewsStack, MarketStack, VideoStack },
   {
     initialRouteName: 'NewsStack',
     animationEnabled: false,

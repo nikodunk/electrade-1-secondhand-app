@@ -44,6 +44,8 @@
 		87A2BCB5F86F63BA5930F3D7 /* libPods-electric.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0760DD99648752FE70B4FB50 /* libPods-electric.a */; };
 		88B276CB5067408F9CE08EEA /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9C5F8440772F47E7A8A1F88F /* MaterialIcons.ttf */; };
 		90B769FD0F764FEEB850D3CA /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 003A494237384871BB5095AC /* Zocial.ttf */; };
+		9119F3C32227399A006BC829 /* libRCTYouTube.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9119F3B222273981006BC829 /* libRCTYouTube.a */; };
+		9119F3C522273DAA006BC829 /* YTPlayerView-iframe-player.html in Resources */ = {isa = PBXBuildFile; fileRef = 9119F3C422273DAA006BC829 /* YTPlayerView-iframe-player.html */; };
 		9CCF3EEAA2CC465185FFE871 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5E6BA53938DE4DF1A107CC23 /* SimpleLineIcons.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		BBAB868B70124A7CB8A6F5E3 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5A9AA7FC57C84FE390004D75 /* AntDesign.ttf */; };
@@ -297,6 +299,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		9119F3B122273981006BC829 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9119F39822273981006BC829 /* RCTYouTube.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8BDB9BC91B4289AE00EF9FEF;
+			remoteInfo = RCTYouTube;
+		};
 		91DE7047221FCBDF0074791C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -371,6 +380,8 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8D0B238751290202E962CCE7 /* Pods-electric.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-electric.release.xcconfig"; path = "Pods/Target Support Files/Pods-electric/Pods-electric.release.xcconfig"; sourceTree = "<group>"; };
+		9119F39822273981006BC829 /* RCTYouTube.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTYouTube.xcodeproj; path = "../node_modules/react-native-youtube/RCTYouTube.xcodeproj"; sourceTree = "<group>"; };
+		9119F3C422273DAA006BC829 /* YTPlayerView-iframe-player.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "YTPlayerView-iframe-player.html"; sourceTree = "<group>"; };
 		94282671A89E4EFCCF134048 /* Pods-electric.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-electric.debug.xcconfig"; path = "Pods/Target Support Files/Pods-electric/Pods-electric.debug.xcconfig"; sourceTree = "<group>"; };
 		9C5F8440772F47E7A8A1F88F /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		A3788ABC70B44EE8B666B462 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
@@ -404,6 +415,7 @@
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
+				9119F3C32227399A006BC829 /* libRCTYouTube.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
@@ -625,6 +637,7 @@
 				139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */,
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
+				9119F39822273981006BC829 /* RCTYouTube.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 			);
 			name = Libraries;
@@ -649,6 +662,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				EEE051E0783AE9BDFD38C661 /* Pods */,
 				2073270D055941A8BFDE0F5D /* Resources */,
+				9119F3C422273DAA006BC829 /* YTPlayerView-iframe-player.html */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -662,6 +676,14 @@
 				00E356EE1AD99517003FC87E /* electricTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* electric-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* electric-tvOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9119F39922273981006BC829 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9119F3B222273981006BC829 /* libRCTYouTube.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -843,6 +865,10 @@
 				{
 					ProductGroup = 139FDEE71B06529A00C62182 /* Products */;
 					ProjectRef = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
+				},
+				{
+					ProductGroup = 9119F39922273981006BC829 /* Products */;
+					ProjectRef = 9119F39822273981006BC829 /* RCTYouTube.xcodeproj */;
 				},
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
@@ -1084,6 +1110,13 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		9119F3B222273981006BC829 /* libRCTYouTube.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTYouTube.a;
+			remoteRef = 9119F3B122273981006BC829 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		91DE7048221FCBDF0074791C /* libjsi.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1135,6 +1168,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				9119F3C522273DAA006BC829 /* YTPlayerView-iframe-player.html in Resources */,
 				BBAB868B70124A7CB8A6F5E3 /* AntDesign.ttf in Resources */,
 				F3CBBF33317744C1A86BD18A /* Entypo.ttf in Resources */,
 				C8F85FA0DF0C4FFE987F0962 /* EvilIcons.ttf in Resources */,

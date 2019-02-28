@@ -29,6 +29,11 @@ export default styles = StyleSheet.create({
         height: 80
     },
 
+    imageVideo:{
+        width: '100%',
+        height: 80
+    },
+
     newsTitle:{
         fontSize: 15,
         fontWeight: '800',
