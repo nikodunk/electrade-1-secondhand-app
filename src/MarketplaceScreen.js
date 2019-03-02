@@ -57,7 +57,7 @@ export default class OtherScreen extends React.Component {
     fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/ssxDRduoSE3XdkzLv/lastExec/results?token=vDBYC8EeGdBZpYPrrrXLEjmwF')
       .then((res) => { return res.json()})
       
-      // merge arrays from different sites
+      // merge arrays from different pages
       .then(res =>  {   let finalArray = []
                          for (i = 0; i < res.length; i++){
                                 if (i === 0) { finalArray = res[0].pageFunctionResult; }
@@ -81,6 +81,17 @@ export default class OtherScreen extends React.Component {
                 let newArray = res; for (i = 0; i < res.length; i++){ newArray[i].price = parseInt(newArray[i].price.replace(',', '').replace('$', '')) }; 
                 return newArray.sort((a, b) => a.price - b.price)  })
 
+      // edit properties of car object
+      .then(res => {  
+                let newArray = res; 
+                for (var i = 0; i < res.length; i++){ 
+                        newArray[i].location = newArray[i].location.substring(0, newArray[i].location.indexOf('Features'))
+                        newArray[i].name = newArray[i].name.replace('USED', '')
+                }; 
+                return newArray
+              }
+      )
+
       // set results as state
       .then((res) => {
                   this.setState({data: res}); 
@@ -91,12 +102,12 @@ export default class OtherScreen extends React.Component {
           // GET OWN LISTINGS
           fetch('https://electrade-server.herokuapp.com/api/listings/get/'+'used')
             .then((res) => res.json())
-            .then((json) => { this.setState({data: json.concat(this.state.data), loading: false}); console.log(json) })
+            .then((json) => { this.setState({data: json.concat(this.state.data), loading: false}); console.log('USED CAR DATA:',this.state.data) })
       })
       
-
-    
   }
+
+
 
   _getNewData(){
     this.setState({loading: true})
@@ -118,6 +129,7 @@ export default class OtherScreen extends React.Component {
                 for (var i = 0; i < res.length; i++){ 
                         newArray[i].price = parseInt(newArray[i].price.replace(',', '').replace('$', ''));
                         newArray[i].link = "https://www.edmunds.com"+newArray[i].link;
+                        newArray[i].name = newArray[i].name.replace('NEW', '')
                 }; 
                 return newArray
               }
@@ -125,8 +137,8 @@ export default class OtherScreen extends React.Component {
 
       // add teslas
       .then((res) => { res.push(
-                          { name: 'NEW Tesla Model 3', price: '42900', image: 'https://www.tesla.com/tesla_theme/assets/img/model3/hero-img--touch.jpg?20170801', link: 'https://3.tesla.com/model3/design#battery'},
-                          { name: 'NEW Tesla Model S', price: '85000', image: 'https://i0.wp.com/eastwest.thegadgetman.org.uk/wp-content/uploads/2017/07/tesla256.png?fit=256%2C256&ssl=1', link: 'https://www.tesla.com/modelx/design#battery'},
+                          { name: 'NEW Tesla Model 3', price: '35000', image: 'https://www.tesla.com/tesla_theme/assets/img/model3/hero-img--touch.jpg?20170801', link: 'https://3.tesla.com/model3/design#battery'},
+                          { name: 'NEW Tesla Model S', price: '79000', image: 'https://i0.wp.com/eastwest.thegadgetman.org.uk/wp-content/uploads/2017/07/tesla256.png?fit=256%2C256&ssl=1', link: 'https://www.tesla.com/modelx/design#battery'},
                           { name: 'NEW Tesla Model X', price: '88000', image: 'https://pbs.twimg.com/profile_images/713511184910139392/_hAw3t46_400x400.jpg', link: 'https://www.tesla.com/models/design#battery'}
                           ) 
                       return res
@@ -155,7 +167,7 @@ export default class OtherScreen extends React.Component {
           // GET OWN LISTINGS
           fetch('https://electrade-server.herokuapp.com/api/listings/get/'+'new')
             .then((res) => res.json())
-            .then((json) => { this.setState({data: json.concat(this.state.data), loading: false}); console.log(json) })
+            .then((json) => { this.setState({data: json.concat(this.state.data), loading: false}); console.log('NEW CAR DATA:',this.state.data) })
       })
   }
 
@@ -177,9 +189,9 @@ export default class OtherScreen extends React.Component {
               <TouchableOpacity style={{alignItems: 'space-between'}}
                                 onPress={() => this.props.navigation.navigate('Submit', {listingType: this.state.used === true ? 'used' : 'new'} )} 
                                 delayPressIn={50} >
-                <View style={{display: 'flex', flexDirection:'row', padding: 5}}>
-                  <Icon name="ios-add-circle" size={24}  color="#4F8EF7" />
-                  <Text style={{color: "#4F8EF7", fontSize: 20, fontWeight: '800'}}>Add a {this.state.used === true ? 'used' : 'new'} EV</Text>
+                <View style={{display: 'flex', flexDirection:'row', padding: 10, paddingBottom: 0}}>
+                  <Icon name="ios-camera" size={30} color="#4F8EF7" style={{position: 'absolute', top: 6, left: 10}} />
+                  <Text style={{color: "#4F8EF7", fontSize: 20, fontWeight: '800', marginLeft: 25}}> List your car</Text>
                 </View>
               </TouchableOpacity>
               <View style={{display: 'flex', flexDirection:'row', padding: 5}}>
@@ -209,7 +221,8 @@ export default class OtherScreen extends React.Component {
 
                               <View style={{flex: 0.6, marginLeft: 5}}>
                                 <Text style={styles.newsTitle}>${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }</Text>
-                                <Text >{item.name.replace('USED', '').replace('NEW', '')}</Text>
+                                <Text >{item.name}</Text>
+                                {item.miles ? <Text style={styles.newsSource}>{item.miles} | {item.source}</Text> : null}
                               </View>
                               
                             </View>

@@ -15,23 +15,51 @@ export default styles = StyleSheet.create({
     },
 
     image:{
-        width: '100%', 
-        height: 100
+        height: 100,
+        borderRadius: 10,
+        margin: 5,
+        padding: 5
     },
 
-    imageDetail:{
-        width: '100%', 
-        height: 300
+    imageDetail:{ 
+        height: 300,
+        borderRadius: 10,
+        margin: 5,
+        padding: 5
     },
 
     imageCar:{
-        width: '100%',
-        height: 80
+        height: 80,
+        borderRadius: 10,
+        margin: 5,
+        padding: 5
     },
 
     imageVideo:{
+        height: 190,
+        position: 'absolute',
         width: '100%',
-        height: 80
+        borderRadius: 10,
+        opacity: .5,
+    },
+
+    videoContainer:{
+        opacity: 1, 
+        backgroundColor: 'black', 
+        width: '94%', 
+        marginLeft: '3%', 
+        marginRight: '3%',
+        shadowOffset: {  width: 0,  height: 2,  },
+        shadowColor: 'lightgrey',
+        shadowOpacity: 1.0
+    },
+
+    videoTitle:{
+        margin: 20, 
+        justifyContent: 'center', 
+        fontWeight: '700', 
+        fontSize: 30, 
+        color: 'white'
     },
 
     newsTitle:{

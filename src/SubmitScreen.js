@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, TextInput, ActivityIndicator } from 'react-native';
+import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, TextInput, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Mixpanel from 'react-native-mixpanel'
 
@@ -14,11 +14,18 @@ export default class SubmitScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      name: null,
-      price: null,
-      image: null,
-      email: null,
-      loading: false,
+      name: '',
+      price: '',
+      image: '',
+      email: '',
+      
+      source: 'electrade',
+      miles: '',
+      location: '',
+      batterysize: '',
+      range: '',
+
+      loading: '',
       listingType: null
        };
   }
@@ -29,11 +36,12 @@ export default class SubmitScreen extends React.Component {
         this.setState({email: res})
         {this.state.email ? Mixpanel.identify(this.state.email) : null }
         if(this.state.email !== 'niko'){Mixpanel.track("SubmitScreen Loaded") }
-        // if(this.state.email === 'niko'){ AsyncStorage.removeItem('remainingtrials') }
       })
 
       this.setState({listingType: this.props.navigation.getParam('listingType') })
       AsyncStorage.getItem('email').then(email => this.setState({email: email}) )
+
+      this._takeImage()
   }
 
 
@@ -58,7 +66,12 @@ export default class SubmitScreen extends React.Component {
             name: this.state.name,
             price: this.state.price,
             image: this.state.image,
-            link: 'mailto:'+this.state.email
+            link: 'mailto:'+this.state.email,
+            source: this.state.source,
+            miles: this.state.miles,
+            location: this.state.location,
+            batterysize: this.state.batterysize,
+            range: this.state.range,
           }),
       }).then(() => AsyncStorage.setItem('email', this.state.email ))
         .then(() => this.props.navigation.goBack())
@@ -130,8 +143,8 @@ export default class SubmitScreen extends React.Component {
       body.append('image', photo);
       // body.append('title', 'A beautiful photo!');
 
-      let serverURL = 'https://electrade-server.herokuapp.com/upload/image'
-      // let serverURL = 'http://localhost:8080/upload/image'
+       let serverURL = 'https://electrade-server.herokuapp.com/upload/image'
+      //let serverURL = 'http://localhost:8080/upload/image'
 
       let request = new XMLHttpRequest();
 
@@ -159,15 +172,14 @@ export default class SubmitScreen extends React.Component {
   }
 
 
- 
-
   render() {
     return (
-       <View>
+      <SafeAreaView style={{flex: 1}}>
+       <KeyboardAvoidingView behavior="padding" enabled style={{flex: 1}}>
 
           <TouchableOpacity 
                 onPress={() => this.props.navigation.goBack()} 
-                style={{left: 10, marginTop: 30}}>
+                style={{left: 10}}>
             <View style={{padding: 5}}>
               <Text style={{fontSize: 18, color: 'dodgerblue'}}>
                   Back
@@ -175,61 +187,129 @@ export default class SubmitScreen extends React.Component {
             </View>
           </TouchableOpacity>
 
-          <ScrollView>
+            <ScrollView style={{flex: 1, marginBottom: 50}}>
 
-                <View style={{margin: 20}}>
-                  <Text style={styles.newsTitle}>Add your {this.state.listingType} EV</Text>
+                  {!this.state.image ?
+                   <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
+                     <Button 
+                       style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
+                       onPress={() => this._pickImage()} 
+                       title="Pick Image" />
+                     <Button 
+                       style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
+                       onPress={() => this._takeImage()} 
+                       title="Open Camera" />
+                   </View> 
+                   : null }
+
+                  {this.state.image ? <Image  style={styles.imageDetail} source={{uri: this.state.image}} /> : null }
+
+                {/* CAR MODEL */}
+                <Text style={styles.newsTitle}>Car Year & Model</Text>
                   <TextInput 
                       underlineColorAndroid="transparent"
                       style={styles.textInput}
-                      placeholder={'Car Model'}
-                      autoFocus={true}
+                      placeholder={'Car Year & Model'}
                       onChangeText={ (text) => {  this.setState({name: text}) }}
                   />
-                  <TextInput 
+
+                {/* REQUESTED PRICE */}
+                  {this.state.listingType === 'gallery' ? null :
+                  <View>
+                    <Text style={styles.newsTitle}>Requested Price</Text>
+                    <TextInput 
+                          underlineColorAndroid="transparent"
+                          style={styles.textInput}
+                          placeholder={'Requested Price'}
+                          keyboardType={'decimal-pad'}
+                          onChangeText={ (text) => {  this.setState({price: text}) }}
+                      />
+                  </View>}
+
+                {/* YOUR CONTACT */}
+                  {this.state.listingType === 'gallery' ? null : 
+                  <View>
+                    <Text style={styles.newsTitle}>How to contact you</Text>
+                    <TextInput 
                       underlineColorAndroid="transparent"
                       style={styles.textInput}
-                      placeholder={'Requested Price'}
-                      keyboardType={'decimal-pad'}
-                      onChangeText={ (text) => {  this.setState({price: text}) }}
-                  />
-
-                 {!this.state.image ?
-                  <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
-                    <Button 
-                      style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
-                      onPress={() => this._pickImage()} 
-                      title="Pick Image" />
-                    <Button 
-                      style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
-                      onPress={() => this._takeImage()} 
-                      title="Open Camera" />
-                  </View> 
-                  : null }
-
-                 {this.state.image ? <Image  style={styles.imageCar} source={{uri: this.state.image}} /> : null }
-
-                  <TextInput 
-                      underlineColorAndroid="transparent"
-                      style={styles.textInput}
+                      placeholder={'Your Email'}
                       value={this.state.email}
                       autoCapitalize = 'none'
                       keyboardType={'email-address'}
                       onChangeText={ (text) => {  this.setState({email: text}) }}
-                  />
+                      />
+                  </View> }
+
+                {/* YOUR CONTACT */}
+                  {this.state.listingType === 'gallery' ? null : 
+                  <View>
+                    <Text style={styles.newsTitle}>Miles</Text>
+                    <TextInput 
+                      underlineColorAndroid="transparent"
+                      style={styles.textInput}
+                      placeholder={'Miles'}
+                      value={this.state.miles}
+                      autoCapitalize = 'none'
+                      onChangeText={ (text) => {  this.setState({miles: text}) }}
+                       />
+                  </View> }
+
+
+                  {this.state.listingType === 'gallery' ? null : 
+                  <View>
+                    <Text style={styles.newsTitle}>Your Location</Text>
+                    <TextInput 
+                      underlineColorAndroid="transparent"
+                      style={styles.textInput}
+                      placeholder={'Location'}
+                      value={this.state.location}
+                      autoCapitalize = 'none'
+                      onChangeText={ (text) => {  this.setState({location: text}) }}
+                      />
+                  </View> }
+
+                  {this.state.listingType === 'gallery' ? null : 
+                  <View>
+                    <Text style={styles.newsTitle}>Battery Size</Text>
+                    <TextInput 
+                      underlineColorAndroid="transparent"
+                      style={styles.textInput}
+                      placeholder={'Battery Size (ie. 64kWh)'}
+                      value={this.state.batterysize}
+                      autoCapitalize = 'none'
+                      onChangeText={ (text) => {  this.setState({batterysize: text}) }}
+                      />
+                  </View> }
+
+                  {this.state.listingType === 'gallery' ? null : 
+                  <View>
+                    <Text style={styles.newsTitle}>Current range</Text>
+                    <TextInput 
+                      underlineColorAndroid="transparent"
+                      style={styles.textInput}
+                      placeholder={'Remaining range at 100% charge'}
+                      value={this.state.range}
+                      autoCapitalize = 'none'
+                      onChangeText={ (text) => {  this.setState({range: text}) }}
+                      />
+                  </View> }
+
 
 
                   <Button 
                     style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
                     onPress={() => this._onPress()} 
                     title="Submit" />
+
                   {this.state.loading ? <ActivityIndicator /> : null}
-                </View>
 
 
-          </ScrollView>
+            </ScrollView>
+          
 
-        </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     );
 
   }

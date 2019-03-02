@@ -60,10 +60,13 @@ export default class DetailScreen extends React.Component {
                   {this.state.item.price ? <Text style={{fontWeight: '500', fontSize: 20}}>${ this.state.item.price }</Text> : null }
                   {this.state.item.name ? <Text>{ this.state.item.name }</Text> : null }
                   {this.state.item.text ? <Text>{ this.state.item.text.substring(0, this.state.item.text.indexOf('http')) }</Text> : null }
+                  {this.state.item.miles ? <Text style={styles.newsSource}>{this.state.item.miles}</Text> : null}
+                  {this.state.item.location ? <Text style={styles.newsSource}>{this.state.item.location}</Text> : null}
                   {this.state.item.source ? 
                       <View>
                         <Button title={`Continue at ${this.state.item.source}`} onPress={() => Linking.openURL(this.state.item.link.toString())}/>
                       </View>  : null }
+
                   {this.state.item.email ?
                       <Button title={`Contact Owner`} onPress={() => Linking.openURL('https://www.edmunds.com'+this.state.item.email.toString()) }/>
                       : null }

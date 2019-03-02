@@ -59,13 +59,15 @@ export default class HomeScreen extends React.Component {
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item, index}) => 
                    <TouchableOpacity 
-                      style={{marginTop: index === 0 ? 30 : 0, marginBottom: index === this.state.data.length -1 ? 80 : 0}} 
+                      style={{marginTop: index === 0 ? 40 : 0, marginBottom: index === this.state.data.length -1 ? 80 : 0, height: 210}} 
                       delayPressIn={50}
                       onPress={() => this.props.navigation.navigate('Details', {item: item} ) } >
-                          <Text style={{marginLeft: 10, marginTop: 10, fontWeight: '500'}}>{item.name}</Text>
-                          <Image  style={styles.imageVideo}
-                                  source={{uri: 'https://i.ytimg.com/vi/'+item.videoLink+'/hqdefault.jpg'}} 
-                                  />
+                          <View style={[styles.imageVideo, styles.videoContainer]}>
+                            <Image  style={styles.imageVideo}
+                                    source={{uri: 'https://i.ytimg.com/vi/'+item.videoLink+'/hqdefault.jpg'}} />
+                            <Text style={styles.videoTitle}>{item.name}</Text>
+                          </View>
+
                    </TouchableOpacity>
                     }
                     /> :  null }
@@ -75,5 +77,6 @@ export default class HomeScreen extends React.Component {
 
   }
 }
+
 
 
