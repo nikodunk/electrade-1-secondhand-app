@@ -86,7 +86,7 @@ export default class HomeScreen extends React.Component {
                        renderItem={({item, index}) => 
                             <View style={{marginTop: index === 0 ? 40 : 0, marginBottom: index === this.state.data.length -1 ? 80 : 0}}>
                               <TouchableOpacity 
-                                  onPress={() => this.props.navigation.navigate('Details', {item: item} ) } 
+                                  onPress={() => this.props.navigation.navigate('Details', {item: item, type: 'News'} ) } 
                                   style={{flexDirection: 'row', display: 'flex'}} 
                                   delayPressIn={50}> 
                                 <View style={{flex: 0.3}}>

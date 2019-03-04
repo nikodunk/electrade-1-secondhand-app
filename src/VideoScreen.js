@@ -1,7 +1,7 @@
-// https://www.youtube.com/results?search_query=electric+vehicle+reviews&sp=CAI%253D
-// https://www.youtube.com/results?search_query=ev+electric+vehicle+review&sp=CAI%253D
-// https://m.youtube.com/results?search_query=ev+electric+vehicle+review&persist_app=1&app=m&uploaded=d
+// https://www.youtube.com/results?search_query=electric+vehicles&sp=CAI%253D
+// https://m.youtube.com/results?q=electric+vehicles&search_type=&uploaded=d
 
+// https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&order=date&q=tesla%7Ckona%7Cecq%7Ce-tron%2Creview&key=AIzaSyDwmCtuWULOagWQg3vrFRbeB59Jb7qmYts
 
 
 import React, {Component} from 'react';
@@ -61,7 +61,7 @@ export default class HomeScreen extends React.Component {
                    <TouchableOpacity 
                       style={{marginTop: index === 0 ? 40 : 0, marginBottom: index === this.state.data.length -1 ? 80 : 0, height: 210}} 
                       delayPressIn={50}
-                      onPress={() => this.props.navigation.navigate('Details', {item: item} ) } >
+                      onPress={() => this.props.navigation.navigate('Details', {item: item, type: 'Video'} ) } >
                           <View style={[styles.imageVideo, styles.videoContainer]}>
                             <Image  style={styles.imageVideo}
                                     source={{uri: 'https://i.ytimg.com/vi/'+item.videoLink+'/hqdefault.jpg'}} />

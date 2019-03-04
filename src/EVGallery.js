@@ -47,7 +47,8 @@ export default class OtherScreen extends React.Component {
       fetch('https://electrade-server.herokuapp.com/api/listings/get/'+'gallery')
       // fetch('http://localhost:8080/api/listings/get/'+'gallery')
         .then((res) => res.json())
-        .then((json) => { this.setState({data: json, loading: false}); console.log(json) })
+        .then((json) => json.reverse())
+        .then((res) => { this.setState({data: res, loading: false}); console.log(res) })
   }
 
 
@@ -57,7 +58,7 @@ export default class OtherScreen extends React.Component {
         <View style={{maxHeight: '100%'}}>
           <View style={{marginTop: 40, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between'}} zIndex={5}>
               <TouchableOpacity style={{alignItems: 'space-between'}}
-                                onPress={() => this.props.navigation.navigate('Submit', {listingType: 'gallery'} )} 
+                                onPress={() => this.props.navigation.navigate('Submit', {listingType: 'gallery', type: 'Gallery'} )} 
                                 delayPressIn={50} >
                 <View style={{display: 'flex', flexDirection:'row', padding: 10, paddingBottom: 0}}>
                   <Icon name="ios-camera" size={30} color="#4F8EF7" style={{position: 'absolute', top: 6, left: 10}} />
@@ -72,7 +73,7 @@ export default class OtherScreen extends React.Component {
                        keyExtractor={(item, index) => index.toString()}
                        renderItem={({item, index}) => 
                           <View style={{ marginBottom: index === this.state.data.length -1 ? 180 : 0}}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Details', {item: item} ) } delayPressIn={50} >
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Details', {item: item, type: 'Gallery'} ) } delayPressIn={50} >
     
                               <View style={{display: 'flex', flexDirection:'row'}}>
                                 

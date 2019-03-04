@@ -39,6 +39,8 @@ export default class SubmitScreen extends React.Component {
       })
 
       this.setState({listingType: this.props.navigation.getParam('listingType') })
+      this.setState({type: this.props.navigation.getParam('type') })
+      
       AsyncStorage.getItem('email').then(email => this.setState({email: email}) )
 
       this._takeImage()

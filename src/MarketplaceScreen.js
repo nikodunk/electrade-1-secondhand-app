@@ -1,8 +1,13 @@
-// https://www.edmunds.com/inventory/srp.html?inventorytype=used%2Ccpo&type=Electric&sort=price%3Aasc
-
+// https://www.edmunds.com/inventory/srp.html?inventorytype=used%2Ccpo&type=Electric&sort=price%3Aasc&radius=500
 // https://sfbay.craigslist.org/search/cta?sort=priceasc&auto_fuel_type=4
+
 // https://www.autotrader.com/cars-for-sale/Used+Cars/San+Francisco+CA-94117?startYear=1981&listingTypes=USED&searchRadius=50&zip=94117&endYear=2020&marketExtension=true&engineCodes=EL&sortBy=derivedpriceASC&numRecords=100&firstRecord=0
 // https://www.cars.com/for-sale/searchresults.action/?fuelTypeId=38745&page=1&perPage=20&rd=30&searchSource=SORT&shippable-dealers-checkbox=true&showMore=false&sort=price-lowest&stkTypId=28881&zc=94117&localVehicles=false
+
+// https://www.myev.com/cars-for-sale?make=tesla&model=model-3
+// https://www.tesla.com/inventory/used/ms?arrangeby=plh&zip=94122&range=0
+
+
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, Linking, FlatList, TouchableOpacity, ActivityIndicator, Switch } from 'react-native';
@@ -16,7 +21,7 @@ export default class OtherScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      used: false,
+      used: true,
       data: null,
       images: null,
       loading: false,
@@ -41,8 +46,8 @@ export default class OtherScreen extends React.Component {
         'willFocus',
         () => {
           AsyncStorage.getItem('used').then((res) => {
-            this.setState({used: (res === 'true')})
-            res === 'true' ? this._getUsedData() : this._getNewData()
+            this.setState({used: (res !== 'true')})
+            res !== 'true' ? this._getUsedData() : this._getNewData()
           })     
         }
       );
@@ -53,7 +58,7 @@ export default class OtherScreen extends React.Component {
 
     this.setState({loading: true})
     
-    // GET SCRAPED RESULTS
+    // GET SCRAPED USED RESULTS
     fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/ssxDRduoSE3XdkzLv/lastExec/results?token=vDBYC8EeGdBZpYPrrrXLEjmwF')
       .then((res) => { return res.json()})
       
@@ -110,7 +115,10 @@ export default class OtherScreen extends React.Component {
 
 
   _getNewData(){
+
+    // GET SCRAPED NEW RESULTS
     this.setState({loading: true})
+
     fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/dqChEgEi92GTiNG9a/lastExec/results?token=p7r3cZrnv5BnGn9c4kC7PpcPT')
       .then((res) => { return res.json()})
       
@@ -130,6 +138,7 @@ export default class OtherScreen extends React.Component {
                         newArray[i].price = parseInt(newArray[i].price.replace(',', '').replace('$', ''));
                         newArray[i].link = "https://www.edmunds.com"+newArray[i].link;
                         newArray[i].name = newArray[i].name.replace('NEW', '')
+                        newArray[i].location = newArray[i].location.substring(0, newArray[i].location.indexOf('Features'))
                 }; 
                 return newArray
               }
@@ -187,7 +196,7 @@ export default class OtherScreen extends React.Component {
         <View style={{maxHeight: '100%'}}>
           <View style={{marginTop: 40, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between'}} zIndex={5}>
               <TouchableOpacity style={{alignItems: 'space-between'}}
-                                onPress={() => this.props.navigation.navigate('Submit', {listingType: this.state.used === true ? 'used' : 'new'} )} 
+                                onPress={() => this.props.navigation.navigate('Submit', {listingType: this.state.used === true ? 'used' : 'new', type: 'Marketplace'} )} 
                                 delayPressIn={50} >
                 <View style={{display: 'flex', flexDirection:'row', padding: 10, paddingBottom: 0}}>
                   <Icon name="ios-camera" size={30} color="#4F8EF7" style={{position: 'absolute', top: 6, left: 10}} />
@@ -195,11 +204,12 @@ export default class OtherScreen extends React.Component {
                 </View>
               </TouchableOpacity>
               <View style={{display: 'flex', flexDirection:'row', padding: 5}}>
-                <Text style={{margin: 5, fontWeight: '400'}}>Show Used</Text>
+                <Text style={{margin: 5, fontWeight: '400'}}>New</Text>
                 <Switch 
                     value={this.state.used} 
                     onValueChange={(value) => this._onSwitchUsed(value)} 
                     />
+                <Text style={{margin: 5, fontWeight: '400'}}>Used</Text>
               </View>
             </View>
           {!this.state.loading ?
@@ -209,7 +219,7 @@ export default class OtherScreen extends React.Component {
                      keyExtractor={(item, index) => index.toString()}
                      renderItem={({item, index}) => 
                         <View style={{ marginBottom: index === this.state.data.length -1 ? 180 : 0}}>
-                          <TouchableOpacity onPress={() => this.props.navigation.navigate('Details', {item: item} ) } delayPressIn={50} >
+                          <TouchableOpacity onPress={() => this.props.navigation.navigate('Details', {item: item, type: 'Marketplace'} ) } delayPressIn={50} >
 
                             <View style={{display: 'flex', flexDirection:'row'}}>
                               
@@ -222,7 +232,7 @@ export default class OtherScreen extends React.Component {
                               <View style={{flex: 0.6, marginLeft: 5}}>
                                 <Text style={styles.newsTitle}>${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }</Text>
                                 <Text >{item.name}</Text>
-                                {item.miles ? <Text style={styles.newsSource}>{item.miles} | {item.source}</Text> : null}
+                                {item.miles ? <Text style={styles.newsSource}>{item.miles} | {item.location}</Text> : null}
                               </View>
                               
                             </View>

@@ -20,6 +20,7 @@ export default class DetailScreen extends React.Component {
 
   componentDidMount() {
       this.setState({item: this.props.navigation.getParam('item') })
+      this.setState({type: this.props.navigation.getParam('type') })
   }
  
 
@@ -44,7 +45,6 @@ export default class DetailScreen extends React.Component {
                     style={styles.imageDetail}
                     source={{uri: this.state.item.image}}
                     /> : null }
-
                 {this.state.item.videoLink ? <YouTube
                         videoId={this.state.item.videoLink}   // The YouTube video ID
                         play={false}             // control playback of video with true/false
@@ -56,20 +56,21 @@ export default class DetailScreen extends React.Component {
                         onError={e => this.setState({ error: e.error })}
                         style={{ alignSelf: 'stretch', height: 300 }}
                       /> : null }
+
+
                 <View style={{padding: 20}}>
+
+                {/* NEWS options */}
+                  {this.state.item.text ? <Text>{ this.state.item.text.substring(0, this.state.item.text.indexOf('http')) }</Text> : null }
+                  {this.state.type === 'News' ? <Button title={`Continue at ${this.state.item.source}`} onPress={() => Linking.openURL(this.state.item.link.toString())}/>  : null }
+
+                {/* marketplace & gallery options */}
                   {this.state.item.price ? <Text style={{fontWeight: '500', fontSize: 20}}>${ this.state.item.price }</Text> : null }
                   {this.state.item.name ? <Text>{ this.state.item.name }</Text> : null }
-                  {this.state.item.text ? <Text>{ this.state.item.text.substring(0, this.state.item.text.indexOf('http')) }</Text> : null }
                   {this.state.item.miles ? <Text style={styles.newsSource}>{this.state.item.miles}</Text> : null}
                   {this.state.item.location ? <Text style={styles.newsSource}>{this.state.item.location}</Text> : null}
-                  {this.state.item.source ? 
-                      <View>
-                        <Button title={`Continue at ${this.state.item.source}`} onPress={() => Linking.openURL(this.state.item.link.toString())}/>
-                      </View>  : null }
+                  {this.state.type === 'Marketplace' ? <Button title={`Contact Seller`} onPress={() => Linking.openURL('https://www.edmunds.com'+this.state.item.email.toString()) }/>  : null }
 
-                  {this.state.item.email ?
-                      <Button title={`Contact Owner`} onPress={() => Linking.openURL('https://www.edmunds.com'+this.state.item.email.toString()) }/>
-                      : null }
                 </View>
            </ScrollView>
          : null }
