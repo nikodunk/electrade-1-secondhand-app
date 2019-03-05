@@ -25,7 +25,6 @@ export default class OtherScreen extends React.Component {
       // get email, except if developer mode
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
-        {this.state.email ? Mixpanel.identify(this.state.email) : null }
         if(this.state.email !== 'niko'){Mixpanel.track("EV Gallery Loaded") }
         // if(this.state.email === 'niko'){ AsyncStorage.removeItem('remainingtrials') }
       })
@@ -54,18 +53,7 @@ export default class OtherScreen extends React.Component {
 
   render() {
     return (
-       <View>
-        <View style={{maxHeight: '100%'}}>
-          <View style={{marginTop: 40, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between'}} zIndex={5}>
-              <TouchableOpacity style={{alignItems: 'space-between'}}
-                                onPress={() => this.props.navigation.navigate('Submit', {listingType: 'gallery', type: 'Gallery'} )} 
-                                delayPressIn={50} >
-                <View style={{display: 'flex', flexDirection:'row', padding: 10, paddingBottom: 0}}>
-                  <Icon name="ios-camera" size={30} color="#4F8EF7" style={{position: 'absolute', top: 6, left: 10}} />
-                  <Text style={{color: "#4F8EF7", fontSize: 20, fontWeight: '800', marginLeft: 25}}> Snap an EV </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
+       <View style={{flex: 1}}>
           {!this.state.loading ?
             <Animatable.View animation="slideInUp" duration={500} easing="ease-out-back">
                     <FlatList
@@ -75,22 +63,16 @@ export default class OtherScreen extends React.Component {
                           <View style={{ marginBottom: index === this.state.data.length -1 ? 180 : 0}}>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('Details', {item: item, type: 'Gallery'} ) } delayPressIn={50} >
     
-                              <View style={{display: 'flex', flexDirection:'row'}}>
+                              <View style={{marginTop: index === 0 ? 40 : 0, marginBottom: index === this.state.data.length -1 ? 80 : 0}}>
                                 
-                                <View style={{flex: 0.4}}>
-                                  <Image  style={styles.imageCar}
+                                <View style={{flex: 1}}>
+                                  <Image  style={styles.imageDetail}
                                           source={{uri: item.image}} 
                                           />
                                 </View>
-    
-                                <View style={{flex: 0.6, marginLeft: 5}}>
-                                  <Text >{item.name}</Text>
-                                </View>
-                                
                               </View>
                             </TouchableOpacity>
                             
-                            <View style={styles.separator} />
     
                           </View> }
                        />
@@ -101,7 +83,12 @@ export default class OtherScreen extends React.Component {
               <ActivityIndicator />
             </View>
           }
-        </View>
+          <Animatable.View animation="bounceIn" duration={500} style={styles.newsItem}>
+            <TouchableOpacity 
+                    onPress={() => this.props.navigation.navigate('Submit', {listingType: 'gallery', type: 'Gallery'} )} >
+              <Icon name="ios-camera" size={24}  color="white" />
+            </TouchableOpacity>
+          </Animatable.View>
       </View>
     );
 

@@ -1,8 +1,8 @@
 // https://www.edmunds.com/inventory/srp.html?inventorytype=used%2Ccpo&type=Electric&sort=price%3Aasc&radius=500
 // https://sfbay.craigslist.org/search/cta?sort=priceasc&auto_fuel_type=4
-
 // https://www.autotrader.com/cars-for-sale/Used+Cars/San+Francisco+CA-94117?startYear=1981&listingTypes=USED&searchRadius=50&zip=94117&endYear=2020&marketExtension=true&engineCodes=EL&sortBy=derivedpriceASC&numRecords=100&firstRecord=0
 // https://www.cars.com/for-sale/searchresults.action/?fuelTypeId=38745&page=1&perPage=20&rd=30&searchSource=SORT&shippable-dealers-checkbox=true&showMore=false&sort=price-lowest&stkTypId=28881&zc=94117&localVehicles=false
+
 
 // https://www.myev.com/cars-for-sale?make=tesla&model=model-3
 // https://www.tesla.com/inventory/used/ms?arrangeby=plh&zip=94122&range=0
@@ -10,7 +10,7 @@
 
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, Linking, FlatList, TouchableOpacity, ActivityIndicator, Switch } from 'react-native';
+import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, Linking, FlatList, TouchableOpacity, ActivityIndicator, SegmentedControlIOS } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Mixpanel from 'react-native-mixpanel'
@@ -21,11 +21,11 @@ export default class OtherScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      used: true,
       data: null,
       images: null,
       loading: false,
-       };
+      listingType: 0,
+      };
 
     this._getUsedData = this._getUsedData.bind(this)
     this._getNewData = this._getNewData.bind(this)
@@ -45,28 +45,67 @@ export default class OtherScreen extends React.Component {
       this.willFocusSubscription = this.props.navigation.addListener(
         'willFocus',
         () => {
-          AsyncStorage.getItem('used').then((res) => {
-            this.setState({used: (res !== 'true')})
-            res !== 'true' ? this._getUsedData() : this._getNewData()
+          AsyncStorage.getItem('listingtype').then((res) => {
+            console.log('listingtype from asyncstorage: ', JSON.parse(res))
+            res !== null ? this.setState({listingType: JSON.parse(res) }) : null
+            this.state.listingType === 0 ? this._getUsedTeslaData() : null
+            this.state.listingType === 1 ? this._getUsedData() : null
+            this.state.listingType === 2 ? this._getNewData() : null
           })     
         }
       );
   }
 
-
-  _getUsedData(){
+  _getUsedTeslaData(){
 
     this.setState({loading: true})
-    
-    // GET SCRAPED USED RESULTS
-    fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/ssxDRduoSE3XdkzLv/lastExec/results?token=vDBYC8EeGdBZpYPrrrXLEjmwF')
+
+    // GET SCRAPED TESLA RESULTS
+    fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/oZsdPYyHQ97zcaJvB/lastExec/results?token=PCARqhzaNZDF5oB9wxHux344H')
       .then((res) => { return res.json()})
       
       // merge arrays from different pages
       .then(res =>  {   let finalArray = []
-                         for (i = 0; i < res.length; i++){
-                                if (i === 0) { finalArray = res[0].pageFunctionResult; }
-                                else { finalArray = finalArray.concat( res[i].pageFunctionResult ); }
+                         for (var i = 0; i < res.length; i++){
+                                if (i === 0) { res[0].pageFunctionResult.pop(); res[0].pageFunctionResult.shift(); finalArray = res[0].pageFunctionResult; }
+                                else { res[i].pageFunctionResult.pop(); res[i].pageFunctionResult.shift(); finalArray = finalArray.concat( res[i].pageFunctionResult ); }
+                              } 
+                         return finalArray
+                      })
+
+      // filter by Tesla
+      .then((res) => {
+                  var filtered = res.filter(car =>  {return car.name.indexOf('Tesla') !== -1} )
+                  return filtered
+      })
+
+      // set results as state
+      .then((res) => {            
+            this.setState({data: res, loading: false});
+      })
+
+      // .then(() => {
+      //     // GET OWN LISTINGS
+      //     fetch('https://electrade-server.herokuapp.com/api/listings/get/'+'used')
+      //       .then((res) => res.json())
+      //       .then((json) => { this.setState({data: json.concat(this.state.data), loading: false}); console.log('USED CAR DATA:',this.state.data) })
+      // })   
+
+  }
+
+  _getUsedData(){
+
+    this.setState({loading: true})
+
+    // GET SCRAPED USED RESULTS
+    fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/oZsdPYyHQ97zcaJvB/lastExec/results?token=PCARqhzaNZDF5oB9wxHux344H')
+      .then((res) => { return res.json()})
+      
+      // merge arrays from different pages
+      .then(res =>  {   let finalArray = []
+                         for (var i = 0; i < res.length; i++){
+                                if (i === 0) { res[0].pageFunctionResult.pop(); res[0].pageFunctionResult.shift(); finalArray = res[0].pageFunctionResult; }
+                                else { res[i].pageFunctionResult.pop(); res[i].pageFunctionResult.shift(); finalArray = finalArray.concat( res[i].pageFunctionResult ); }
                               } 
                          return finalArray
                       })
@@ -82,25 +121,24 @@ export default class OtherScreen extends React.Component {
       })
 
       // sort
-      .then(res => {  
-                let newArray = res; for (i = 0; i < res.length; i++){ newArray[i].price = parseInt(newArray[i].price.replace(',', '').replace('$', '')) }; 
-                return newArray.sort((a, b) => a.price - b.price)  })
+      // .then(res => {  
+      //           let newArray = res; for (i = 0; i < res.length; i++){ newArray[i].price = parseInt(newArray[i].price.replace(',', '').replace('$', '')) }; 
+      //           return newArray.sort((a, b) => a.price - b.price)  })
 
       // edit properties of car object
-      .then(res => {  
-                let newArray = res; 
-                for (var i = 0; i < res.length; i++){ 
-                        newArray[i].location = newArray[i].location.substring(0, newArray[i].location.indexOf('Features'))
-                        newArray[i].name = newArray[i].name.replace('USED', '')
-                }; 
-                return newArray
-              }
-      )
+      // .then(res => {  
+      //           let newArray = res; 
+      //           for (var i = 0; i < res.length; i++){ 
+      //                   { newArray[i].description ? newArray[i].description = newArray[i].description.substring(0, newArray[i].description.indexOf('.')) : null }
+      //                   // newArray[i].name = newArray[i].name.replace('USED', '')
+      //           }; 
+      //           return newArray
+      //         }
+      // )
 
       // set results as state
-      .then((res) => {
-                  this.setState({data: res}); 
-                  console.log(res)
+      .then((res) => {            
+            this.setState({data: res});
       })
 
       .then(() => {
@@ -108,8 +146,7 @@ export default class OtherScreen extends React.Component {
           fetch('https://electrade-server.herokuapp.com/api/listings/get/'+'used')
             .then((res) => res.json())
             .then((json) => { this.setState({data: json.concat(this.state.data), loading: false}); console.log('USED CAR DATA:',this.state.data) })
-      })
-      
+      })      
   }
 
 
@@ -119,14 +156,14 @@ export default class OtherScreen extends React.Component {
     // GET SCRAPED NEW RESULTS
     this.setState({loading: true})
 
-    fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/dqChEgEi92GTiNG9a/lastExec/results?token=p7r3cZrnv5BnGn9c4kC7PpcPT')
+    fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/x7MRPs4gC5m92pFqT/lastExec/results?token=P5RuE6cEHFtLd5myHFxFybLym')
       .then((res) => { return res.json()})
       
       // merge arrays from different sites
       .then(res =>  {   let finalArray = []
                          for (var i = 0; i < res.length; i++){
-                                if (i === 0) { finalArray = res[0].pageFunctionResult; }
-                                else { finalArray = finalArray.concat( res[i].pageFunctionResult ); }
+                                if (i === 0) { res[0].pageFunctionResult.pop(); res[0].pageFunctionResult.shift(); finalArray = res[0].pageFunctionResult; }
+                                else { res[i].pageFunctionResult.pop(); res[i].pageFunctionResult.shift(); finalArray = finalArray.concat( res[i].pageFunctionResult ); }
                               } 
                          return finalArray
                       })
@@ -135,10 +172,10 @@ export default class OtherScreen extends React.Component {
       .then(res => {  
                 let newArray = res; 
                 for (var i = 0; i < res.length; i++){ 
-                        newArray[i].price = parseInt(newArray[i].price.replace(',', '').replace('$', ''));
-                        newArray[i].link = "https://www.edmunds.com"+newArray[i].link;
-                        newArray[i].name = newArray[i].name.replace('NEW', '')
-                        newArray[i].location = newArray[i].location.substring(0, newArray[i].location.indexOf('Features'))
+                        // newArray[i].offers.price = parseInt(newArray[i].offers.price.replace(',', '').replace('$', ''));
+                        // newArray[i].link = "https://www.edmunds.com"+newArray[i].link;
+                        // newArray[i].name = newArray[i].name.replace('NEW', '')
+                        // { newArray[i].description ? newArray[i].description = newArray[i].description.substring(0, newArray[i].description.indexOf('.')) : null }
                 }; 
                 return newArray
               }
@@ -146,9 +183,9 @@ export default class OtherScreen extends React.Component {
 
       // add teslas
       .then((res) => { res.push(
-                          { name: 'NEW Tesla Model 3', price: '35000', image: 'https://www.tesla.com/tesla_theme/assets/img/model3/hero-img--touch.jpg?20170801', link: 'https://3.tesla.com/model3/design#battery'},
-                          { name: 'NEW Tesla Model S', price: '79000', image: 'https://i0.wp.com/eastwest.thegadgetman.org.uk/wp-content/uploads/2017/07/tesla256.png?fit=256%2C256&ssl=1', link: 'https://www.tesla.com/modelx/design#battery'},
-                          { name: 'NEW Tesla Model X', price: '88000', image: 'https://pbs.twimg.com/profile_images/713511184910139392/_hAw3t46_400x400.jpg', link: 'https://www.tesla.com/models/design#battery'}
+                          { name: 'NEW Tesla Model 3', offers: {price:  '35000' }, image: 'https://www.tesla.com/tesla_theme/assets/img/model3/hero-img--touch.jpg?20170801', url: 'https://3.tesla.com/model3/design#battery'},
+                          { name: 'NEW Tesla Model S', offers: {price: '79000' }, image: 'https://i0.wp.com/eastwest.thegadgetman.org.uk/wp-content/uploads/2017/07/tesla256.png?fit=256%2C256&ssl=1', url: 'https://www.tesla.com/modelx/design#battery'},
+                          { name: 'NEW Tesla Model X', offers: {price: '88000' }, image: 'https://pbs.twimg.com/profile_images/713511184910139392/_hAw3t46_400x400.jpg', url: 'https://www.tesla.com/models/design#battery'}
                           ) 
                       return res
                     })
@@ -181,58 +218,55 @@ export default class OtherScreen extends React.Component {
   }
 
 
-  _onSwitchUsed(value){
-    console.log(value)
-    this.setState({used: value})
-    AsyncStorage.setItem('used', JSON.stringify(value))
-    // if(this.state.email !== 'niko'){ Mixpanel.track("Switched Abbreviation to "+this.state.abbreviated); }
-    this.state.used === true ? this._getNewData() : this._getUsedData()
+  _onSwitchType(event){
+    let newIndex = event.nativeEvent.selectedSegmentIndex
+    console.log(JSON.stringify(newIndex))
+    this.setState({listingType: newIndex});
+    AsyncStorage.setItem('listingtype', JSON.stringify(newIndex))
+    if(this.state.email !== 'niko'){ Mixpanel.track("Switched Marketplace to "+newIndex); }
+    newIndex === 0 ? this._getUsedTeslaData() : null
+    newIndex === 1 ? this._getUsedData() : null
+    newIndex === 2 ? this._getNewData() : null
   }
 
 
   render() {
     return (
-       <View>
-        <View style={{maxHeight: '100%'}}>
-          <View style={{marginTop: 40, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between'}} zIndex={5}>
-              <TouchableOpacity style={{alignItems: 'space-between'}}
-                                onPress={() => this.props.navigation.navigate('Submit', {listingType: this.state.used === true ? 'used' : 'new', type: 'Marketplace'} )} 
-                                delayPressIn={50} >
-                <View style={{display: 'flex', flexDirection:'row', padding: 10, paddingBottom: 0}}>
-                  <Icon name="ios-camera" size={30} color="#4F8EF7" style={{position: 'absolute', top: 6, left: 10}} />
-                  <Text style={{color: "#4F8EF7", fontSize: 20, fontWeight: '800', marginLeft: 25}}> List your car</Text>
-                </View>
-              </TouchableOpacity>
-              <View style={{display: 'flex', flexDirection:'row', padding: 5}}>
-                <Text style={{margin: 5, fontWeight: '400'}}>New</Text>
-                <Switch 
-                    value={this.state.used} 
-                    onValueChange={(value) => this._onSwitchUsed(value)} 
-                    />
-                <Text style={{margin: 5, fontWeight: '400'}}>Used</Text>
-              </View>
+       <View style={{flex: 1}}>
+        <View style={{maxHeight: '100%', flex: 1}}>
+          <View style={{marginTop: 40, backgroundColor: 'white', height: 25, margin: 7}} zIndex={5}>
+                <SegmentedControlIOS
+                  values={['Used Teslas', 'All Used', 'New']}
+                  style={{flex: 1}}
+                  selectedIndex={this.state.listingType}
+                  onChange={(event) => {
+                    this._onSwitchType(event)
+                  }}
+                 />
             </View>
           {!this.state.loading ?
-            <Animatable.View animation="slideInUp" duration={500} easing="ease-out-back">
+            <Animatable.View animation="slideInUp" duration={500} easing="ease-out-back" style={{flex: 1}}>
               <FlatList
                      data={this.state.data}
+                     style={{flex: 1}}
                      keyExtractor={(item, index) => index.toString()}
                      renderItem={({item, index}) => 
-                        <View style={{ marginBottom: index === this.state.data.length -1 ? 180 : 0}}>
+                        <View style={{ marginBottom: index === this.state.data.length -1 ? 80 : 0}}>
                           <TouchableOpacity onPress={() => this.props.navigation.navigate('Details', {item: item, type: 'Marketplace'} ) } delayPressIn={50} >
 
                             <View style={{display: 'flex', flexDirection:'row'}}>
                               
                               <View style={{flex: 0.4}}>
-                                <Image  style={styles.imageCar}
+                                {item.image ? <Image  style={styles.imageCar}
                                         source={{uri: item.image}} 
-                                        />
+                                        /> : null }
                               </View>
 
                               <View style={{flex: 0.6, marginLeft: 5}}>
-                                <Text style={styles.newsTitle}>${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }</Text>
-                                <Text >{item.name}</Text>
-                                {item.miles ? <Text style={styles.newsSource}>{item.miles} | {item.location}</Text> : null}
+                                {item.offers.price ? <Text style={styles.newsTitle}>${item.offers.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }</Text> : null }
+                                <Text> {item.name}</Text>
+                                {item.mileageFromOdometer && item.mileageFromOdometer.value ? <Text style={styles.newsSource}>Miles: {item.mileageFromOdometer.value}</Text> : <Text style={styles.newsSource}>New</Text> } 
+                                <Text style={styles.newsSource}>{item.description ? item.description.substring(0, item.description.indexOf('.')) : null } </Text>
                               </View>
                               
                             </View>
@@ -250,6 +284,13 @@ export default class OtherScreen extends React.Component {
               <ActivityIndicator />
             </View>
           }
+          <Animatable.View animation="bounceIn" duration={500} style={styles.newsItem}>
+            <TouchableOpacity 
+                    onPress={() => this.props.navigation.navigate('Submit', {listingType: this.state.listingType, type: 'Marketplace'} )} >
+              <Icon name="ios-camera" size={24}  color="white" />
+            </TouchableOpacity>
+          </Animatable.View>
+
         </View>
       </View>
     );

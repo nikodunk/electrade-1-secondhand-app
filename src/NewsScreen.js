@@ -104,18 +104,18 @@ export default class HomeScreen extends React.Component {
                             </View>
                      }
                      />
-              <TouchableOpacity 
-                      style={[styles.newsItem, {right: 10, bottom: '10%', position: 'absolute', padding: 10}]}
-                      onPress={() => this._getData()} >
-                <Icon name="ios-refresh" size={24}  color="#4F8EF7" />
-              </TouchableOpacity>
             </Animatable.View>
             :
             <View style={{marginTop: 100, alignItems: 'center'}}>
               <Text style={{color: 'grey'}}>Getting EV news... </Text>
               <ActivityIndicator />
-            </View>
-          }
+            </View> }
+          <Animatable.View animation="bounceIn" duration={500} style={styles.newsItem}>
+            <TouchableOpacity 
+                    onPress={() => this._getData()} >
+              <Icon name="ios-refresh" size={24}  color="white" />
+            </TouchableOpacity>
+          </Animatable.View>
       </View>
     );
 

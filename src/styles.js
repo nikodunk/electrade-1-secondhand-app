@@ -5,13 +5,19 @@ export default styles = StyleSheet.create({
 
     // general 
     newsItem:{    	
-        padding: 5,
+        padding: 20,
+        paddingLeft: 25,
+        paddingRight: 25,
+        width: 68,
         margin: 10,
-        borderRadius: 10,
-        backgroundColor: 'white',
+        borderRadius: 70,
+        backgroundColor: '#4F8EF7',
         shadowOffset: {  width: 0,  height: 2,  },
-        shadowColor: 'lightgrey',
-        shadowOpacity: 1.0
+        shadowColor: '#4F8EF7',
+        shadowOpacity: .4,
+        right: 0, 
+        bottom: '10%', 
+        position: 'absolute'
     },
 
     image:{
