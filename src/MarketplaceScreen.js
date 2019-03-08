@@ -1,13 +1,19 @@
-// https://www.edmunds.com/inventory/srp.html?inventorytype=used%2Ccpo&type=Electric&sort=price%3Aasc&radius=500
-// https://sfbay.craigslist.org/search/cta?sort=priceasc&auto_fuel_type=4
+// cant filter by location https://www.edmunds.com/inventory/srp.html?inventorytype=used%2Ccpo&type=Electric&sort=price%3Aasc&radius=500
+// cant https://www.cars.com/for-sale/searchresults.action/?fuelTypeId=38745&page=1&perPage=20&rd=30&searchSource=SORT&shippable-dealers-checkbox=true&showMore=false&sort=price-lowest&stkTypId=28881&zc=94117&localVehicles=false
+// nah https://sfbay.craigslist.org/search/cta?sort=priceasc&auto_fuel_type=4
+
+// USED for SF, NY, LA
 // https://www.autotrader.com/cars-for-sale/Used+Cars/San+Francisco+CA-94117?startYear=1981&listingTypes=USED&searchRadius=50&zip=94117&endYear=2020&marketExtension=true&engineCodes=EL&sortBy=derivedpriceASC&numRecords=100&firstRecord=0
-// https://www.cars.com/for-sale/searchresults.action/?fuelTypeId=38745&page=1&perPage=20&rd=30&searchSource=SORT&shippable-dealers-checkbox=true&showMore=false&sort=price-lowest&stkTypId=28881&zc=94117&localVehicles=false
+// https://www.cargurus.com/Cars/l-Used-2016-Tesla-Model-S-Coppell-c25654_L33624
 
-
-// https://www.myev.com/cars-for-sale?make=tesla&model=model-3
+// SECOND HAND TESLAS
 // https://www.tesla.com/inventory/used/ms?arrangeby=plh&zip=94122&range=0
+// https://www.myev.com/cars-for-sale?make=tesla&model=model-3
+// https://onlyusedtesla.com/
 
-
+// LEASE SWAP MONTH TO MONTH
+// http://www.swapalease.com/lease/Tesla/search.aspx?zip=94117
+// http://www.swapalease.com/lease/Tesla/search.aspx?zip=94117&distance=50
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, Linking, FlatList, TouchableOpacity, ActivityIndicator, SegmentedControlIOS } from 'react-native';
@@ -61,7 +67,7 @@ export default class OtherScreen extends React.Component {
     this.setState({loading: true})
 
     // GET SCRAPED TESLA RESULTS
-    fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/oZsdPYyHQ97zcaJvB/lastExec/results?token=PCARqhzaNZDF5oB9wxHux344H')
+    fetch('https://api.apify.com/v1/execs/fHkJKGREp27N9T2TD/results')
       .then((res) => { return res.json()})
       
       // merge arrays from different pages
@@ -79,17 +85,27 @@ export default class OtherScreen extends React.Component {
                   return filtered
       })
 
+      // edit properties of car object
+      .then(res => {  
+                let newArray = res; 
+                for (var i = 0; i < res.length; i++){ 
+                        newArray[i].price = newArray[i].offers.price;
+                }; 
+                return newArray
+              }
+      )
+
       // set results as state
       .then((res) => {            
             this.setState({data: res, loading: false});
       })
 
-      // .then(() => {
-      //     // GET OWN LISTINGS
-      //     fetch('https://electrade-server.herokuapp.com/api/listings/get/'+'used')
-      //       .then((res) => res.json())
-      //       .then((json) => { this.setState({data: json.concat(this.state.data), loading: false}); console.log('USED CAR DATA:',this.state.data) })
-      // })   
+      .then(() => {
+          // GET OWN LISTINGS
+          fetch('https://electrade-server.herokuapp.com/api/listings/get/'+'0')
+            .then((res) => res.json())
+            .then((json) => { this.setState({data: json.concat(this.state.data), loading: false}); console.log('USED CAR DATA:',this.state.data) })
+      })   
 
   }
 
@@ -98,7 +114,7 @@ export default class OtherScreen extends React.Component {
     this.setState({loading: true})
 
     // GET SCRAPED USED RESULTS
-    fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/oZsdPYyHQ97zcaJvB/lastExec/results?token=PCARqhzaNZDF5oB9wxHux344H')
+    fetch('https://api.apify.com/v1/execs/fHkJKGREp27N9T2TD/results')
       .then((res) => { return res.json()})
       
       // merge arrays from different pages
@@ -126,15 +142,14 @@ export default class OtherScreen extends React.Component {
       //           return newArray.sort((a, b) => a.price - b.price)  })
 
       // edit properties of car object
-      // .then(res => {  
-      //           let newArray = res; 
-      //           for (var i = 0; i < res.length; i++){ 
-      //                   { newArray[i].description ? newArray[i].description = newArray[i].description.substring(0, newArray[i].description.indexOf('.')) : null }
-      //                   // newArray[i].name = newArray[i].name.replace('USED', '')
-      //           }; 
-      //           return newArray
-      //         }
-      // )
+      .then(res => {  
+                let newArray = res; 
+                for (var i = 0; i < res.length; i++){ 
+                        newArray[i].price = newArray[i].offers.price;
+                }; 
+                return newArray
+              }
+      )
 
       // set results as state
       .then((res) => {            
@@ -143,7 +158,7 @@ export default class OtherScreen extends React.Component {
 
       .then(() => {
           // GET OWN LISTINGS
-          fetch('https://electrade-server.herokuapp.com/api/listings/get/'+'used')
+          fetch('https://electrade-server.herokuapp.com/api/listings/get/'+'1')
             .then((res) => res.json())
             .then((json) => { this.setState({data: json.concat(this.state.data), loading: false}); console.log('USED CAR DATA:',this.state.data) })
       })      
@@ -156,7 +171,7 @@ export default class OtherScreen extends React.Component {
     // GET SCRAPED NEW RESULTS
     this.setState({loading: true})
 
-    fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/x7MRPs4gC5m92pFqT/lastExec/results?token=P5RuE6cEHFtLd5myHFxFybLym')
+    fetch('https://api.apify.com/v1/execs/YzqbCCPWeFBYfMrvX/results')
       .then((res) => { return res.json()})
       
       // merge arrays from different sites
@@ -168,14 +183,11 @@ export default class OtherScreen extends React.Component {
                          return finalArray
                       })
 
-      // add to URL and $
+      // edit properties of objects
       .then(res => {  
                 let newArray = res; 
                 for (var i = 0; i < res.length; i++){ 
-                        // newArray[i].offers.price = parseInt(newArray[i].offers.price.replace(',', '').replace('$', ''));
-                        // newArray[i].link = "https://www.edmunds.com"+newArray[i].link;
-                        // newArray[i].name = newArray[i].name.replace('NEW', '')
-                        // { newArray[i].description ? newArray[i].description = newArray[i].description.substring(0, newArray[i].description.indexOf('.')) : null }
+                        newArray[i].price = newArray[i].offers.price;
                 }; 
                 return newArray
               }
@@ -183,9 +195,9 @@ export default class OtherScreen extends React.Component {
 
       // add teslas
       .then((res) => { res.push(
-                          { name: 'NEW Tesla Model 3', offers: {price:  '35000' }, image: 'https://www.tesla.com/tesla_theme/assets/img/model3/hero-img--touch.jpg?20170801', url: 'https://3.tesla.com/model3/design#battery'},
-                          { name: 'NEW Tesla Model S', offers: {price: '79000' }, image: 'https://i0.wp.com/eastwest.thegadgetman.org.uk/wp-content/uploads/2017/07/tesla256.png?fit=256%2C256&ssl=1', url: 'https://www.tesla.com/modelx/design#battery'},
-                          { name: 'NEW Tesla Model X', offers: {price: '88000' }, image: 'https://pbs.twimg.com/profile_images/713511184910139392/_hAw3t46_400x400.jpg', url: 'https://www.tesla.com/models/design#battery'}
+                          { name: 'NEW Tesla Model 3', price:  '35000', image: 'https://www.tesla.com/tesla_theme/assets/img/model3/hero-img--touch.jpg?20170801', url: 'https://3.tesla.com/model3/design#battery'},
+                          { name: 'NEW Tesla Model S', price: '79000', image: 'https://i0.wp.com/eastwest.thegadgetman.org.uk/wp-content/uploads/2017/07/tesla256.png?fit=256%2C256&ssl=1', url: 'https://www.tesla.com/modelx/design#battery'},
+                          { name: 'NEW Tesla Model X', price: '88000', image: 'https://pbs.twimg.com/profile_images/713511184910139392/_hAw3t46_400x400.jpg', url: 'https://www.tesla.com/models/design#battery'}
                           ) 
                       return res
                     })
@@ -211,7 +223,7 @@ export default class OtherScreen extends React.Component {
 
       .then(() => {
           // GET OWN LISTINGS
-          fetch('https://electrade-server.herokuapp.com/api/listings/get/'+'new')
+          fetch('https://electrade-server.herokuapp.com/api/listings/get/'+'2')
             .then((res) => res.json())
             .then((json) => { this.setState({data: json.concat(this.state.data), loading: false}); console.log('NEW CAR DATA:',this.state.data) })
       })
@@ -263,10 +275,11 @@ export default class OtherScreen extends React.Component {
                               </View>
 
                               <View style={{flex: 0.6, marginLeft: 5}}>
-                                {item.offers.price ? <Text style={styles.newsTitle}>${item.offers.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }</Text> : null }
+                                {item.price ? <Text style={styles.newsTitle}>${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }</Text> : null }
                                 <Text> {item.name}</Text>
                                 {item.mileageFromOdometer && item.mileageFromOdometer.value ? <Text style={styles.newsSource}>Miles: {item.mileageFromOdometer.value}</Text> : <Text style={styles.newsSource}>New</Text> } 
                                 <Text style={styles.newsSource}>{item.description ? item.description.substring(0, item.description.indexOf('.')) : null } </Text>
+                                {item.source ? <Text style={{color: 'dodgerblue'}}> {item.source} native</Text> : null }
                               </View>
                               
                             </View>

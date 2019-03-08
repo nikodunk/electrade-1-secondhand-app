@@ -56,6 +56,11 @@ export default class OtherScreen extends React.Component {
        <View style={{flex: 1}}>
           {!this.state.loading ?
             <Animatable.View animation="slideInUp" duration={500} easing="ease-out-back">
+                    <View style={{marginTop: 50}}>
+                      <Button
+                        onPress={() => Linking.openURL("mailto:hello@sunboxlabs.com")}
+                        title="Send Feedback to developers" />
+                    </View>
                     <FlatList
                        data={this.state.data}
                        keyExtractor={(item, index) => index.toString()}
@@ -63,7 +68,7 @@ export default class OtherScreen extends React.Component {
                           <View style={{ marginBottom: index === this.state.data.length -1 ? 180 : 0}}>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('Details', {item: item, type: 'Gallery'} ) } delayPressIn={50} >
     
-                              <View style={{marginTop: index === 0 ? 40 : 0, marginBottom: index === this.state.data.length -1 ? 80 : 0}}>
+                              <View style={{marginTop: index === 0 ? 0 : 0, marginBottom: index === this.state.data.length -1 ? 80 : 0}}>
                                 
                                 <View style={{flex: 1}}>
                                   <Image  style={styles.imageDetail}
@@ -72,10 +77,10 @@ export default class OtherScreen extends React.Component {
                                 </View>
                               </View>
                             </TouchableOpacity>
-                            
-    
-                          </View> }
+                          </View> 
+                        }
                        />
+
             </Animatable.View>
           :
             <View style={{marginTop: 100, alignItems: 'center'}}>

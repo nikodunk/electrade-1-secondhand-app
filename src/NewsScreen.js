@@ -32,9 +32,10 @@ export default class HomeScreen extends React.Component {
       // get email, except if developer mode
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
-        {this.state.email ? Mixpanel.identify(this.state.email) : null }
+        if(this.state.email){ Mixpanel.identify(this.state.email); Mixpanel.set({"$email": this.state.email}) }
         if(this.state.email !== 'niko'){Mixpanel.track("NewsScreen Loaded") }
-        // if(this.state.email === 'niko'){ AsyncStorage.removeItem('remainingtrials') }
+        // this seems to be android only but not sure yet 
+        // Mixpanel.setPushRegistrationId("GCM/FCM push token")
       })
   }
 

@@ -9,6 +9,7 @@ export default class SignInScreen extends React.Component {
 
   static navigationOptions = {
     title: 'Welcome!',
+    headerMode: 'none'
   };
 
   constructor(props) {
@@ -66,14 +67,10 @@ export default class SignInScreen extends React.Component {
                       : 
                       <KeyboardAvoidingView behavior="padding" enabled>
 
-                        <View style={styles.border}>
+                        <View style={styles.signin}>
                           <Text></Text>
-                          <View style={{padding: 20}}>
-                            <Text style={{fontWeight: '500', color: 'dodgerblue', fontSize: 20}}>Watch the oncoming electric revolution from here.</Text>
-                            <Text></Text>
-                            <Text>This is a one-stop shop for electric vehicles: News & EV deals – all in a clean, clutter-free design.</Text>
-                            <Text></Text>
-                            <Text>We will never send you spam or share your email – this email is for submitting a car only.</Text>
+                          <View>
+                            <Text style={{fontWeight: '500', color: 'dodgerblue', fontSize: 20}}>Be part of the oncoming electric revolution from here.</Text>
                             <Text></Text>
                           <TextInput 
                               underlineColorAndroid="transparent"
@@ -88,6 +85,7 @@ export default class SignInScreen extends React.Component {
                             onPress={() => this._onPress(this.state.email)}
                             title="Let's Go!" />
                           </View>
+                          <Text style={{color: 'grey'}}>Your email is only for the rare feedback email to improve the app. I won't sell it, I won't spam you.</Text>
                         </View>
 
 

@@ -93,6 +93,9 @@ export default styles = StyleSheet.create({
       fontSize: 15,
       textAlign: 'center',
       height: 40, 
+    },
+    signin: {
+        padding: 20
     }
 
 

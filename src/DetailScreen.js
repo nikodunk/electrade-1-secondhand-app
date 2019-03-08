@@ -33,7 +33,7 @@ export default class DetailScreen extends React.Component {
 
   render() {
     return (
-       <View>
+       <View style={{flex: 1}}>
 
         <TouchableOpacity 
               onPress={() => this.props.navigation.goBack()} 
@@ -46,13 +46,13 @@ export default class DetailScreen extends React.Component {
         </TouchableOpacity>
 
         {this.state.item ?
-          <ScrollView style={{height: '100%'}}>
-                {this.state.item.image ? 
+          <ScrollView style={{maxHeight: '80%'}}>
+                { this.state.item.image ? 
                   <Image
                     style={styles.imageDetail}
                     source={{uri: this.state.item.image}}
                     /> : null }
-                {this.state.item.id && this.state.item.id.videoId ? <YouTube
+                { this.state.item.id && this.state.item.id.videoId ? <YouTube
                         videoId={this.state.item.id.videoId}   // The YouTube video ID
                         play={false}             // control playback of video with true/false
                         fullscreen={true}       // control whether the video should play in fullscreen or inline
@@ -69,7 +69,7 @@ export default class DetailScreen extends React.Component {
 
                 {/* NEWS options */}
                   {this.state.item.text ? <Text>{ this.state.item.text.substring(0, this.state.item.text.indexOf('http')) }</Text> : null }
-                  {this.state.type === 'News' ? <Button title={`Continue at ${this.state.item.source}`} onPress={() => {Linking.openURL(this.state.item.link.toString()); if(this.state.email !== 'niko'){Mixpanel.track(this.state.item.link.toString()+"touched") }}}/>  : null }
+                  {this.state.type === 'News' ? <Button title={`Continue at ${this.state.item.source}`} onPress={() => {Linking.openURL(this.state.item.link.toString()); if(this.state.email !== 'niko'){Mixpanel.track(this.state.item.link.toString()+" touched") }}}/>  : null }
 
                 {/* video options */}
                 { this.state.item.snippet && this.state.item.snippet.title ? <Text>{ this.state.item.snippet.title }</Text> : null }
@@ -77,7 +77,7 @@ export default class DetailScreen extends React.Component {
                 {/* marketplace & gallery options */}
                   {this.state.type === 'Gallery' || this.state.type === 'Marketplace' ?
                    <View>
-                      {this.state.item.offers && this.state.item.offers.price ? <Text style={{fontWeight: '500', fontSize: 20}}>${ this.state.item.offers.price }</Text> : null }
+                      {this.state.item.price ? <Text style={{fontWeight: '500', fontSize: 20}}>${ this.state.item.price }</Text> : null }
                       {this.state.item.name ? <Text>{ this.state.item.name }</Text> : null }
                       {this.state.item.mileageFromOdometer && this.state.item.mileageFromOdometer.value ? <Text style={styles.newsSource}>{this.state.item.mileageFromOdometer.value} miles</Text> : null}
                       {this.state.item.description ? <Text style={styles.newsSource}>{this.state.item.description}</Text> : null}
