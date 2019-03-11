@@ -9,12 +9,11 @@ import DetailScreen from './DetailScreen';
 
 import MarketplaceScreen from './MarketplaceScreen';
 import SubmitScreen from './SubmitScreen';
-import VideoScreen from './VideoScreen';
-import EVGallery from './EVGallery';
+// import VideoScreen from './VideoScreen';
+// import EVGallery from './EVGallery';
 
 
 import styles from './styles'
-
 
 class AuthLoadingScreen extends React.Component {
   constructor(props) {
