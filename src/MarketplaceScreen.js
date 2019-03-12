@@ -1,21 +1,3 @@
-// cant filter by location https://www.edmunds.com/inventory/srp.html?inventorytype=used%2Ccpo&type=Electric&sort=price%3Aasc&radius=500
-// cant https://www.cars.com/for-sale/searchresults.action/?fuelTypeId=38745&page=1&perPage=20&rd=30&searchSource=SORT&shippable-dealers-checkbox=true&showMore=false&sort=price-lowest&stkTypId=28881&zc=94117&localVehicles=false
-// nah https://sfbay.craigslist.org/search/cta?sort=priceasc&auto_fuel_type=4
-
-// USED for SF, NY, LA
-// https://www.autotrader.com/cars-for-sale/Used+Cars/San+Francisco+CA-94117?startYear=1981&listingTypes=USED&searchRadius=50&zip=94117&endYear=2020&marketExtension=true&engineCodes=EL&sortBy=derivedpriceASC&numRecords=100&firstRecord=0
-// https://www.cargurus.com/Cars/l-Used-2016-Tesla-Model-S-Coppell-c25654_L33624
-
-// SECOND HAND TESLAS
-// https://www.tesla.com/inventory/used/ms?arrangeby=plh&zip=94122&range=0
-// https://www.myev.com/cars-for-sale?make=tesla&model=model-3
-// https://onlyusedtesla.com/
-// https://www.tesla.com/api.php?m=tesla_cpo_marketing_tool&a=inventory_search&query=%7B%22query%22%3A%7B%22model%22%3A%22ms%22%2C%22condition%22%3A%22used%22%2C%22options%22%3A%7B%7D%2C%22arrangeby%22%3A%22Price%22%2C%22order%22%3A%22asc%22%2C%22market%22%3A%22US%22%2C%22language%22%3A%22en%22%2C%22super_region%22%3A%22north%20america%22%2C%22lng%22%3A-122.4128%2C%22lat%22%3A37.7758%2C%22zip%22%3A%2294103%22%2C%22range%22%3A0%2C%22region%22%3A%22CA%22%7D%2C%22offset%22%3A50%2C%22count%22%3A50%2C%22outsideOffset%22%3A0%2C%22outsideSearch%22%3Afalse%7D
-
-// LEASE SWAP MONTH TO MONTH
-// http://www.swapalease.com/lease/Tesla/search.aspx?zip=94117
-// http://www.swapalease.com/lease/Tesla/search.aspx?zip=94117&distance=50
-
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, Linking, FlatList, TouchableOpacity, ActivityIndicator, SegmentedControlIOS } from 'react-native';
@@ -69,7 +51,7 @@ export default class OtherScreen extends React.Component {
     this.setState({loading: true})
 
     // GET SCRAPED TESLA RESULTS
-    fetch('https://electrade-server.herokuapp.com/api/scrapes/get/0')
+    fetch('https://electrade-server.herokuapp.com/api/scrapes/get/'+'0')
       .then((res) => { return res.json()})
       
       // merge arrays from different pages
@@ -116,7 +98,7 @@ export default class OtherScreen extends React.Component {
     this.setState({loading: true})
 
     // GET SCRAPED USED RESULTS
-    fetch('https://electrade-server.herokuapp.com/api/scrapes/get/1')
+    fetch('https://electrade-server.herokuapp.com/api/scrapes/get/'+'1')
       .then((res) => { return res.json()})
       
       // merge arrays from different pages
@@ -173,7 +155,7 @@ export default class OtherScreen extends React.Component {
     // GET SCRAPED NEW RESULTS
     this.setState({loading: true})
 
-    fetch('https://electrade-server.herokuapp.com/api/scrapes/get/2')
+    fetch('https://electrade-server.herokuapp.com/api/scrapes/get/'+'2')
       .then((res) => { return res.json()})
       
       // merge arrays from different sites
