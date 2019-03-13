@@ -68,6 +68,12 @@ export default class SettingsScreen extends React.Component {
                   {this.state.email}
                 </Text>
               </View>
+
+              <View>
+                <Button
+                  onPress={() => Linking.openURL("mailto:hello@sunboxlabs.com")}
+                  title="Send Feedback to developers" />
+              </View>
         </ScrollView>
       </SafeAreaView>
     );

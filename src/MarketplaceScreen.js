@@ -57,7 +57,7 @@ export default class OtherScreen extends React.Component {
     this.setState({loading: true})
 
     // GET SCRAPED TESLA RESULTS
-    fetch('https://electrade-server.herokuapp.com/api/scrapes/get/'+'0')
+    fetch('https://electrade-server.herokuapp.com/api/indexes/get/SF/'+'0')
       .then((res) => { return res.json()})
       
       // merge arrays from different pages
@@ -104,7 +104,7 @@ export default class OtherScreen extends React.Component {
     this.setState({loading: true})
 
     // GET SCRAPED USED RESULTS
-    fetch('https://electrade-server.herokuapp.com/api/scrapes/get/'+'1')
+    fetch('https://electrade-server.herokuapp.com/api/indexes/get/SF/'+'1')
       .then((res) => { return res.json()})
       
       // merge arrays from different pages
@@ -126,11 +126,6 @@ export default class OtherScreen extends React.Component {
                   return res
       })
 
-      // sort
-      // .then(res => {  
-      //           let newArray = res; for (i = 0; i < res.length; i++){ newArray[i].price = parseInt(newArray[i].price.replace(',', '').replace('$', '')) }; 
-      //           return newArray.sort((a, b) => a.price - b.price)  })
-
       // edit properties of car object
       .then(res => {  
                 let newArray = res; 
@@ -140,6 +135,12 @@ export default class OtherScreen extends React.Component {
                 return newArray
               }
       )
+
+      // sort
+      .then(res => {  
+                let newArray = res; for (i = 0; i < res.length; i++){ newArray[i].price = parseInt(newArray[i].price) }; 
+                return newArray.sort((a, b) => a.price - b.price)  })
+
 
       // set results as state
       .then((res) => {            
@@ -161,7 +162,7 @@ export default class OtherScreen extends React.Component {
     // GET SCRAPED NEW RESULTS
     this.setState({loading: true})
 
-    fetch('https://electrade-server.herokuapp.com/api/scrapes/get/'+'2')
+    fetch('https://electrade-server.herokuapp.com/api/indexes/get/SF/'+'2')
       .then((res) => { return res.json()})
       
       // merge arrays from different sites
@@ -174,20 +175,20 @@ export default class OtherScreen extends React.Component {
                       })
 
       // edit properties of objects
-      .then(res => {  
-                let newArray = res; 
-                for (var i = 0; i < res.length; i++){ 
-                        newArray[i].price = newArray[i].offers.price;
-                }; 
-                return newArray
-              }
-      )
+      // .then(res => {  
+      //           let newArray = res; 
+      //           for (var i = 0; i < res.length; i++){ 
+      //                     newArray[i].price = res[i].offers.price
+      //           }; 
+      //           return newArray
+      //         }
+      // )
 
       // add teslas
       .then((res) => { res.push(
-                          { name: 'NEW Tesla Model 3', price:  '35000', image: 'https://www.tesla.com/tesla_theme/assets/img/model3/hero-img--touch.jpg?20170801', url: 'https://3.tesla.com/model3/design#battery'},
-                          { name: 'NEW Tesla Model S', price: '79000', image: 'https://i0.wp.com/eastwest.thegadgetman.org.uk/wp-content/uploads/2017/07/tesla256.png?fit=256%2C256&ssl=1', url: 'https://www.tesla.com/modelx/design#battery'},
-                          { name: 'NEW Tesla Model X', price: '88000', image: 'https://pbs.twimg.com/profile_images/713511184910139392/_hAw3t46_400x400.jpg', url: 'https://www.tesla.com/models/design#battery'}
+                          { name: 'NEW Tesla Model 3', offers: {price:  '35000'}, image: 'https://www.tesla.com/tesla_theme/assets/img/model3/hero-img--touch.jpg?20170801', url: 'https://3.tesla.com/model3/design#battery'},
+                          { name: 'NEW Tesla Model S', offers: {price: '79000'}, image: 'https://i0.wp.com/eastwest.thegadgetman.org.uk/wp-content/uploads/2017/07/tesla256.png?fit=256%2C256&ssl=1', url: 'https://www.tesla.com/modelx/design#battery'},
+                          { name: 'NEW Tesla Model X', offers: {price: '88000'}, image: 'https://pbs.twimg.com/profile_images/713511184910139392/_hAw3t46_400x400.jpg', url: 'https://www.tesla.com/models/design#battery'}
                           ) 
                       return res
                     })
@@ -202,8 +203,8 @@ export default class OtherScreen extends React.Component {
       })
 
       // sort
-      .then(res => {  
-                return res.sort((a, b) => a.price - b.price)  })
+      // .then(res => {  
+      //           return res.sort((a, b) => a.price - b.price)  })
 
       // set results as state
       .then((res) => {
@@ -266,7 +267,7 @@ export default class OtherScreen extends React.Component {
                               </View>
 
                               <View style={{flex: 0.6, marginLeft: 5}}>
-                                {item.price ? <Text style={styles.newsTitle}>${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }</Text> : null }
+                                {item.offers && item.offers.price ? <Text style={styles.newsTitle}>${item.offers.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }</Text> : null }
                                 <Text> {item.name}</Text>
                                 {item.mileageFromOdometer && item.mileageFromOdometer.value ? <Text style={styles.newsSource}>Miles: {item.mileageFromOdometer.value}</Text> : <Text style={styles.newsSource}>New</Text> } 
                                 <Text style={styles.newsSource}>{item.description ? item.description.substring(0, item.description.indexOf('.')) : null } </Text>
