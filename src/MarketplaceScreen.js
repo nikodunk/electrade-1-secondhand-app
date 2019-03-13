@@ -15,6 +15,7 @@ export default class OtherScreen extends React.Component {
       images: null,
       loading: false,
       listingType: 0,
+      region: null
       };
 
     this._getUsedData = this._getUsedData.bind(this)
@@ -30,6 +31,11 @@ export default class OtherScreen extends React.Component {
         {this.state.email ? Mixpanel.identify(this.state.email) : null }
         if(this.state.email !== 'niko'){Mixpanel.track("PriceScreenUsed Loaded") }
         // if(this.state.email === 'niko'){ AsyncStorage.removeItem('remainingtrials') }
+      })
+
+      AsyncStorage.getItem('region').then((res) => {
+        if(this.state.region === null){this.setState({region: 'Bay Area'})}
+        else{ this.setState({region: res}) }
       })
 
       this.willFocusSubscription = this.props.navigation.addListener(
@@ -228,9 +234,10 @@ export default class OtherScreen extends React.Component {
 
   render() {
     return (
-       <View style={{flex: 1}}>
+       <SafeAreaView style={{flex: 1}}>
         <View style={{maxHeight: '100%', flex: 1}}>
-          <View style={{marginTop: 40, backgroundColor: 'white', height: 25, margin: 7}} zIndex={5}>
+            <Text> Your Region: {this.state.region} </Text>
+            <View style={{ backgroundColor: 'white', height: 25, margin: 7}} zIndex={5}>
                 <SegmentedControlIOS
                   values={['Used Teslas', 'All Used', 'All New']}
                   style={{flex: 1}}
@@ -289,7 +296,7 @@ export default class OtherScreen extends React.Component {
           </Animatable.View>
 
         </View>
-      </View>
+      </SafeAreaView>
     );
 
 

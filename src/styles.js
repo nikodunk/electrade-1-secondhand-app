@@ -96,6 +96,11 @@ export default styles = StyleSheet.create({
     },
     signin: {
         padding: 20
+    },
+    deal: {
+        flex: 1,
+        margin: 10,
+        padding: 5
     }
 
 
