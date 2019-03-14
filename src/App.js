@@ -57,7 +57,7 @@ const SettingsStack = createStackNavigator({ SettingsScreen: SettingsScreen }, {
 
 
 const AppTabs = createBottomTabNavigator(
-  { NewsStack, MarketStack, LeaseStack, SettingsStack },
+  { NewsStack, MarketStack, SettingsStack },
   {
     initialRouteName: 'NewsStack',
     animationEnabled: false,

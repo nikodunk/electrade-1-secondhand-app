@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, ActivityIndicator } from 'react-native';
+import {Platform, Picker, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, ActivityIndicator, Switch } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Details from './DetailScreen';
@@ -19,7 +19,6 @@ export default class SettingsScreen extends React.Component {
       loading: null,
       region: null
        };
-
   }
 
 
@@ -40,26 +39,38 @@ export default class SettingsScreen extends React.Component {
         if(this.state.region === null){this.setState({region: 'Bay Area'})}
         else{ this.setState({region: res}) }
       })
-
       
   }
-
-
   
 
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
         <ScrollView style={{flex: 1}}>
+
+
+              {/* REGION */}
               <View style={styles.deal}>
-                <Text style={styles.newsTitle}>
-                  Your Region
-                </Text>
-                <Text>
-                  {this.state.region}
-                </Text>
+
+                  <Text style={styles.newsTitle}>
+                    Your Region
+                  </Text>
+                  <Picker
+                    selectedValue={this.state.region}
+                    itemStyle={{height: 100}}
+                    style={{ height: 100, width: 300, borderColor: 'lightgrey', borderWidth: 1, borderRadius: 10, margin: 10 }}
+                    onValueChange={(itemValue, itemIndex) => this._onChangeRegion(itemValue)}>
+                    <Picker.Item label="SF Bay Area" value="SF" />
+                    {/*<Picker.Item label="Sacramento" value="Sacramento" />*/}
+                  </Picker>
+
               </View>
 
+              <View style={styles.separator} />
+
+
+
+            {/* EMAIL */}
               <View style={styles.deal}>
                 <Text style={styles.newsTitle}>
                   Your email:
@@ -69,11 +80,32 @@ export default class SettingsScreen extends React.Component {
                 </Text>
               </View>
 
-              <View>
-                <Button
-                  onPress={() => Linking.openURL("mailto:hello@sunboxlabs.com")}
-                  title="Send Feedback to developers" />
+              <View style={styles.separator} />
+
+
+            {/* FEEDBACK */}
+              <View style={{flex: 1, alignItems: 'center', padding: 10}}>
+                 <Text style={{fontWeight: 'bold', padding: 3}}>Feature missing? Have feedback?</Text>
+                <Button 
+                    title="Email Feedback to Developers" 
+                    onPress={() => Linking.openURL('mailto:n.dunkel@gmail.com')} 
+                    />
+                <Text></Text>
+                <Text>Email the developers with feature requests, ideas, bugs to fix or feedback!</Text>
               </View>
+
+
+            {/* NOTIFICATIONS */}
+              {/*<View style={{ padding: 10}}>
+                <View style={{flexDirection:'row' }}> 
+
+                  <Text style={{fontWeight: 'bold', padding: 3}}>Notifications about new local lease deals</Text>
+                  <Switch value={this.state.chiefcomplaintvisible} onValueChange={(value) => this._onSwitchChiefComplaintVisible(value)} />
+
+                </View>
+              </View>*/}
+
+
         </ScrollView>
       </SafeAreaView>
     );

@@ -8,8 +8,10 @@ import * as Animatable from 'react-native-animatable';
 
 export default class OtherScreen extends React.Component {
 
+
   constructor(props) {
     super(props);
+    
     this.state = { 
       data: null,
       images: null,
@@ -57,17 +59,9 @@ export default class OtherScreen extends React.Component {
     this.setState({loading: true})
 
     // GET SCRAPED TESLA RESULTS
-    fetch('https://electrade-server.herokuapp.com/api/indexes/get/SF/'+'0')
+    // fetch('http://localhost:8080/api/indexes/get/'+'SF'+'/'+'0')
+    fetch('https://electrade-server.herokuapp.com/api/indexes/get/'+'SF'+'/'+'0')
       .then((res) => { return res.json()})
-      
-      // merge arrays from different pages
-      .then(res =>  {   let finalArray = []
-                         for (var i = 0; i < res.length; i++){
-                                if (i === 0) { res[0].pageFunctionResult.pop(); res[0].pageFunctionResult.shift(); finalArray = res[0].pageFunctionResult; }
-                                else { res[i].pageFunctionResult.pop(); res[i].pageFunctionResult.shift(); finalArray = finalArray.concat( res[i].pageFunctionResult ); }
-                              } 
-                         return finalArray
-                      })
 
       // filter by Tesla
       .then((res) => {
@@ -75,15 +69,13 @@ export default class OtherScreen extends React.Component {
                   return filtered
       })
 
-      // edit properties of car object
-      .then(res => {  
-                let newArray = res; 
-                for (var i = 0; i < res.length; i++){ 
-                        newArray[i].price = newArray[i].offers.price;
-                }; 
-                return newArray
-              }
-      )
+      // filter out remaining 0 prices
+      .then((res) => {
+        filtered = res.filter(function (item) {
+          return item.offers.price !== 0;
+        });
+        return filtered
+      })
 
       // set results as state
       .then((res) => {            
@@ -95,7 +87,7 @@ export default class OtherScreen extends React.Component {
           fetch('https://electrade-server.herokuapp.com/api/listings/get/'+'0')
             .then((res) => res.json())
             .then((json) => { this.setState({data: json.concat(this.state.data), loading: false}); console.log('USED CAR DATA:',this.state.data) })
-      })   
+      })
 
   }
 
@@ -104,44 +96,18 @@ export default class OtherScreen extends React.Component {
     this.setState({loading: true})
 
     // GET SCRAPED USED RESULTS
-    fetch('https://electrade-server.herokuapp.com/api/indexes/get/SF/'+'1')
+    // fetch('http://localhost:8080/api/indexes/get/'+'SF'+'/'+'1')
+    fetch('https://electrade-server.herokuapp.com/api/indexes/get/'+'SF'+'/'+'1')
       .then((res) => { return res.json()})
-      
-      // merge arrays from different pages
-      .then(res =>  {   let finalArray = []
-                         for (var i = 0; i < res.length; i++){
-                                if (i === 0) { res[0].pageFunctionResult.pop(); res[0].pageFunctionResult.shift(); finalArray = res[0].pageFunctionResult; }
-                                else { res[i].pageFunctionResult.pop(); res[i].pageFunctionResult.shift(); finalArray = finalArray.concat( res[i].pageFunctionResult ); }
-                              } 
-                         return finalArray
-                      })
 
-      // deduplicate
+      // filter out remaining 0 prices
       .then((res) => {
-                  res = res.filter((thing, index, self) =>
-                    index === self.findIndex((t) => (
-                       t.name === thing.name
-                    ))
-                  )
-                  return res
+        filtered = res.filter(function (item) {
+          return item.offers.price !== 0;
+        });
+        return filtered
       })
-
-      // edit properties of car object
-      .then(res => {  
-                let newArray = res; 
-                for (var i = 0; i < res.length; i++){ 
-                        newArray[i].price = newArray[i].offers.price;
-                }; 
-                return newArray
-              }
-      )
-
-      // sort
-      .then(res => {  
-                let newArray = res; for (i = 0; i < res.length; i++){ newArray[i].price = parseInt(newArray[i].price) }; 
-                return newArray.sort((a, b) => a.price - b.price)  })
-
-
+      
       // set results as state
       .then((res) => {            
             this.setState({data: res});
@@ -162,49 +128,19 @@ export default class OtherScreen extends React.Component {
     // GET SCRAPED NEW RESULTS
     this.setState({loading: true})
 
-    fetch('https://electrade-server.herokuapp.com/api/indexes/get/SF/'+'2')
+    // fetch('http://localhost:8080/api/indexes/get/'+'SF'+'/'+'2')
+    fetch('https://electrade-server.herokuapp.com/api/indexes/get/'+'SF'+'/'+'2')
+      
+      // JSONify
       .then((res) => { return res.json()})
       
-      // merge arrays from different sites
-      .then(res =>  {   let finalArray = []
-                         for (var i = 0; i < res.length; i++){
-                                if (i === 0) { res[0].pageFunctionResult.pop(); res[0].pageFunctionResult.shift(); finalArray = res[0].pageFunctionResult; }
-                                else { res[i].pageFunctionResult.pop(); res[i].pageFunctionResult.shift(); finalArray = finalArray.concat( res[i].pageFunctionResult ); }
-                              } 
-                         return finalArray
-                      })
-
-      // edit properties of objects
-      // .then(res => {  
-      //           let newArray = res; 
-      //           for (var i = 0; i < res.length; i++){ 
-      //                     newArray[i].price = res[i].offers.price
-      //           }; 
-      //           return newArray
-      //         }
-      // )
-
-      // add teslas
-      .then((res) => { res.push(
-                          { name: 'NEW Tesla Model 3', offers: {price:  '35000'}, image: 'https://www.tesla.com/tesla_theme/assets/img/model3/hero-img--touch.jpg?20170801', url: 'https://3.tesla.com/model3/design#battery'},
-                          { name: 'NEW Tesla Model S', offers: {price: '79000'}, image: 'https://i0.wp.com/eastwest.thegadgetman.org.uk/wp-content/uploads/2017/07/tesla256.png?fit=256%2C256&ssl=1', url: 'https://www.tesla.com/modelx/design#battery'},
-                          { name: 'NEW Tesla Model X', offers: {price: '88000'}, image: 'https://pbs.twimg.com/profile_images/713511184910139392/_hAw3t46_400x400.jpg', url: 'https://www.tesla.com/models/design#battery'}
-                          ) 
-                      return res
-                    })
-
-      // deduplicate
+      // filter out remaining 0 prices
       .then((res) => {
-                  res = res.filter((thing, index, self) =>
-                    index === self.findIndex((t) => (
-                       t.name === thing.name
-                  )))
-                  return res
+        filtered = res.filter(function (item) {
+          return item.offers.price !== 0;
+        });
+        return filtered
       })
-
-      // sort
-      // .then(res => {  
-      //           return res.sort((a, b) => a.price - b.price)  })
 
       // set results as state
       .then((res) => {
@@ -240,7 +176,7 @@ export default class OtherScreen extends React.Component {
             <Text> Your Region: {this.state.region} </Text>
             <View style={{ backgroundColor: 'white', height: 25, margin: 7}} zIndex={5}>
                 <SegmentedControlIOS
-                  values={['Used Teslas', 'All Used', 'All New']}
+                  values={['Used Teslas', 'Used EVs', 'New EVs']}
                   style={{flex: 1}}
                   selectedIndex={this.state.listingType}
                   onChange={(event) => {
