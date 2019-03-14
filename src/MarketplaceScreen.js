@@ -36,7 +36,7 @@ export default class OtherScreen extends React.Component {
       })
 
       AsyncStorage.getItem('region').then((res) => {
-        if(this.state.region === null){this.setState({region: 'Bay Area'})}
+        if(this.state.region === null){this.setState({region: 'SF Bay Area'})}
         else{ this.setState({region: res}) }
       })
 

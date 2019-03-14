@@ -58,7 +58,7 @@ export default class SettingsScreen extends React.Component {
                   <Picker
                     selectedValue={this.state.region}
                     itemStyle={{height: 100}}
-                    style={{ height: 100, width: 300, borderColor: 'lightgrey', borderWidth: 1, borderRadius: 10, margin: 10 }}
+                    style={{ height: 100, width: '80%', borderColor: 'lightgrey', borderWidth: 1, borderRadius: 10, marginLeft: '10%', marginRight: '10%' }}
                     onValueChange={(itemValue, itemIndex) => this._onChangeRegion(itemValue)}>
                     <Picker.Item label="SF Bay Area" value="SF" />
                     {/*<Picker.Item label="Sacramento" value="Sacramento" />*/}
