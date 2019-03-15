@@ -35,13 +35,27 @@ export default class SettingsScreen extends React.Component {
         // Mixpanel.setPushRegistrationId("GCM/FCM push token")
       })
 
-      AsyncStorage.getItem('region').then((res) => {
-        if(this.state.region === null){this.setState({region: 'Bay Area'})}
-        else{ this.setState({region: res}) }
-      })
+      AsyncStorage.getItem('region').then((region) => {
+                            if(region === ''){
+                                this.setState({ 'region': 'SF Bay Area' })
+                              }
+                            else{
+                                this.setState({ 'region': JSON.parse(region) }) 
+                              }
+                        })
       
   }
   
+  _onChangeEmail(text){
+      this.setState({email: text})
+      AsyncStorage.setItem('email', JSON.stringify(text))
+  }
+
+  _onChangeRegion(newRegion){
+    AsyncStorage.setItem('region', JSON.stringify(newRegion))
+    this.setState({region: newRegion})
+    if(this.state.email !== 'niko'){ Mixpanel.track("Region changed to "+newRegion); }
+  }
 
   render() {
     return (
@@ -51,6 +65,11 @@ export default class SettingsScreen extends React.Component {
 
               {/* REGION */}
               <View style={styles.deal}>
+                  <Text style={[styles.newsTitle, {fontSize: 20}]}>
+                    Settings
+                  </Text>
+
+
 
                   <Text style={styles.newsTitle}>
                     Your Region
@@ -60,8 +79,9 @@ export default class SettingsScreen extends React.Component {
                     itemStyle={{height: 100}}
                     style={{ height: 100, width: '80%', borderColor: 'lightgrey', borderWidth: 1, borderRadius: 10, marginLeft: '10%', marginRight: '10%' }}
                     onValueChange={(itemValue, itemIndex) => this._onChangeRegion(itemValue)}>
-                    <Picker.Item label="SF Bay Area" value="SF" />
-                    {/*<Picker.Item label="Sacramento" value="Sacramento" />*/}
+                    <Picker.Item label="SF Bay Area" value="SF Bay Area" />
+                    <Picker.Item label="Sacramento" value="Sacramento" />
+                    {/*<Picker.Item label="Los Angeles" value="Los Angeles" />*/}
                   </Picker>
 
               </View>
@@ -76,7 +96,7 @@ export default class SettingsScreen extends React.Component {
                   Your email:
                 </Text>
                 <Text>
-                  {this.state.email}
+                  &nbsp;{this.state.email}
                 </Text>
               </View>
 

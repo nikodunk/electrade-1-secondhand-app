@@ -3,7 +3,7 @@
 // https://twitter.com/InsideEVs
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, ActivityIndicator } from 'react-native';
+import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, ActivityIndicator, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Details from './DetailScreen';
@@ -18,17 +18,18 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      data: null,
+      news: null,
       email: null,
       loading: null
        };
 
-    this._getData = this._getData.bind(this)
+    this._getNews = this._getNews.bind(this)
   }
 
 
   componentDidMount() {
-      this._getData()
+      this.setState({loading: true})
+      this._getNews()
       
       // get email, except if developer mode
       AsyncStorage.getItem('email').then((res) => {
@@ -81,10 +82,25 @@ export default class HomeScreen extends React.Component {
           // Process your notification as required
           // console.log('notif received')
       });
+      
+      AsyncStorage.getItem('region').then((region) => {
+                            if(region === ''){
+                                this.setState({ 'region': 'SF Bay Area' })
+                                AsyncStorage.setItem('region', JSON.stringify('SF Bay Area'))
+                              }
+                            else{
+                                this.setState({ 'region': JSON.parse(region) }) 
+                              }
+                        })
   }
 
-  _getData(){
-    this.setState({loading: true})
+  _onRefresh = () => {
+      this.setState({refreshing: true});
+      this._getNews()
+    }
+
+
+  _getNews(){
     fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/Z79rSy82LB9BxDyaa/lastExec/results?token=u8HqK39BcB8PKAFsjMtb9Bnnh')
       .then(res => { return res.json()})
 
@@ -112,7 +128,7 @@ export default class HomeScreen extends React.Component {
 
       // set results as state
       .then((sorted) => { 
-                      this.setState({data: sorted, loading: false}); 
+                      this.setState({news: sorted, loading: false, refreshing: false}); 
                       // console.log(sorted)
 
                       })
@@ -126,10 +142,16 @@ export default class HomeScreen extends React.Component {
         {!this.state.loading ?
            <Animatable.View animation="slideInUp" duration={500} easing="ease-out-back">
              <FlatList
-                       data={this.state.data}
+                       data={this.state.news}
+                       refreshControl={
+                                 <RefreshControl
+                                   refreshing={this.state.refreshing}
+                                   onRefresh={this._onRefresh}
+                                 />
+                               }
                        keyExtractor={(item, index) => index.toString()}
                        renderItem={({item, index}) => 
-                            <View style={{marginTop: index === 0 ? 40 : 0, marginBottom: index === this.state.data.length -1 ? 80 : 0}}>
+                            <View style={{marginTop: index === 0 ? 40 : 0, marginBottom: index === this.state.news.length -1 ? 80 : 0}}>
                               <TouchableOpacity 
                                   onPress={() => this.props.navigation.navigate('Details', {item: item, type: 'News'} ) } 
                                   style={{flexDirection: 'row', display: 'flex'}} 
@@ -155,12 +177,13 @@ export default class HomeScreen extends React.Component {
               <Text style={{color: 'grey'}}>Getting EV news... </Text>
               <ActivityIndicator />
             </View> }
-          <Animatable.View animation="bounceIn" duration={500} style={styles.newsItem}>
+            
+          {/*<Animatable.View animation="bounceIn" duration={500} style={styles.newsItem}>
             <TouchableOpacity 
-                    onPress={() => this._getData()} >
+                    onPress={() => this._getNews()} >
               <Icon name="ios-refresh" size={24}  color="white" />
             </TouchableOpacity>
-          </Animatable.View>
+          </Animatable.View>*/}
       </View>
     );
 

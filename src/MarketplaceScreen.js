@@ -35,32 +35,41 @@ export default class OtherScreen extends React.Component {
         // if(this.state.email === 'niko'){ AsyncStorage.removeItem('remainingtrials') }
       })
 
-      AsyncStorage.getItem('region').then((res) => {
-        if(this.state.region === null){this.setState({region: 'SF Bay Area'})}
-        else{ this.setState({region: res}) }
-      })
+      
 
       this.willFocusSubscription = this.props.navigation.addListener(
         'willFocus',
         () => {
+          this._getRegion()
           AsyncStorage.getItem('listingtype').then((res) => {
             console.log('listingtype from asyncstorage: ', JSON.parse(res))
             res !== null ? this.setState({listingType: JSON.parse(res) }) : null
             this.state.listingType === 0 ? this._getUsedTeslaData() : null
             this.state.listingType === 1 ? this._getUsedData() : null
             this.state.listingType === 2 ? this._getNewData() : null
-          })     
+          })
         }
       );
+  }
+
+  
+  _getRegion(){
+    AsyncStorage.getItem('region').then((region) => {
+                  region === '' ?  this.setState({ 'region': 'SF Bay Area' }) : this.setState({ 'region': JSON.parse(region) }) 
+                  this.state.region === 'SF Bay Area' ? this.setState({regionShort: 'SF'}) : null
+                  this.state.region === 'Los Angeles' ? this.setState({regionShort: 'LA'}) : null
+                  this.state.region === 'Sacramento' ? this.setState({regionShort: 'Sac'}) : null
+                })
   }
 
   _getUsedTeslaData(){
 
     this.setState({loading: true})
 
+
     // GET SCRAPED TESLA RESULTS
     // fetch('http://localhost:8080/api/indexes/get/'+'SF'+'/'+'0')
-    fetch('https://electrade-server.herokuapp.com/api/indexes/get/'+'SF'+'/'+'0')
+    fetch('https://electrade-server.herokuapp.com/api/indexes/get/'+this.state.regionShort+'/'+'0')
       .then((res) => { return res.json()})
 
       // filter by Tesla
@@ -97,7 +106,7 @@ export default class OtherScreen extends React.Component {
 
     // GET SCRAPED USED RESULTS
     // fetch('http://localhost:8080/api/indexes/get/'+'SF'+'/'+'1')
-    fetch('https://electrade-server.herokuapp.com/api/indexes/get/'+'SF'+'/'+'1')
+    fetch('https://electrade-server.herokuapp.com/api/indexes/get/'+this.state.regionShort+'/'+'1')
       .then((res) => { return res.json()})
 
       // filter out remaining 0 prices
@@ -129,7 +138,7 @@ export default class OtherScreen extends React.Component {
     this.setState({loading: true})
 
     // fetch('http://localhost:8080/api/indexes/get/'+'SF'+'/'+'2')
-    fetch('https://electrade-server.herokuapp.com/api/indexes/get/'+'SF'+'/'+'2')
+    fetch('https://electrade-server.herokuapp.com/api/indexes/get/'+this.state.regionShort+'/'+'2')
       
       // JSONify
       .then((res) => { return res.json()})
@@ -173,10 +182,19 @@ export default class OtherScreen extends React.Component {
     return (
        <SafeAreaView style={{flex: 1}}>
         <View style={{maxHeight: '100%', flex: 1}}>
-            <Text> Your Region: {this.state.region} </Text>
+
+            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={[styles.newsTitle, {fontSize: 20}]}>
+                &nbsp; {this.state.region}
+              </Text>
+              <Button 
+                style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
+                onPress={() => this.props.navigation.navigate('Submit', {listingType: this.state.listingType, type: 'Marketplace'} )}
+                title="Sell your EV here" />
+            </View>
             <View style={{ backgroundColor: 'white', height: 25, margin: 7}} zIndex={5}>
                 <SegmentedControlIOS
-                  values={['Used Teslas', 'Used EVs', 'New EVs']}
+                  values={['Buy Used Teslas', 'Buy Used EVs', 'Buy New EVs']}
                   style={{flex: 1}}
                   selectedIndex={this.state.listingType}
                   onChange={(event) => {
@@ -184,6 +202,7 @@ export default class OtherScreen extends React.Component {
                   }}
                  />
             </View>
+            
           {!this.state.loading ?
             <Animatable.View animation="slideInUp" duration={500} easing="ease-out-back" style={{flex: 1}}>
               <FlatList
@@ -225,12 +244,13 @@ export default class OtherScreen extends React.Component {
               <ActivityIndicator />
             </View>
           }
-          <Animatable.View animation="bounceIn" duration={500} style={styles.newsItem}>
+
+          {/*<Animatable.View animation="bounceIn" duration={500} style={styles.newsItem}>
             <TouchableOpacity 
                     onPress={() => this.props.navigation.navigate('Submit', {listingType: this.state.listingType, type: 'Marketplace'} )} >
               <Icon name="ios-camera" size={24}  color="white" />
             </TouchableOpacity>
-          </Animatable.View>
+          </Animatable.View>*/}
 
         </View>
       </SafeAreaView>

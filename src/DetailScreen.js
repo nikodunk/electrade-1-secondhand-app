@@ -53,6 +53,12 @@ export default class DetailScreen extends React.Component {
                     source={{uri: this.state.item.image}}
                     /> : null }
 
+                { this.state.item.teaserImage ? 
+                  <Image
+                    style={[styles.imageDetail, { maxWidth: '96%' }]}
+                    source={this.state.item.teaserImage}
+                    /> : null }
+
                 <View style={{padding: 20}}>
 
                 {/* NEWS options */}
@@ -61,13 +67,22 @@ export default class DetailScreen extends React.Component {
 
                 {/* marketplace & gallery options */}
                   {this.state.type === 'Gallery' || this.state.type === 'Marketplace' ?
-                   <View>
+                    <View>
                       {this.state.item.price ? <Text style={{fontWeight: '500', fontSize: 20}}>${ this.state.item.price }</Text> : null }
                       {this.state.item.name ? <Text>{ this.state.item.name }</Text> : null }
                       {this.state.item.mileageFromOdometer && this.state.item.mileageFromOdometer.value ? <Text style={styles.newsSource}>{this.state.item.mileageFromOdometer.value} miles</Text> : null}
                       {this.state.item.description ? <Text style={styles.newsSource}>{this.state.item.description}</Text> : null}
-                      {this.state.type === 'Marketplace' ? <Button title={`Contact Seller`} onPress={() => Linking.openURL(this.state.item.url) }/>  : null }
+                      {this.state.type === 'Marketplace' ? <Button title={`Contact Seller on Autotrader`} onPress={() => Linking.openURL(this.state.item.url) }/>  : null }
                     </View> : null }
+
+                {/* lease options */}
+                  {this.state.type === 'Lease' ?
+                    <View>
+                      <Text style={{fontWeight: '500', fontSize: 20}}>{ this.state.item.price }, { this.state.item.title }</Text>
+                      <Text>{ this.state.item.details }</Text>
+                      <Button title={`Get this deal`} onPress={() => this.props.navigation.navigate('Submit', {item: this.state.item, type: 'Lease'} )}/>
+                    </View> : null }
+
                 </View>
            </ScrollView>
          : null }

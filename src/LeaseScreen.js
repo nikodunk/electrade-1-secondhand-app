@@ -11,14 +11,45 @@ Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')
 import firebase from 'react-native-firebase';
 
 
+
 export default class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = { 
-      data: null,
+      leases: [
+        {
+          teaserImage: require('./img/bolt.jpg'),
+          title: 'Chevrolet Bolt EV',
+          details: 'Chevrolet Bolt LT, $0 down, 36 month lease, 10,000 Miles per year, Transunion Credit Scores over 700 required',
+          price: '$430/mo incl. tax',
+          regions: ['Los Angeles']
+        },
+        {
+          teaserImage: require('./img/bolt.jpg'),
+          title: 'Chevrolet Bolt EV',
+          details: 'Chevrolet Bolt LT, $0 down, 36 month lease, 10,000 Miles per year, Transunion Credit Scores over 700 required',
+          price: '$485/mo incl. tax',
+          regions: ['SF Bay Area']
+        },
+        {
+          teaserImage: require('./img/bolt.jpg'),
+          title: 'Chevrolet Bolt EV',
+          details: 'Chevrolet Bolt LT, $0 down, 36 month lease, 10,000 Miles per year, Transunion Credit Scores over 700 required',
+          price: '$450/mo incl. tax',
+          regions: ['Sacramento']
+        },
+        {
+          teaserImage: require('./img/model3.jpg'),
+          title: 'Tesla Model 3',
+          details: 'Base Tesla Model 3, $0 down, 36 month lease, 10,000 Miles per year, only for business leasers with established FICO score',
+          price: '$720/month incl. tax (Business only)',
+          regions: ['Los Angeles', 'SF Bay Area', 'Sacramento']
+        }
+      ],
       email: null,
-      loading: null
+      loading: null,
+      region: null
        };
 
   }
@@ -36,42 +67,63 @@ export default class HomeScreen extends React.Component {
         // this seems to be android only but not sure yet 
         // Mixpanel.setPushRegistrationId("GCM/FCM push token")
       })
+
+      this.willFocusSubscription = this.props.navigation.addListener(
+        'willFocus',
+        () => {
+          this.setState({loading: true})
+          this._getRegion()
+        }
+      );
   }
 
 
-  
+  _getRegion(){
+    AsyncStorage.getItem('region').then((region) => {
+                  region === '' ?  this.setState({ 'region': 'SF Bay Area' }) : this.setState({ 'region': JSON.parse(region), loading: false }) 
+                })
+  }
+
 
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
         <ScrollView style={{flex: 1}}>
+          <View style={{marginBottom: 80}}>
+              
               <View style={styles.deal}>
-                <Text>
-                  Your Region: Bay Area
+                <Text style={[styles.newsTitle, {fontSize: 20}]}>
+                    New, local, pre-quoted lease deals around {this.state.region}
                 </Text>
               </View>
-              <View style={styles.deal}>
-                <Text style={styles.newsTitle}>
-                  Bolt EV
-                </Text>
-                <Text></Text>
-                <Text style={styles.newsTitle}>
-                  $377/mo plus tax, $0 down
-                </Text>
-                <Text>
-                  36 months, 10'000 miles per year{'\n'}
-                  (add $11/mo or $400 for 12k) {'\n'}
-                  (add $31 or $1,100 for 15k) {'\n'}
-                  Prices are only for excellent credit {'\n'}
-                  Drive off amounts include all upfront tax and fees {'\n'}{'\n'}{'\n'}
+              {!this.state.loading ? 
+                <FlatList
+                  data={this.state.leases}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={({item, index}) => 
+                  
+                  <View>
+                    {item.regions.indexOf(this.state.region) !== -1 ?
+                        <TouchableOpacity 
+                          style={{height: 210}} 
+                          delayPressIn={50}
+                          onPress={() => this.props.navigation.navigate('Details', {item: item, type: 'Lease'} ) } >
+                              <View style={[styles.imageVideo, styles.videoContainer]}>
+                                <Image  style={styles.imageVideo}
+                                        source={item.teaserImage} />
+                                <Text style={styles.videoTitle}>{item.title} for {item.price}</Text>
+                              </View> 
+                        </TouchableOpacity>
+                    : null }
+                  </View>
 
-                  Phil Gileno
-                  415-596-6262
-                  Capitol Chevy
-                  San Jose C.A.
-                  PhilGileno@gmail.com
-                </Text>
-              </View>
+                        }
+                        /> 
+              : null }
+
+              <Text style={{margin: 10, color: 'grey'}}>All vehicles $0 down, 36 month leases, 10'000 Miles per year, Transunion Credit Scores over 700 required or for businesses established FICO score</Text>
+
+          </View>
         </ScrollView>
       </SafeAreaView>
     );

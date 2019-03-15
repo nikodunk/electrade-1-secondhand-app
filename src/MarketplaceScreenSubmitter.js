@@ -43,7 +43,7 @@ export default class SubmitScreen extends React.Component {
       
       AsyncStorage.getItem('email').then(email => this.setState({email: email}) )
 
-      this._takeImage()
+      // this._takeImage()
   }
 
 
@@ -189,22 +189,12 @@ export default class SubmitScreen extends React.Component {
             </View>
           </TouchableOpacity>
 
-            <ScrollView style={{flex: 1, marginBottom: 50}}>
+            <ScrollView style={{flex: 1}}>
+              <View style={{marginBottom: 80}}>
+                <View style={styles.deal} >
 
-                  {!this.state.image ?
-                   <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
-                     <Button 
-                       style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
-                       onPress={() => this._pickImage()} 
-                       title="Pick Image" />
-                     <Button 
-                       style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
-                       onPress={() => this._takeImage()} 
-                       title="Open Camera" />
-                   </View> 
-                   : null }
 
-                  {this.state.image ? <Image  style={styles.imageDetail} source={{uri: this.state.image}} /> : null }
+                <Text style={[styles.newsTitle, {fontSize: 20}]}>Sell your EV</Text>
 
                 {/* CAR MODEL */}
                 <Text style={styles.newsTitle}>Car Year & Model</Text>
@@ -258,6 +248,25 @@ export default class SubmitScreen extends React.Component {
                   </View> }
 
 
+                  {!this.state.image ?
+                  <View>
+                     <Text style={styles.newsTitle}>Image</Text>
+                     <View style={[styles.textInput, {display: 'flex', flexDirection: 'row', justifyContent: 'space-around', height: 100, paddingTop: 30}]}>
+                       <Button 
+                         style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
+                         onPress={() => this._pickImage()} 
+                         title="Pick Image" />
+                       <Button 
+                         style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
+                         onPress={() => this._takeImage()} 
+                         title="Open Camera" />
+                     </View> 
+                  </View>
+                   : null }
+
+                  {this.state.image ? <Image  style={styles.imageDetail} source={{uri: this.state.image}} /> : null }
+
+
                   {this.state.listingType === 'gallery' ? null : 
                   <View>
                     <Text style={styles.newsTitle}>Your Location</Text>
@@ -306,7 +315,8 @@ export default class SubmitScreen extends React.Component {
 
                   {this.state.loading ? <ActivityIndicator /> : null}
 
-
+                  </View>
+                </View>
             </ScrollView>
           
 
