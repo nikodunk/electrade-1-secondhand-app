@@ -3,9 +3,17 @@ import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Imag
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Mixpanel from 'react-native-mixpanel'
-
-
 import styles from './styles'
+
+
+const model3Image = require('./img/model3.jpg')
+const boltImage = require('./img/bolt.jpg')
+const leafImage = require('./img/leaf.jpg')
+const konaImage = require('./img/kona.jpg')
+const etronImage = require('./img/etron.jpg')
+
+
+
 
 export default class DetailScreen extends React.Component {
 
@@ -56,7 +64,12 @@ export default class DetailScreen extends React.Component {
                 { this.state.item.teaserImage ? 
                   <Image
                     style={[styles.imageDetail, { maxWidth: '96%' }]}
-                    source={this.state.item.teaserImage}
+                    source={
+                          this.state.item.teaserImage === 'Bolt' ? boltImage : 
+                          this.state.item.teaserImage === 'Leaf' ? leafImage : 
+                          this.state.item.teaserImage === 'Etron' ? etronImage : 
+                          this.state.item.teaserImage === 'Kona' ? konaImage : 
+                          model3Image}
                     /> : null }
 
                 <View style={{padding: 20}}>
@@ -78,8 +91,17 @@ export default class DetailScreen extends React.Component {
                 {/* lease options */}
                   {this.state.type === 'Lease' ?
                     <View>
-                      <Text style={{fontWeight: '500', fontSize: 20}}>{ this.state.item.price }, { this.state.item.title }</Text>
-                      <Text>{ this.state.item.details }</Text>
+                      <Text style={[styles.newsTitle, {fontSize: 20}]}>
+                        { this.state.item.title }
+                      </Text>
+                      <Text style={{fontWeight: '500', fontSize: 15}}>
+                        { this.state.item.price }
+                        {'\n'}
+                      </Text>
+                      <Text>
+                        { this.state.item.details }
+                        {'\n'}
+                      </Text>
                       <Button title={`Get this deal`} onPress={() => this.props.navigation.navigate('Submit', {item: this.state.item, type: 'Lease'} )}/>
                     </View> : null }
 

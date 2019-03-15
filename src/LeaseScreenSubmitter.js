@@ -1,12 +1,9 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, TextInput, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
+import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, TextInput, ActivityIndicator, KeyboardAvoidingView, Alert} from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Mixpanel from 'react-native-mixpanel'
-
 import styles from './styles'
 
-
-import ImagePicker from 'react-native-image-crop-picker';
 
 export default class SubmitScreen extends React.Component {
 
@@ -14,19 +11,9 @@ export default class SubmitScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      name: '',
-      price: '',
-      image: '',
       email: '',
-      
-      source: 'electrade',
-      miles: '',
-      location: '',
-      batterysize: '',
-      range: '',
-
-      loading: '',
-      listingType: null
+      thanks: false,
+      loading: ''
        };
   }
 
@@ -38,8 +25,7 @@ export default class SubmitScreen extends React.Component {
         if(this.state.email !== 'niko'){Mixpanel.track("SubmitScreen Loaded") }
       })
 
-      this.setState({listingType: this.props.navigation.getParam('listingType') })
-      this.setState({type: this.props.navigation.getParam('type') })
+      this.setState({item: this.props.navigation.getParam('item') })
       
       AsyncStorage.getItem('email').then(email => this.setState({email: email}) )
 
@@ -57,25 +43,16 @@ export default class SubmitScreen extends React.Component {
     }
     else{
       this.setState({loading: true})
-      fetch('https://electrade-server.herokuapp.com/api/listings/create/'+this.state.listingType, {
+      // fetch('http://localhost:8080/api/leases/create/'+this.state.email+'/'+this.state.item.title, {
+      fetch('https://electrade-server.herokuapp.com/api/leases/create/'+this.state.email+'/'+this.state.item.title, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: this.state.name,
-            price: this.state.price,
-            image: this.state.image,
-            link: 'mailto:'+this.state.email,
-            source: this.state.source,
-            miles: this.state.miles,
-            location: this.state.location,
-            batterysize: this.state.batterysize,
-            range: this.state.range,
-          }),
-      }).then(() => AsyncStorage.setItem('email', this.state.email ))
-        .then(() => this.props.navigation.goBack())
+          }
+      })
+      .then(() => this.setState({thanks: true}) )
+      .then(() => setTimeout(() => this.props.navigation.navigate('Lease'), 1000 ) )
     }
   }
 
@@ -84,7 +61,7 @@ export default class SubmitScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
-       <KeyboardAvoidingView behavior="padding" enabled style={{flex: 1}}>
+        <KeyboardAvoidingView behavior="padding" enabled style={{flex: 1}}>
 
             <TouchableOpacity 
                   onPress={() => this.props.navigation.goBack()} 
@@ -96,35 +73,23 @@ export default class SubmitScreen extends React.Component {
               </View>
             </TouchableOpacity>
 
+          {!this.state.thanks ? 
             <ScrollView style={{flex: 1}}>
               <View style={{marginBottom: 80}}>
                 <View style={styles.deal}>
 
+                <Text style={[styles.newsTitle, {fontSize: 20}]}>
+                  Thanks for your interest!
+                  {'\n'}
+                </Text>
 
-                {/* CAR MODEL */}
-                <Text style={styles.newsTitle}>Company Name</Text>
-                  <TextInput 
-                      underlineColorAndroid="transparent"
-                      style={styles.textInput}
-                      placeholder={'Company Name'}
-                      onChangeText={ (text) => {  this.setState({name: text}) }}
-                  />
+                <Text>
+                  Unfortunately, we're dealing with higher demand than anticipated. We're expecting this deal to be live again very soon. Please enter your email below to join the waitlist, and we will notify you once it is available again.
+                  {'\n'}{'\n'}
+                </Text>
 
-                {/* REQUESTED PRICE */}
-                  {this.state.listingType === 'gallery' ? null :
-                  <View>
-                    <Text style={styles.newsTitle}>First & Last Name</Text>
-                    <TextInput 
-                          underlineColorAndroid="transparent"
-                          style={styles.textInput}
-                          placeholder={'First & Last Name'}
-                          keyboardType={'decimal-pad'}
-                          onChangeText={ (text) => {  this.setState({price: text}) }}
-                      />
-                  </View>}
 
-                {/* YOUR CONTACT */}
-                  {this.state.listingType === 'gallery' ? null : 
+                {/* EMAIL */}
                   <View>
                     <Text style={styles.newsTitle}>Email</Text>
                     <TextInput 
@@ -136,18 +101,23 @@ export default class SubmitScreen extends React.Component {
                       keyboardType={'email-address'}
                       onChangeText={ (text) => {  this.setState({email: text}) }}
                       />
-                  </View> }
+                  </View>
+
 
                   <Button 
                     style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
                     onPress={() => this._onPress()} 
-                    title="Submit" />
+                    title="Join Waitlist" />
 
                   {this.state.loading ? <ActivityIndicator /> : null}
 
                 </View>
               </View>
-            </ScrollView>
+            </ScrollView>:
+
+            <View style={{marginTop: 100, alignItems: 'center'}}>
+              <Text style={{color: 'grey', fontSize: 25, fontWeight: '300'}}>Thank you! We'll be in touch soon.</Text>
+            </View> }
           
 
         </KeyboardAvoidingView>

@@ -61,12 +61,13 @@ export default class SettingsScreen extends React.Component {
     return (
       <SafeAreaView style={{flex: 1}}>
         <ScrollView style={{flex: 1}}>
-
+          <View style={{marginBottom: 80}}>
 
               {/* REGION */}
               <View style={styles.deal}>
                   <Text style={[styles.newsTitle, {fontSize: 20}]}>
                     Settings
+                    {'\n'}
                   </Text>
 
 
@@ -96,7 +97,7 @@ export default class SettingsScreen extends React.Component {
                   Your email:
                 </Text>
                 <Text>
-                  &nbsp;{this.state.email}
+                  &nbsp;&nbsp;{this.state.email}
                 </Text>
               </View>
 
@@ -105,7 +106,10 @@ export default class SettingsScreen extends React.Component {
 
             {/* FEEDBACK */}
               <View style={{flex: 1, alignItems: 'center', padding: 10}}>
-                 <Text style={{fontWeight: 'bold', padding: 3}}>Feature missing? Have feedback?</Text>
+                  <Text style={{fontWeight: 'bold', padding: 3}}>
+                    {'\n'}
+                    Feature missing? Have feedback?
+                  </Text>
                 <Button 
                     title="Email Feedback to Developers" 
                     onPress={() => Linking.openURL('mailto:n.dunkel@gmail.com')} 
@@ -125,7 +129,7 @@ export default class SettingsScreen extends React.Component {
                 </View>
               </View>*/}
 
-
+          </View>
         </ScrollView>
       </SafeAreaView>
     );

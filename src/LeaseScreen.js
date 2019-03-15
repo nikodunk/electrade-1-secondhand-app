@@ -10,43 +10,18 @@ import * as Animatable from 'react-native-animatable';
 Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')
 import firebase from 'react-native-firebase';
 
-
+const model3Image = require('./img/model3.jpg')
+const boltImage = require('./img/bolt.jpg')
+const leafImage = require('./img/leaf.jpg')
+const konaImage = require('./img/kona.jpg')
+const etronImage = require('./img/etron.jpg')
 
 export default class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = { 
-      leases: [
-        {
-          teaserImage: require('./img/bolt.jpg'),
-          title: 'Chevrolet Bolt EV',
-          details: 'Chevrolet Bolt LT, $0 down, 36 month lease, 10,000 Miles per year, Transunion Credit Scores over 700 required',
-          price: '$430/mo incl. tax',
-          regions: ['Los Angeles']
-        },
-        {
-          teaserImage: require('./img/bolt.jpg'),
-          title: 'Chevrolet Bolt EV',
-          details: 'Chevrolet Bolt LT, $0 down, 36 month lease, 10,000 Miles per year, Transunion Credit Scores over 700 required',
-          price: '$485/mo incl. tax',
-          regions: ['SF Bay Area']
-        },
-        {
-          teaserImage: require('./img/bolt.jpg'),
-          title: 'Chevrolet Bolt EV',
-          details: 'Chevrolet Bolt LT, $0 down, 36 month lease, 10,000 Miles per year, Transunion Credit Scores over 700 required',
-          price: '$450/mo incl. tax',
-          regions: ['Sacramento']
-        },
-        {
-          teaserImage: require('./img/model3.jpg'),
-          title: 'Tesla Model 3',
-          details: 'Base Tesla Model 3, $0 down, 36 month lease, 10,000 Miles per year, only for business leasers with established FICO score',
-          price: '$720/month incl. tax (Business only)',
-          regions: ['Los Angeles', 'SF Bay Area', 'Sacramento']
-        }
-      ],
+      leases: null,
       email: null,
       loading: null,
       region: null
@@ -72,7 +47,7 @@ export default class HomeScreen extends React.Component {
         'willFocus',
         () => {
           this.setState({loading: true})
-          this._getRegion()
+          this._getLeases()
         }
       );
   }
@@ -82,6 +57,21 @@ export default class HomeScreen extends React.Component {
     AsyncStorage.getItem('region').then((region) => {
                   region === '' ?  this.setState({ 'region': 'SF Bay Area' }) : this.setState({ 'region': JSON.parse(region), loading: false }) 
                 })
+  }
+
+
+  _getLeases(){
+
+    // GET CURRENT LEASES
+    // fetch('http://localhost:8080/api/leases/get')
+    fetch('https://electrade-server.herokuapp.com/api/leases/get')
+      .then((res) => { return res.json()})
+      
+      // set results as state
+      .then((res) => {
+            this.setState({leases: res});
+            this._getRegion()
+      })   
   }
 
 
@@ -97,31 +87,40 @@ export default class HomeScreen extends React.Component {
                 </Text>
               </View>
               {!this.state.loading ? 
-                <FlatList
-                  data={this.state.leases}
-                  keyExtractor={(item, index) => index.toString()}
-                  renderItem={({item, index}) => 
-                  
-                  <View>
-                    {item.regions.indexOf(this.state.region) !== -1 ?
-                        <TouchableOpacity 
-                          style={{height: 210}} 
-                          delayPressIn={50}
-                          onPress={() => this.props.navigation.navigate('Details', {item: item, type: 'Lease'} ) } >
-                              <View style={[styles.imageVideo, styles.videoContainer]}>
-                                <Image  style={styles.imageVideo}
-                                        source={item.teaserImage} />
-                                <Text style={styles.videoTitle}>{item.title} for {item.price}</Text>
-                              </View> 
-                        </TouchableOpacity>
-                    : null }
+                <View>
+                  <FlatList
+                    data={this.state.leases}
+                    renderItem={({item, index}) => 
+                                <View>
+                                  {item.regions.indexOf(this.state.region) !== -1 ?
+                                      <TouchableOpacity 
+                                        style={{height: 210}} 
+                                        delayPressIn={50}
+                                        onPress={() => this.props.navigation.navigate('Details', {item: item, type: 'Lease'} ) } >
+                                            <View style={[styles.imageVideo, styles.videoContainer]}>
+                                              <Image  style={styles.imageVideo}
+                                                      source={
+                                                              item.teaserImage === 'Bolt' ? boltImage : 
+                                                              item.teaserImage === 'Leaf' ? leafImage : 
+                                                              item.teaserImage === 'Etron' ? etronImage : 
+                                                              item.teaserImage === 'Kona' ? konaImage : 
+                                                              model3Image} />
+                                              <Text style={styles.videoTitle}>{item.title} for {item.price}</Text>
+                                            </View> 
+                                      </TouchableOpacity>
+                                  : null }
+                                  </View>
+                                }
+                    keyExtractor={(item, index) => index.toString()}
+                    /> 
+                  <Text style={{margin: 10, color: 'grey'}}>All vehicles $0 down, 36 month leases, 10'000 Miles per year, Transunion Credit Scores over 700 required or for businesses established FICO score</Text>
                   </View>
-
-                        }
-                        /> 
-              : null }
-
-              <Text style={{margin: 10, color: 'grey'}}>All vehicles $0 down, 36 month leases, 10'000 Miles per year, Transunion Credit Scores over 700 required or for businesses established FICO score</Text>
+              : 
+              <View style={{marginTop: 100, alignItems: 'center'}}>
+                <Text style={{color: 'grey'}}>Getting Newest Lease Deals... </Text>
+                <ActivityIndicator />
+              </View>
+               }
 
           </View>
         </ScrollView>
