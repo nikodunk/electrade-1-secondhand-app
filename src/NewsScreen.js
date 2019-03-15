@@ -83,15 +83,17 @@ export default class HomeScreen extends React.Component {
           // console.log('notif received')
       });
       
-      AsyncStorage.getItem('region').then((region) => {
-                            if(region === ''){
-                                this.setState({ 'region': 'SF Bay Area' })
-                                AsyncStorage.setItem('region', JSON.stringify('SF Bay Area'))
-                              }
-                            else{
-                                this.setState({ 'region': JSON.parse(region) }) 
-                              }
-                        })
+      this._getRegion()
+  }
+
+  _getRegion(){
+    AsyncStorage.getItem('region').then((region) => {
+            region === null ? (
+                                    this.setState({region: 'SF Bay Area', loading: false }),
+                                    AsyncStorage.setItem('region', JSON.stringify('SF Bay Area'))
+                              ) : 
+                                    this.setState({region: JSON.parse(region), loading: false })
+                            })
   }
 
   _onRefresh = () => {

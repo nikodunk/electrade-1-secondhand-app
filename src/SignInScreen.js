@@ -27,7 +27,6 @@ export default class SignInScreen extends React.Component {
         email = res
         this.setState({email: email})
       })
-      AsyncStorage.setItem('region', JSON.stringify('SF Bay Area'))
   }
 
 

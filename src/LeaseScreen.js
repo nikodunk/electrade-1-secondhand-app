@@ -26,7 +26,6 @@ export default class HomeScreen extends React.Component {
       loading: null,
       region: null
        };
-
   }
 
 
@@ -55,8 +54,12 @@ export default class HomeScreen extends React.Component {
 
   _getRegion(){
     AsyncStorage.getItem('region').then((region) => {
-                  region === '' ?  this.setState({ 'region': 'SF Bay Area' }) : this.setState({ 'region': JSON.parse(region), loading: false }) 
-                })
+            region === null ? (
+                                    this.setState({region: 'SF Bay Area', loading: false }),
+                                    AsyncStorage.setItem('region', JSON.stringify('SF Bay Area'))
+                              ) : 
+                                    this.setState({region: JSON.parse(region), loading: false })
+                            })
   }
 
 

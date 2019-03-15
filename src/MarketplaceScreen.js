@@ -35,32 +35,48 @@ export default class OtherScreen extends React.Component {
         // if(this.state.email === 'niko'){ AsyncStorage.removeItem('remainingtrials') }
       })
 
-      
-
       this.willFocusSubscription = this.props.navigation.addListener(
         'willFocus',
         () => {
+
           this._getRegion()
-          AsyncStorage.getItem('listingtype').then((res) => {
-            console.log('listingtype from asyncstorage: ', JSON.parse(res))
-            res !== null ? this.setState({listingType: JSON.parse(res) }) : null
-            this.state.listingType === 0 ? this._getUsedTeslaData() : null
-            this.state.listingType === 1 ? this._getUsedData() : null
-            this.state.listingType === 2 ? this._getNewData() : null
-          })
+          
         }
       );
   }
 
-  
+
   _getRegion(){
-    AsyncStorage.getItem('region').then((region) => {
-                  region === '' ?  this.setState({ 'region': 'SF Bay Area' }) : this.setState({ 'region': JSON.parse(region) }) 
-                  this.state.region === 'SF Bay Area' ? this.setState({regionShort: 'SF'}) : null
-                  this.state.region === 'Los Angeles' ? this.setState({regionShort: 'LA'}) : null
-                  this.state.region === 'Sacramento' ? this.setState({regionShort: 'Sac'}) : null
-                })
+      AsyncStorage.getItem('region').then((region) => {
+              if(region === null) {
+                                      this.setState({region: 'SF Bay Area', loading: false }),
+                                      AsyncStorage.setItem('region', JSON.stringify('SF Bay Area'))
+                                      this._getData()
+
+                                } else{
+                                      this.setState({region: JSON.parse(region), loading: false })
+                                      this._getData()
+                                }
+      })
+}
+
+
+
+  _getData(){
+    this.state.region === 'SF Bay Area' ? this.setState({regionShort: 'SF'}) : null
+    this.state.region === 'Los Angeles' ? this.setState({regionShort: 'LA'}) : null
+    this.state.region === 'Sacramento' ? this.setState({regionShort: 'Sac'}) : null
+
+    AsyncStorage.getItem('listingtype').then((res) => {
+      console.log('listingtype from asyncstorage: ', JSON.parse(res))
+      res !== null ? this.setState({listingType: JSON.parse(res) }) : null
+      this.state.listingType === 0 ? this._getUsedTeslaData() : null
+      this.state.listingType === 1 ? this._getUsedData() : null
+      this.state.listingType === 2 ? this._getNewData() : null
+    })
   }
+
+
 
   _getUsedTeslaData(){
 
