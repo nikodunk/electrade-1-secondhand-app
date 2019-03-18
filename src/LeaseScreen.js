@@ -15,6 +15,9 @@ const boltImage = require('./img/bolt.jpg')
 const leafImage = require('./img/leaf.jpg')
 const konaImage = require('./img/kona.jpg')
 const etronImage = require('./img/etron.jpg')
+const i3Image = require('./img/i3.jpg')
+const fiatImage = require('./img/fiat.jpg')
+const golfImage = require('./img/golf.jpg')
 
 export default class HomeScreen extends React.Component {
 
@@ -37,7 +40,7 @@ export default class HomeScreen extends React.Component {
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
         if(this.state.email){ Mixpanel.identify(this.state.email); Mixpanel.set({"$email": this.state.email}); firebase.analytics().setUserId(this.state.email) }
-        if(this.state.email !== 'niko'){Mixpanel.track("NewsScreen Loaded"); firebase.analytics().setCurrentScreen('NewsScreen Loaded') }
+        if(this.state.email !== 'niko'){Mixpanel.track("LeaseScreen Loaded"); firebase.analytics().setCurrentScreen('NewsScreen Loaded') }
         // this seems to be android only but not sure yet 
         // Mixpanel.setPushRegistrationId("GCM/FCM push token")
       })
@@ -86,7 +89,7 @@ export default class HomeScreen extends React.Component {
               
               <View style={styles.deal}>
                 <Text style={[styles.newsTitle, {fontSize: 20}]}>
-                    New, local, pre-quoted lease deals around {this.state.region}
+                    Local lease deals around {this.state.region}
                 </Text>
               </View>
               {!this.state.loading ? 
@@ -107,6 +110,9 @@ export default class HomeScreen extends React.Component {
                                                               item.teaserImage === 'Leaf' ? leafImage : 
                                                               item.teaserImage === 'Etron' ? etronImage : 
                                                               item.teaserImage === 'Kona' ? konaImage : 
+                                                              item.teaserImage === '500e' ? fiatImage : 
+                                                              item.teaserImage === 'i3' ? i3Image : 
+                                                              item.teaserImage === 'Golf' ? golfImage : 
                                                               model3Image} />
                                               <Text style={styles.videoTitle}>{item.title} for {item.price}</Text>
                                             </View> 
@@ -116,7 +122,7 @@ export default class HomeScreen extends React.Component {
                                 }
                     keyExtractor={(item, index) => index.toString()}
                     /> 
-                  <Text style={{margin: 10, color: 'grey'}}>All vehicles $0 down, 36 month leases, 10'000 Miles per year, Transunion Credit Scores over 700 required or for businesses established FICO score</Text>
+                  <Text style={{margin: 10, color: 'grey'}}>NOTE: Numbers exclude tax, license, doc fees.  Estimates of these amounts were subtracted from offers that were specified with a total drive-off. Also, many of these offers include conditional incentives and/or rebates (i.e. recent college grad, loyalty, competitive, etc).</Text>
                   </View>
               : 
               <View style={{marginTop: 100, alignItems: 'center'}}>

@@ -11,6 +11,9 @@ const boltImage = require('./img/bolt.jpg')
 const leafImage = require('./img/leaf.jpg')
 const konaImage = require('./img/kona.jpg')
 const etronImage = require('./img/etron.jpg')
+const i3Image = require('./img/i3.jpg')
+const fiatImage = require('./img/fiat.jpg')
+const golfImage = require('./img/golf.jpg')
 
 
 
@@ -65,11 +68,14 @@ export default class DetailScreen extends React.Component {
                   <Image
                     style={[styles.imageDetail, { maxWidth: '96%' }]}
                     source={
-                          this.state.item.teaserImage === 'Bolt' ? boltImage : 
-                          this.state.item.teaserImage === 'Leaf' ? leafImage : 
-                          this.state.item.teaserImage === 'Etron' ? etronImage : 
-                          this.state.item.teaserImage === 'Kona' ? konaImage : 
-                          model3Image}
+                            this.state.item.teaserImage === 'Bolt' ? boltImage : 
+                            this.state.item.teaserImage === 'Leaf' ? leafImage : 
+                            this.state.item.teaserImage === 'Etron' ? etronImage : 
+                            this.state.item.teaserImage === 'Kona' ? konaImage : 
+                            this.state.item.teaserImage === '500e' ? fiatImage : 
+                            this.state.item.teaserImage === 'i3' ? i3Image : 
+                            this.state.item.teaserImage === 'Golf' ? golfImage : 
+                            model3Image}
                     /> : null }
 
                 <View style={{padding: 20}}>

@@ -31,7 +31,7 @@ export default class OtherScreen extends React.Component {
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
         {this.state.email ? Mixpanel.identify(this.state.email) : null }
-        if(this.state.email !== 'niko'){Mixpanel.track("PriceScreenUsed Loaded") }
+        if(this.state.email !== 'niko'){Mixpanel.track("Marketplace Loaded") }
         // if(this.state.email === 'niko'){ AsyncStorage.removeItem('remainingtrials') }
       })
 

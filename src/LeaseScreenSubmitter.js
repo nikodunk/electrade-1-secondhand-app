@@ -22,7 +22,7 @@ export default class SubmitScreen extends React.Component {
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
         {this.state.email ? Mixpanel.identify(this.state.email) : null }
-        if(this.state.email !== 'niko'){Mixpanel.track("SubmitScreen Loaded") }
+        if(this.state.email !== 'niko'){Mixpanel.track("LeaseDetails Loaded") }
       })
 
       this.setState({item: this.props.navigation.getParam('item') })
