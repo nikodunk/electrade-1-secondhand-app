@@ -101,6 +101,10 @@ export default styles = StyleSheet.create({
         flex: 1,
         margin: 10,
         padding: 5
+    },
+    bigButton:{
+        backgroundColor: '#2191fb', 
+        borderRadius: 10
     }
 
 

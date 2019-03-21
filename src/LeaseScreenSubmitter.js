@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, TextInput, ActivityIndicator, KeyboardAvoidingView, Alert} from 'react-native';
+import {Platform, StyleSheet, Text, View, AsyncStorage, ScrollView, Image, FlatList, TouchableOpacity, Linking, TextInput, ActivityIndicator, KeyboardAvoidingView, Alert} from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Mixpanel from 'react-native-mixpanel'
 import styles from './styles'
 import firebase from 'react-native-firebase';
+import { Button } from 'react-native-elements';
 
 
 export default class SubmitScreen extends React.Component {
@@ -14,7 +15,8 @@ export default class SubmitScreen extends React.Component {
     this.state = { 
       email: '',
       thanks: false,
-      loading: ''
+      loading: '',
+      region: null
        };
   }
 
@@ -31,8 +33,19 @@ export default class SubmitScreen extends React.Component {
       AsyncStorage.getItem('email').then(email => this.setState({email: email}) )
       firebase.analytics().logEvent('GetLease_Touched')
 
+      this._getRegion()
+
   }
 
+  _getRegion(){
+    AsyncStorage.getItem('region').then((region) => {
+            region === null ? (
+                                    this.setState({region: 'SF Bay Area', loading: false }),
+                                    AsyncStorage.setItem('region', JSON.stringify('SF Bay Area'))
+                              ) : 
+                                    this.setState({region: JSON.parse(region), loading: false })
+                            })
+  }
 
   _onPress = async () => {
     Mixpanel.track("Email Button Pressed");
@@ -51,7 +64,10 @@ export default class SubmitScreen extends React.Component {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-          }
+          },
+          body: JSON.stringify({
+            region: this.state.region
+          }),
       })
       .then(() => {
           Mixpanel.track("Lease Request Submitted")
@@ -109,11 +125,12 @@ export default class SubmitScreen extends React.Component {
                       />
                   </View>
 
-
-                  <Button 
-                    style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
+                  <Button
+                    type="solid"
+                    buttonStyle={styles.bigButton}
                     onPress={() => this._onPress()} 
-                    title="Join Waitlist" />
+                    title="Join Waitlist"
+                    />
 
                   {this.state.loading ? <ActivityIndicator /> : null}
 

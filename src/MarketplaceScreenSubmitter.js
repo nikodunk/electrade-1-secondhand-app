@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, TextInput, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
+import {Platform, StyleSheet, Text, View, AsyncStorage, ScrollView, Image, FlatList, TouchableOpacity, Linking, TextInput, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Mixpanel from 'react-native-mixpanel'
+import { Button } from 'react-native-elements';
+
 
 import styles from './styles'
 
@@ -252,12 +254,12 @@ export default class SubmitScreen extends React.Component {
                   <View>
                      <Text style={styles.newsTitle}>Image</Text>
                      <View style={[styles.textInput, {display: 'flex', flexDirection: 'row', justifyContent: 'space-around', height: 100, paddingTop: 30}]}>
-                       <Button 
-                         style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
+                       <Button
+                         type="clear"
                          onPress={() => this._pickImage()} 
                          title="Pick Image" />
                        <Button 
-                         style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
+                         type="clear"
                          onPress={() => this._takeImage()} 
                          title="Open Camera" />
                      </View> 
@@ -306,12 +308,15 @@ export default class SubmitScreen extends React.Component {
                       />
                   </View> }
 
+                  <Text></Text>
+                  <Text></Text>
 
-
-                  <Button 
-                    style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
-                    onPress={() => this._onPress()} 
-                    title="Submit" />
+                  <Button
+                    type="solid"
+                    buttonStyle={styles.bigButton}
+                    onPress={() => this.props.navigation.navigate('Submit', {listingType: this.state.listingType, type: 'Marketplace'} )}
+                    title="Submit" 
+                    />
 
                   {this.state.loading ? <ActivityIndicator /> : null}
 

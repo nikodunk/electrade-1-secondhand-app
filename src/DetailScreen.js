@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking } from 'react-native';
+import {Platform, StyleSheet, Text, View, AsyncStorage, ScrollView, Image, FlatList, TouchableOpacity, Linking } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Mixpanel from 'react-native-mixpanel'
 import styles from './styles'
+import { Button } from 'react-native-elements';
 
 
 const model3Image = require('./img/model3.jpg')
@@ -81,8 +82,20 @@ export default class DetailScreen extends React.Component {
                 <View style={{padding: 20}}>
 
                 {/* NEWS options */}
-                  {this.state.item.text ? <Text>{ this.state.item.text.substring(0, this.state.item.text.indexOf('http')) }</Text> : null }
-                  {this.state.type === 'News' ? <Button title={`Continue at ${this.state.item.source}`} onPress={() => {Linking.openURL(this.state.item.link.toString()); if(this.state.email !== 'niko'){Mixpanel.track(this.state.item.link.toString()+" touched") }}}/>  : null }
+                  {this.state.item.text ? <Text>{ this.state.item.text.substring(0, this.state.item.text.indexOf('http')) } {'\n'}</Text> : null }
+                  {this.state.type === 'News' ? 
+                          <Button 
+                              icon={
+                                <Icon
+                                name="ios-open"
+                                size={20}
+                                color="white"
+                                /> } 
+                              title={` Continue at ${this.state.item.source}`} 
+                              buttonStyle={styles.bigButton} 
+                              onPress={() => {Linking.openURL(this.state.item.link.toString()); if(this.state.email !== 'niko'){Mixpanel.track(this.state.item.link.toString()+" touched") }}}
+                          />  
+                  : null }
 
                 {/* marketplace & gallery options */}
                   {this.state.type === 'Gallery' || this.state.type === 'Marketplace' ?
@@ -90,8 +103,13 @@ export default class DetailScreen extends React.Component {
                       {this.state.item.price ? <Text style={{fontWeight: '500', fontSize: 20}}>${ this.state.item.price }</Text> : null }
                       {this.state.item.name ? <Text>{ this.state.item.name }</Text> : null }
                       {this.state.item.mileageFromOdometer && this.state.item.mileageFromOdometer.value ? <Text style={styles.newsSource}>{this.state.item.mileageFromOdometer.value} miles</Text> : null}
-                      {this.state.item.description ? <Text style={styles.newsSource}>{this.state.item.description}</Text> : null}
-                      {this.state.type === 'Marketplace' ? <Button title={`Contact Seller on Autotrader`} onPress={() => Linking.openURL(this.state.item.url) }/>  : null }
+                      {this.state.item.description ? <Text style={styles.newsSource}>{this.state.item.description} {'\n'}</Text> : null}
+                      {this.state.type === 'Marketplace' ? <Button icon={
+                                <Icon
+                                name="ios-open"
+                                size={20}
+                                color="white"
+                                /> } title={` Contact Seller on Autotrader`} buttonStyle={styles.bigButton} onPress={() => Linking.openURL(this.state.item.url) }/>  : null }
                     </View> : null }
 
                 {/* lease details */}
@@ -100,16 +118,34 @@ export default class DetailScreen extends React.Component {
                       <Text style={[styles.newsTitle, {fontSize: 20}]}>
                         { this.state.item.title }
                       </Text>
-                      <Text style={{fontWeight: '500', fontSize: 15}}>
+                      <Text style={{fontWeight: '500', fontSize: 17}}>
                         { this.state.item.price }
                         {'\n'}
                       </Text>
-                      <Text>
+                      <Text style={{}}>
+                        { this.state.item.blurb }
+                      </Text>
+                      <View style={styles.separator} />
+                      <Text> </Text>
+                      
+                      <Text style={{fontWeight: '500', color: '#1a2a3a'}}>
+                        { this.state.item.stats }
+                        {'\n'}
+                      </Text>
+                      <View style={styles.separator} />
+                      <Text> </Text>
+
+                      <Text style={{fontWeight: '700'}}>
                         Offer Details:{'\n'}
                         { this.state.item.details }
                         {'\n'}
                       </Text>
-                      <Button title={`Get this deal`} onPress={() => this.props.navigation.navigate('Submit', {item: this.state.item, type: 'Lease'} )}/>
+                      <Button
+                        type="solid"
+                        buttonStyle={styles.bigButton}
+                        onPress={() => this.props.navigation.navigate('Submit', {item: this.state.item, type: 'Lease'} )}
+                        title={`Reserve this deal`} 
+                        />
                     </View> : null }
 
                 </View>

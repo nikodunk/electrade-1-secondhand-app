@@ -206,14 +206,12 @@ export default class OtherScreen extends React.Component {
               </Text>
               <Button
                 type="clear"
-                style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
                 onPress={() => this.props.navigation.navigate('Submit', {listingType: this.state.listingType, type: 'Marketplace'} )}
                 title="+ Sell your EV" />
             </View>
-            <View style={{ backgroundColor: 'white', height: 25, margin: 7}} zIndex={5}>
+            <View style={{ backgroundColor: 'white', height: 30, margin: 5, marginTop: 0, marginBottom: 2}} zIndex={5}>
                  <SegmentedControlTab
                            values={['Buy Used Teslas', 'Buy Used EVs', 'Buy New EVs']}
-                           style={{flex: 1}}
                            selectedIndex={this.state.listingType}
                            onTabPress={(event) => {
                              this._onSwitchType(event)
