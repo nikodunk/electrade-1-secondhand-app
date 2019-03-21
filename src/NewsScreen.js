@@ -39,49 +39,6 @@ export default class HomeScreen extends React.Component {
         // this seems to be android only but not sure yet 
         // Mixpanel.setPushRegistrationId("GCM/FCM push token")
       })
-
-      firebase.messaging().getToken()
-        .then(fcmToken => {
-          if (fcmToken) {
-            // user has a device token
-            console.log('this is my FBCM token '+fcmToken)
-            // this.props.putToken(this.state.phoneNo, fcmToken)
-          } else {
-            // user doesn't have a device token yet
-          } 
-        });
-
-      firebase.messaging().hasPermission()
-        .then(enabled => {
-          if (enabled) {
-            // user has permissions
-            console.log(enabled)
-          } else {
-            // user doesn't have permission
-            firebase.messaging().requestPermission()
-              .then(() => {
-                // User has authorised  
-              })
-              .catch(error => {
-                // User has rejected permissions  
-              });
-          } 
-        });
-
-      // this.messageListener = firebase.messaging().onMessage((message: RemoteMessage) => {
-      //         // Process your message as required
-      //         console.log('message received' + message)
-      //     });
-
-      this.notificationDisplayedListener = firebase.notifications().onNotificationDisplayed((notification: Notification) => {
-              // Process your notification as required
-              // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
-          });
-      
-      this.notificationListener = firebase.notifications().onNotification((notification: Notification) => {
-          // Process your notification as required
-          // console.log('notif received')
-      });
       
       this._getRegion()
   }

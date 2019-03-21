@@ -94,7 +94,7 @@ export default class DetailScreen extends React.Component {
                       {this.state.type === 'Marketplace' ? <Button title={`Contact Seller on Autotrader`} onPress={() => Linking.openURL(this.state.item.url) }/>  : null }
                     </View> : null }
 
-                {/* lease options */}
+                {/* lease details */}
                   {this.state.type === 'Lease' ?
                     <View>
                       <Text style={[styles.newsTitle, {fontSize: 20}]}>
@@ -105,6 +105,7 @@ export default class DetailScreen extends React.Component {
                         {'\n'}
                       </Text>
                       <Text>
+                        Offer Details:{'\n'}
                         { this.state.item.details }
                         {'\n'}
                       </Text>

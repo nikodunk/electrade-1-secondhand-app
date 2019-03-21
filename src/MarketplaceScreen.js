@@ -1,10 +1,11 @@
-
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, Linking, FlatList, TouchableOpacity, ActivityIndicator, SegmentedControlIOS } from 'react-native';
+import {Platform, StyleSheet, Text, View, AsyncStorage, ScrollView, Image, Linking, FlatList, TouchableOpacity, ActivityIndicator, SegmentedControlIOS } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Mixpanel from 'react-native-mixpanel'
 import * as Animatable from 'react-native-animatable';
+import SegmentedControlTab from "react-native-segmented-control-tab";
+import { Button } from 'react-native-elements';
 
 export default class OtherScreen extends React.Component {
 
@@ -183,7 +184,7 @@ export default class OtherScreen extends React.Component {
 
 
   _onSwitchType(event){
-    let newIndex = event.nativeEvent.selectedSegmentIndex
+    let newIndex = event
     console.log(JSON.stringify(newIndex))
     this.setState({listingType: newIndex});
     AsyncStorage.setItem('listingtype', JSON.stringify(newIndex))
@@ -203,20 +204,21 @@ export default class OtherScreen extends React.Component {
               <Text style={[styles.newsTitle, {fontSize: 20}]}>
                 &nbsp; {this.state.region}
               </Text>
-              <Button 
+              <Button
+                type="clear"
                 style={[{backgroundColor: '#2191fb' }, styles.bottomButton]}
                 onPress={() => this.props.navigation.navigate('Submit', {listingType: this.state.listingType, type: 'Marketplace'} )}
-                title="Sell your EV here" />
+                title="+ Sell your EV" />
             </View>
             <View style={{ backgroundColor: 'white', height: 25, margin: 7}} zIndex={5}>
-                <SegmentedControlIOS
-                  values={['Buy Used Teslas', 'Buy Used EVs', 'Buy New EVs']}
-                  style={{flex: 1}}
-                  selectedIndex={this.state.listingType}
-                  onChange={(event) => {
-                    this._onSwitchType(event)
-                  }}
-                 />
+                 <SegmentedControlTab
+                           values={['Buy Used Teslas', 'Buy Used EVs', 'Buy New EVs']}
+                           style={{flex: 1}}
+                           selectedIndex={this.state.listingType}
+                           onTabPress={(event) => {
+                             this._onSwitchType(event)
+                           }}
+                         />
             </View>
             
           {!this.state.loading ?

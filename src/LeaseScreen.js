@@ -39,11 +39,63 @@ export default class HomeScreen extends React.Component {
       // get email, except if developer mode
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
-        if(this.state.email){ Mixpanel.identify(this.state.email); Mixpanel.set({"$email": this.state.email}); firebase.analytics().setUserId(this.state.email) }
+        if(this.state.email){ Mixpanel.identify(this.state.email); Mixpanel.set({"$email": this.state.email}); }
         if(this.state.email !== 'niko'){Mixpanel.track("LeaseScreen Loaded"); firebase.analytics().setCurrentScreen('NewsScreen Loaded') }
-        // this seems to be android only but not sure yet 
-        // Mixpanel.setPushRegistrationId("GCM/FCM push token")
+        
+        firebase.analytics().setUserId(this.state.email)
+        firebase.analytics().logEvent('LeaseScreen_Loaded')
       })
+
+
+      // ------------- ** FIREBASE NOTIFICATION CODE ** -----
+
+      firebase.messaging().getToken()
+        .then(fcmToken => {
+          if (fcmToken) {
+            // user has a device token
+            console.log('this is my FBCM token '+fcmToken)
+            // this.props.putToken(this.state.phoneNo, fcmToken)
+          } else {
+            // user doesn't have a device token yet
+          } 
+        });
+
+      firebase.messaging().hasPermission()
+        .then(enabled => {
+          if (enabled) {
+            // user has permissions
+            console.log(enabled)
+          } else {
+            // user doesn't have permission
+            firebase.messaging().requestPermission()
+              .then(() => {
+                // User has authorised  
+              })
+              .catch(error => {
+                // User has rejected permissions  
+              });
+          } 
+        });
+
+
+      //if there are any unread badgets, remove them.
+      firebase.notifications().setBadge(0)
+
+
+      // not sure if below two are necessary.
+      this.notificationDisplayedListener = firebase.notifications().onNotificationDisplayed((notification: Notification) => {
+              // Process your notification as required
+              // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
+          });
+      
+      this.notificationListener = firebase.notifications().onNotification((notification: Notification) => {
+          // Process your notification as required
+          // console.log('notif received')
+      });
+
+
+      // ------------- ** END FIREBASE NOTIFICATION CODE ** -----
+
 
       this.willFocusSubscription = this.props.navigation.addListener(
         'willFocus',
@@ -52,17 +104,6 @@ export default class HomeScreen extends React.Component {
           this._getLeases()
         }
       );
-  }
-
-
-  _getRegion(){
-    AsyncStorage.getItem('region').then((region) => {
-            region === null ? (
-                                    this.setState({region: 'SF Bay Area', loading: false }),
-                                    AsyncStorage.setItem('region', JSON.stringify('SF Bay Area'))
-                              ) : 
-                                    this.setState({region: JSON.parse(region), loading: false })
-                            })
   }
 
 
@@ -78,6 +119,17 @@ export default class HomeScreen extends React.Component {
             this.setState({leases: res});
             this._getRegion()
       })   
+  }
+
+
+  _getRegion(){
+    AsyncStorage.getItem('region').then((region) => {
+            region === null ? (
+                                    this.setState({region: 'SF Bay Area', loading: false }),
+                                    AsyncStorage.setItem('region', JSON.stringify('SF Bay Area'))
+                              ) : 
+                                    this.setState({region: JSON.parse(region), loading: false })
+                            })
   }
 
 

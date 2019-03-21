@@ -4,6 +4,11 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
+import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
+
+
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -12,6 +17,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +38,10 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new PickerPackage(),
             new RNGestureHandlerPackage(),
-            new RNMixpanel()
+            new RNMixpanel(),
+            new RNFirebaseMessagingPackage(),
+            new RNFirebaseNotificationsPackage(),
+            new RNFirebaseAnalyticsPackage()
       );
     }
 

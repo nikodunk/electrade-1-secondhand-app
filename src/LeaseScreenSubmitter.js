@@ -3,6 +3,7 @@ import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Imag
 import { SafeAreaView } from 'react-navigation';
 import Mixpanel from 'react-native-mixpanel'
 import styles from './styles'
+import firebase from 'react-native-firebase';
 
 
 export default class SubmitScreen extends React.Component {
@@ -22,12 +23,13 @@ export default class SubmitScreen extends React.Component {
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
         {this.state.email ? Mixpanel.identify(this.state.email) : null }
-        if(this.state.email !== 'niko'){Mixpanel.track("LeaseDetails Loaded") }
+        if(this.state.email !== 'niko'){Mixpanel.track("GetLease Touched") }
       })
 
       this.setState({item: this.props.navigation.getParam('item') })
       
       AsyncStorage.getItem('email').then(email => this.setState({email: email}) )
+      firebase.analytics().logEvent('GetLease_Touched')
 
   }
 
@@ -51,7 +53,11 @@ export default class SubmitScreen extends React.Component {
             'Content-Type': 'application/json',
           }
       })
-      .then(() => this.setState({thanks: true}) )
+      .then(() => {
+          Mixpanel.track("Lease Request Submitted")
+          firebase.analytics().logEvent('Lease_Request_Submitted');
+          this.setState({thanks: true})
+        } )
       .then(() => setTimeout(() => this.props.navigation.navigate('Lease'), 1000 ) )
     }
   }

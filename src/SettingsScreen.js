@@ -73,8 +73,6 @@ export default class SettingsScreen extends React.Component {
                     {'\n'}
                   </Text>
 
-
-
                   <Text style={styles.newsTitle}>
                     Your Region
                   </Text>
@@ -85,7 +83,7 @@ export default class SettingsScreen extends React.Component {
                     onValueChange={(itemValue, itemIndex) => this._onChangeRegion(itemValue)}>
                     <Picker.Item label="SF Bay Area" value="SF Bay Area" />
                     <Picker.Item label="Sacramento" value="Sacramento" />
-                    {/*<Picker.Item label="Los Angeles" value="Los Angeles" />*/}
+                    <Picker.Item label="Los Angeles" value="Los Angeles" />
                   </Picker>
 
               </View>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "48461899723",
+    "firebase_url": "https://electrade-6e8c7.firebaseio.com",
+    "project_id": "electrade-6e8c7",
+    "storage_bucket": "electrade-6e8c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48461899723:android:35501d0ddfb090f5",
+        "android_client_info": {
+          "package_name": "com.bigset.electric"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48461899723-g9msojb23qbmrcdeck3pdqa3b1h1a10m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8wqxas9TwHUjwB_BB2sYv7Ctknfws9gw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
