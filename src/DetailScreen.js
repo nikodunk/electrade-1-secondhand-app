@@ -58,7 +58,7 @@ export default class DetailScreen extends React.Component {
         </TouchableOpacity>
 
         {this.state.item ?
-          <ScrollView style={{maxHeight: '80%'}}>
+          <ScrollView>
                 { this.state.item.image ? 
                   <Image
                     style={styles.imageDetail}

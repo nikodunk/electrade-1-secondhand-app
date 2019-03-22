@@ -1,6 +1,6 @@
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View } from 'react-native';
-import { createSwitchNavigator, createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation';
+import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View, SafeAreaView } from 'react-native';
+import { createSwitchNavigator, createStackNavigator, createAppContainer, createMaterialTopTabNavigator, MaterialTopTabBar } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import SignInScreen from './SignInScreen';
@@ -39,7 +39,7 @@ class AuthLoadingScreen extends React.Component {
   // Render any loading content that you like here
   render() {
     return (
-      <View style={{flex: 1, alignItems: 'center', backgroundColor: 'white'}}>
+      <View style={{flex: 1, alignItems: 'center', backgroundColor: 'rgba(255, 255, 255, 0.95)'}}>
         
       </View>
     );
@@ -52,33 +52,44 @@ const AuthStack = createStackNavigator({ SignIn: SignInScreen}, { headerMode: 'n
 const LeaseStack = createStackNavigator({ Lease: LeaseScreen, Details: DetailScreen, Submit: LeaseScreenSubmitter }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Lease Deals', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-notifications" size={20} color="#4F8EF7" /> : <Icon name="ios-notifications" size={20} color="grey" /> } }) })
 const MarketStack = createStackNavigator({ Used: MarketplaceScreen, Details: DetailScreen, Submit: MarketplaceScreenSubmitter }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Buy & Sell', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-swap" size={20} color="#4F8EF7" /> : <Icon name="ios-swap" size={20} color="grey" /> } }) })
 const NewsStack = createStackNavigator({ News: NewsScreen, Details: DetailScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Newsfeed', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-paper" size={20} color="#4F8EF7" /> : <Icon name="ios-paper" size={20} color="grey" /> } }) })
-const SettingsStack = createStackNavigator({ SettingsScreen: SettingsScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Settings', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-settings" size={25} color="#4F8EF7" /> : <Icon name="ios-settings" size={25} color="grey" /> } }) })
+const SettingsStack = createStackNavigator({ SettingsScreen: SettingsScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Settings', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-settings" size={20} color="#4F8EF7" /> : <Icon name="ios-settings" size={20} color="grey" /> } }) })
 
 // const VideoStack = createStackNavigator({ Video: VideoScreen, Details: DetailScreen}, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Daily Videos', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-videocam" size={25} color="#4F8EF7" /> : <Icon name="ios-videocam" size={25} color="grey" /> } })  })
 // const ShareStack = createStackNavigator({ Gallery: EVGallery, Details: DetailScreen, Submit: SubmitScreen}, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Gallery', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-photos" size={25} color="#4F8EF7" /> : <Icon name="ios-photos" size={25} color="grey" /> } })  })
 
 
+function SafeAreaMaterialTopTabBar (props) {
+  return (
+    <SafeAreaView style={{backgroundColor: 'white'}}>
+      <MaterialTopTabBar {...props} />
+    </SafeAreaView>
+  )
+}
 
-const AppTabs = createBottomTabNavigator(
+
+const AppTabs = createMaterialTopTabNavigator(
   { LeaseStack, MarketStack, NewsStack, SettingsStack },
   {
     initialRouteName: 'LeaseStack',
-    animationEnabled: false,
-    swipeEnabled: false,
+    animationEnabled: true,
+    swipeEnabled: true,
     lazyLoad: true,
+    optimizationsEnabled: true,
+    tabBarComponent: SafeAreaMaterialTopTabBar,
+    tabBarPosition: 'bottom',
     tabBarOptions: {
       activeTintColor: 'dodgerblue',
       inactiveTintColor: 'grey',
+      pressOpacity: 1,
       showIcon: true,
       showLabel: true,
       lazyLoad: true,
-      style: {
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0
-      }
+      upperCaseLabel: false,
+      tabStyle: {padding: 0, margin: 0, borderTopColor: 'lightgrey', borderTopWidth: 1 },
+      style:{ backgroundColor: 'white'},
+      iconStyle: {padding: 0, margin: 0, marginBottom: 2},
+      labelStyle: {padding: 0, margin: 0, marginBottom: 2, fontSize: 11},
+      indicatorStyle: {backgroundColor: 'rgba(0, 0, 0, 0.0)'},
     }
   }
 )

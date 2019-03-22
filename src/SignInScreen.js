@@ -85,7 +85,7 @@ export default class SignInScreen extends React.Component {
                             onPress={() => this._onPress(this.state.email)}
                             title="Let's Go!" />
                           </View>
-                          <Text style={{color: 'grey'}}>Your email is only for the rare feedback email to improve the app. I won't sell it, I won't spam you.</Text>
+                          <Text style={{color: 'grey'}}>Your email will not be used for marketing purposes, but this preset is required should you apply for a lease. It will not be given to third parties without your (later) consent.</Text>
                         </View>
 
 
