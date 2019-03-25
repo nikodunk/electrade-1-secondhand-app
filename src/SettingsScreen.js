@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, Picker, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, ActivityIndicator, Switch } from 'react-native';
+import {Platform, Picker, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, ActivityIndicator, Switch, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Details from './DetailScreen';
@@ -51,7 +51,7 @@ export default class SettingsScreen extends React.Component {
   
   _onChangeEmail(text){
       this.setState({email: text})
-      AsyncStorage.setItem('email', JSON.stringify(text))
+      AsyncStorage.setItem('email', text)
   }
 
   _onChangeRegion(newRegion){
@@ -62,9 +62,9 @@ export default class SettingsScreen extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={{flex: 1}}>
+      <View style={{flex: 1}}>
         <ScrollView style={{flex: 1}}>
-          <View style={{marginBottom: 80}}>
+          <View style={{marginBottom: 80, marginTop: 30}}>
 
               {/* REGION */}
               <View style={styles.deal}>
@@ -97,9 +97,14 @@ export default class SettingsScreen extends React.Component {
                 <Text style={styles.newsTitle}>
                   Your email:
                 </Text>
-                <Text>
-                  &nbsp;&nbsp;{this.state.email}
-                </Text>
+                <TextInput 
+                  underlineColorAndroid="transparent"
+                  style={styles.textInput}
+                  placeholder={'Your email'}
+                  value={this.state.email}
+                  autoCapitalize = 'none'
+                  onChangeText={ (text) => this._onChangeEmail(text)}
+                  />
               </View>
 
               <View style={styles.separator} />
@@ -132,7 +137,7 @@ export default class SettingsScreen extends React.Component {
 
           </View>
         </ScrollView>
-      </SafeAreaView>
+      </View>
     );
 
   }

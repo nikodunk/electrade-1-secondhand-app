@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Button, AsyncStorage, KeyboardAvoidingView, TextInput, ActivityIndicator, Alert} from 'react-native';
+import {Platform, StyleSheet, Text, View, AsyncStorage, KeyboardAvoidingView, TextInput, ActivityIndicator, Alert} from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import * as Animatable from 'react-native-animatable';
 import Mixpanel from 'react-native-mixpanel'
 Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')
+import { Button } from 'react-native-elements';
 
 export default class SignInScreen extends React.Component {
 
@@ -34,7 +35,9 @@ export default class SignInScreen extends React.Component {
     Mixpanel.track("Email Button Pressed");
     this.setState({loading: true})
     console.log(email)
-    if(email === '' || email === ' ' || email === null){
+    if(email === '' || email === null
+      // || email === ' ' 
+      ){
       Alert.alert('Please enter your email');
       this.setState({loading: false})
       return
@@ -79,16 +82,21 @@ export default class SignInScreen extends React.Component {
                               autoFocus={true}
                               autoCapitalize = 'none'
                               keyboardType={'email-address'}
-                              onChangeText={ (text) => {  this.setState({email: text}) }}
+                              onChangeText={ (text) => { this.setState({email: text}) }}
                           />
                           <Button
+                            type="solid"
+                            buttonStyle={styles.bigButton}
                             onPress={() => this._onPress(this.state.email)}
-                            title="Let's Go!" />
+                            title="Sign up"
+                            />
+                          <Button
+                            type="clear"
+                            onPress={() => {this._onPress(' ')}}
+                            title="Skip for now" />
                           </View>
                           <Text style={{color: 'grey'}}>Your email will not be used for marketing purposes, but this preset is required should you apply for a lease. It will not be given to third parties without your (later) consent.</Text>
                         </View>
-
-
 
                       </KeyboardAvoidingView>
                     }
