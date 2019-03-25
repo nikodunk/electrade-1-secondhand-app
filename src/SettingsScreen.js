@@ -30,7 +30,7 @@ export default class SettingsScreen extends React.Component {
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
         if(this.state.email){ Mixpanel.identify(this.state.email); Mixpanel.set({"$email": this.state.email}); firebase.analytics().setUserId(this.state.email) }
-        if(this.state.email !== 'niko'){Mixpanel.track("SettingsScreen Loaded"); firebase.analytics().setCurrentScreen('NewsScreen Loaded') }
+        if(this.state.email !== 'niko'){Mixpanel.track("AccountScreen Loaded"); firebase.analytics().setCurrentScreen('AccountScreen Loaded') }
         // this seems to be android only but not sure yet 
         // Mixpanel.setPushRegistrationId("GCM/FCM push token")
       })
@@ -69,7 +69,7 @@ export default class SettingsScreen extends React.Component {
               {/* REGION */}
               <View style={styles.deal}>
                   <Text style={[styles.newsTitle, {fontSize: 20}]}>
-                    Settings
+                    Account
                     {'\n'}
                   </Text>
 
