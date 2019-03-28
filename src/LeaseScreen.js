@@ -174,7 +174,7 @@ export default class HomeScreen extends React.Component {
                                 }
                     keyExtractor={(item, index) => index.toString()}
                     /> 
-                  <Text style={{margin: 10, color: 'grey'}}>NOTE: Numbers exclude tax, license & documentation fees.  Estimates of these amounts were subtracted from offers that were specified with a total drive-off. Also, many of these offers include conditional incentives and/or rebates (i.e. recent college grad, loyalty, competitive, etc).</Text>
+                  <Text style={{margin: 10, color: 'grey'}}>NOTE: Numbers are average of total cost per month: An average of total drive-off and all monthly payments, excluding tax. Electrade does not guarantee precision of the offer. Some offers include conditional incentives and/or rebates (i.e. recent college grad, loyalty, competitive, etc).</Text>
                   </View>
               : 
               <View style={{marginTop: 100, alignItems: 'center'}}>
