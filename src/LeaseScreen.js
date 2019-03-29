@@ -19,6 +19,11 @@ const i3Image = require('./img/i3.jpg')
 const fiatImage = require('./img/fiat.jpg')
 const golfImage = require('./img/golf.jpg')
 
+const bmwImage = require('./img/bmw330e.jpg')
+const primeImage = require('./img/prime.jpg')
+const voltImage = require('./img/volt.jpg')
+const niroImage = require('./img/niro.jpg')
+
 export default class HomeScreen extends React.Component {
 
   constructor(props) {
@@ -40,7 +45,7 @@ export default class HomeScreen extends React.Component {
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
         if(this.state.email){ Mixpanel.identify(this.state.email); Mixpanel.set({"$email": this.state.email}); }
-        if(this.state.email !== 'niko'){Mixpanel.track("LeaseScreen Loaded"); firebase.analytics().setCurrentScreen('NewsScreen Loaded') }
+        if(this.state.email !== 'niko'){Mixpanel.track("LeaseScreen Loaded"); firebase.analytics().setCurrentScreen('LeaseScreen') }
         
         firebase.analytics().setUserId(this.state.email)
         firebase.analytics().logEvent('LeaseScreen_Loaded')
@@ -141,7 +146,7 @@ export default class HomeScreen extends React.Component {
               
               <View style={styles.deal}>
                 <Text style={[styles.newsTitle, {fontSize: 20}]}>
-                    Local lease deals around {this.state.region}
+                    Current lease deals around {this.state.region}
                 </Text>
               </View>
               {!this.state.loading ? 
@@ -158,15 +163,19 @@ export default class HomeScreen extends React.Component {
                                             <View style={[styles.imageVideo, styles.videoContainer]}>
                                               <Image  style={styles.imageVideo}
                                                       source={
-                                                              item.teaserImage === 'Bolt' ? boltImage : 
-                                                              item.teaserImage === 'Leaf' ? leafImage : 
-                                                              item.teaserImage === 'Etron' ? etronImage : 
-                                                              item.teaserImage === 'Kona' ? konaImage : 
-                                                              item.teaserImage === '500e' ? fiatImage : 
-                                                              item.teaserImage === 'i3' ? i3Image : 
-                                                              item.teaserImage === 'Golf' ? golfImage : 
-                                                              model3Image} />
-                                              <Text style={styles.videoTitle}>{item.title} for {item.price}</Text>
+                                                        item.teaserImage === 'Bolt' ? boltImage : 
+                                                        item.teaserImage === 'Leaf' ? leafImage : 
+                                                        item.teaserImage === 'Etron' ? etronImage : 
+                                                        item.teaserImage === 'Kona' ? konaImage : 
+                                                        item.teaserImage === '500e' ? fiatImage : 
+                                                        item.teaserImage === 'i3' ? i3Image : 
+                                                        item.teaserImage === 'Golf' ? golfImage : 
+                                                        item.teaserImage === '330e' ? bmwImage : 
+                                                        item.teaserImage === 'Prime' ? primeImage : 
+                                                        item.teaserImage === 'Volt' ? voltImage : 
+                                                        item.teaserImage === 'Niro' ? niroImage : 
+                                                        model3Image} />
+                                              <Text style={styles.videoTitle}>{item.title} for{'\n'}{item.price}</Text>
                                             </View> 
                                       </TouchableOpacity>
                                   : null }
@@ -174,7 +183,7 @@ export default class HomeScreen extends React.Component {
                                 }
                     keyExtractor={(item, index) => index.toString()}
                     /> 
-                  <Text style={{margin: 10, color: 'grey'}}>NOTE: Numbers are average of total cost per month: An average of total drive-off and all monthly payments, excluding tax. Electrade does not guarantee precision of the offer. Some offers include conditional incentives and/or rebates (i.e. recent college grad, loyalty, competitive, etc).</Text>
+                  <Text style={{margin: 10, color: 'grey'}}>NOTE: Numbers exclude tax, license and doc fees, but include acquisition and destination. Electrade does not guarantee precision of the offer. Some offers include conditional incentives and/or rebates (i.e. recent college grad, loyalty, competitive, etc).</Text>
                   </View>
               : 
               <View style={{marginTop: 100, alignItems: 'center'}}>

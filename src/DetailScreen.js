@@ -39,6 +39,7 @@ export default class DetailScreen extends React.Component {
         this.setState({email: res})
         if(this.state.email !== 'niko'){Mixpanel.track(this.state.type+"Details Loaded") }
         // if(this.state.email === 'niko'){ AsyncStorage.removeItem('remainingtrials') }
+        firebase.analytics().logEvent(this.state.type+'DetailsScreen_Loaded')
       })
   }
  

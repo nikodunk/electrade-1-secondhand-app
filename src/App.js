@@ -69,11 +69,11 @@ function SafeAreaMaterialTopTabBar (props) {
 
 
 const AppTabs = createMaterialTopTabNavigator(
-  { LeaseStack, MarketStack, NewsStack, SettingsStack },
+  { NewsStack, LeaseStack, MarketStack, SettingsStack },
   {
-    initialRouteName: 'LeaseStack',
-    animationEnabled: true,
-    swipeEnabled: true,
+    initialRouteName: 'NewsStack',
+    animationEnabled: false,
+    swipeEnabled: false,
     lazyLoad: true,
     optimizationsEnabled: true,
     tabBarComponent: SafeAreaMaterialTopTabBar,
