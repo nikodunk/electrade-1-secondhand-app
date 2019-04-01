@@ -30,6 +30,7 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = { 
       leases: null,
+      filteredLeases: null,
       email: null,
       loading: null,
       region: null
@@ -116,26 +117,68 @@ export default class HomeScreen extends React.Component {
 
     // GET CURRENT LEASES
     // fetch('http://localhost:8080/api/leases/get')
-    fetch('https://electrade-server.herokuapp.com/api/leases/get')
+    // fetch('https://electrade-server.herokuapp.com/api/leases/get')
+    fetch('https://electrade-server.herokuapp.com/api/leases/all/get')
       .then((res) => { return res.json()})
       
       // set results as state
       .then((res) => {
             this.setState({leases: res});
-            this._getRegion()
-      })   
+      })
+
+      .then(() => this._getRegion())
+
+      
   }
 
 
   _getRegion(){
-    AsyncStorage.getItem('region').then((region) => {
-            region === null ? (
-                                    this.setState({region: 'SF Bay Area', loading: false }),
-                                    AsyncStorage.setItem('region', JSON.stringify('SF Bay Area'))
-                              ) : 
-                                    this.setState({region: JSON.parse(region), loading: false })
-                            })
+    AsyncStorage.getItem('region')
+    .then((region) => { if (region === null){
+                                    this.setState({region: 'Northern California', loading: false }),
+                                    AsyncStorage.setItem('region', JSON.stringify('CA(N)'))
+                        }
+                        else {      let humanReadableRegion
+                                    let regionString = JSON.parse(region)
+                                    regionString === 'CA(N)' ? humanReadableRegion = 'Northern California' : null
+                                    regionString === 'CA(S)' ? humanReadableRegion = 'Southern California' : null
+                                    regionString === 'NY' ? humanReadableRegion = 'New York' : null
+                                    regionString === 'CO' ? humanReadableRegion = 'Colorado' : null
+                                    regionString === 'FL' ? humanReadableRegion = 'Florida' : null
+                                    regionString === 'GA' ? humanReadableRegion = 'Georgia' : null
+                                    regionString === 'IL' ? humanReadableRegion = 'Illinois' : null
+                                    regionString === 'MA' ? humanReadableRegion = 'Massachusetts' : null
+                                    regionString === 'MD' ? humanReadableRegion = 'Maryland' : null
+                                    regionString === 'NJ' ? humanReadableRegion = 'New Jersey' : null
+                                    regionString === 'OR' ? humanReadableRegion = 'Oregon' : null
+                                    regionString === 'VA' ? humanReadableRegion = 'Virginia' : null
+                                    regionString === 'WA' ? humanReadableRegion = 'Washington' : null
+                                    this.setState({region: regionString, loading: false, regionString: humanReadableRegion })
+                            }})
+    .then(() => this._filter())
   }
+
+
+  _filter(){
+    
+    let filtered
+
+    // filter by region
+    filtered = this.state.leases.filter((item, index) => item["State"] === this.state.region )
+
+    // deduplicate
+    filtered = filtered.filter((thing, index, self) =>
+                            index === self.findIndex((t) => (
+                               t["Make and Model"] === thing["Make and Model"]
+                          )))
+
+    this.setState({filteredLeases: filtered})
+
+
+  }
+
+
+  
 
 
   render() {
@@ -146,16 +189,15 @@ export default class HomeScreen extends React.Component {
               
               <View style={styles.deal}>
                 <Text style={[styles.newsTitle, {fontSize: 20}]}>
-                    Current lease deals around {this.state.region}
+                    Current lease deals in {this.state.regionString}
                 </Text>
               </View>
               {!this.state.loading ? 
                 <View>
                   <FlatList
-                    data={this.state.leases}
+                    data={this.state.filteredLeases}
                     renderItem={({item, index}) => 
                                 <View>
-                                  {item.regions.indexOf(this.state.region) !== -1 ?
                                       <TouchableOpacity 
                                         style={{height: 210}} 
                                         delayPressIn={50}
@@ -163,22 +205,23 @@ export default class HomeScreen extends React.Component {
                                             <View style={[styles.imageVideo, styles.videoContainer]}>
                                               <Image  style={styles.imageVideo}
                                                       source={
-                                                        item.teaserImage === 'Bolt' ? boltImage : 
-                                                        item.teaserImage === 'Leaf' ? leafImage : 
-                                                        item.teaserImage === 'Etron' ? etronImage : 
-                                                        item.teaserImage === 'Kona' ? konaImage : 
-                                                        item.teaserImage === '500e' ? fiatImage : 
-                                                        item.teaserImage === 'i3' ? i3Image : 
-                                                        item.teaserImage === 'Golf' ? golfImage : 
-                                                        item.teaserImage === '330e' ? bmwImage : 
-                                                        item.teaserImage === 'Prime' ? primeImage : 
-                                                        item.teaserImage === 'Volt' ? voltImage : 
-                                                        item.teaserImage === 'Niro' ? niroImage : 
-                                                        model3Image} />
-                                              <Text style={styles.videoTitle}>{item.title} for{'\n'}{item.price}</Text>
+                                                                item.teaserImage === 'Bolt' ? boltImage : 
+                                                                item.teaserImage === 'Leaf' ? leafImage : 
+                                                                item.teaserImage === 'Etron' ? etronImage : 
+                                                                item.teaserImage === 'Kona' ? konaImage : 
+                                                                item.teaserImage === '500e' ? fiatImage : 
+                                                                item.teaserImage === 'i3' ? i3Image : 
+                                                                item.teaserImage === 'Golf' ? golfImage : 
+                                                                item.teaserImage === '330e' ? bmwImage : 
+                                                                item.teaserImage === 'Prime' ? primeImage : 
+                                                                item.teaserImage === 'Volt' ? voltImage : 
+                                                                item.teaserImage === 'Niro' ? niroImage : 
+                                                                item.teaserImage === 'Model3' ? model3Image : 
+                                                                null
+                                                      } />
+                                              <Text style={styles.videoTitle}>{item["Make and Model"]}: {'\n'}{item["$/mo"]}/Month,{'\n'}{item["down+acq"]} Down</Text>
                                             </View> 
                                       </TouchableOpacity>
-                                  : null }
                                   </View>
                                 }
                     keyExtractor={(item, index) => index.toString()}

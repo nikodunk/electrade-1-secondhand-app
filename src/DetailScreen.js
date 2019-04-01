@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Mixpanel from 'react-native-mixpanel'
 import styles from './styles'
 import { Button } from 'react-native-elements';
+import firebase from 'react-native-firebase';
 
 
 const model3Image = require('./img/model3.jpg')
@@ -15,6 +16,11 @@ const etronImage = require('./img/etron.jpg')
 const i3Image = require('./img/i3.jpg')
 const fiatImage = require('./img/fiat.jpg')
 const golfImage = require('./img/golf.jpg')
+
+const bmwImage = require('./img/bmw330e.jpg')
+const primeImage = require('./img/prime.jpg')
+const voltImage = require('./img/volt.jpg')
+const niroImage = require('./img/niro.jpg')
 
 
 
@@ -77,7 +83,13 @@ export default class DetailScreen extends React.Component {
                             this.state.item.teaserImage === '500e' ? fiatImage : 
                             this.state.item.teaserImage === 'i3' ? i3Image : 
                             this.state.item.teaserImage === 'Golf' ? golfImage : 
-                            model3Image}
+                            this.state.item.teaserImage === '330e' ? bmwImage : 
+                            this.state.item.teaserImage === 'Prime' ? primeImage : 
+                            this.state.item.teaserImage === 'Volt' ? voltImage : 
+                            this.state.item.teaserImage === 'Niro' ? niroImage : 
+                            this.state.item.teaserImage === 'Model3' ? model3Image : 
+                            null
+                            }
                     /> : null }
 
                 <View style={{padding: 20}}>
@@ -116,14 +128,12 @@ export default class DetailScreen extends React.Component {
                 {/* lease details */}
                   {this.state.type === 'Lease' ?
                     <View>
-                      <Text style={[styles.newsTitle, {fontSize: 20}]}>
-                        { this.state.item.title }
+                      <Text style={[styles.newsTitle, {fontSize: 20}]}>{ this.state.item["Make and Model"] }
                       </Text>
                       <Text style={{fontWeight: '500', fontSize: 17}}>
-                        { this.state.item.price }
-                        {'\n'}
+                        {this.state.item["$/mo"]}/month, {this.state.item["down+acq"]} down
                       </Text>
-                      <Text style={{}}>
+                      {/*<Text style={{}}>
                         { this.state.item.blurb }
                       </Text>
                       <View style={styles.separator} />
@@ -132,15 +142,19 @@ export default class DetailScreen extends React.Component {
                       <Text style={{fontWeight: '500', color: '#1a2a3a'}}>
                         { this.state.item.stats }
                         {'\n'}
-                      </Text>
+                      </Text>*/}
                       <View style={styles.separator} />
                       <Text> </Text>
 
-                      <Text style={{fontWeight: '700'}}>
-                        Offer Details:{'\n'}
-                        { this.state.item.details }
-                        {'\n'}
-                      </Text>
+                      <Text style={{fontWeight: '700'}}>Offer Details</Text>
+                      <Text>Down payment: { this.state.item["down+acq"] }</Text>
+                      <Text>Monthly payment:  { this.state.item["$/mo"] } + tax</Text>
+                      <Text>Months:  { this.state.item["months"] }</Text>
+                      <Text>Miles per year:  { this.state.item["miles/yr"] }</Text>
+                      <Text>Total amount:  { this.state.item["$ total"] } ("one pay")</Text>
+                      <Text>Average over lease:  { this.state.item["$/mo avg"] } ("zero down price")</Text>
+                      <Text>Dollars per mile:  { this.state.item["$/mi"] }</Text>
+                      <Text> </Text>
                       <Button
                         type="solid"
                         buttonStyle={styles.bigButton}
