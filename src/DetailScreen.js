@@ -143,6 +143,7 @@ export default class DetailScreen extends React.Component {
                         { this.state.item.stats }
                         {'\n'}
                       </Text>*/}
+                      <Text> </Text>
                       <View style={styles.separator} />
                       <Text> </Text>
 

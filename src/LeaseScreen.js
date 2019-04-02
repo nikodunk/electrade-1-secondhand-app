@@ -175,7 +175,6 @@ export default class HomeScreen extends React.Component {
 
     this.setState({filteredLeases: filtered})
 
-
   }
 
 
@@ -190,8 +189,10 @@ export default class HomeScreen extends React.Component {
               
               <View style={styles.deal}>
                 <Text style={[styles.newsTitle, {fontSize: 20}]}>
-                    Current lease deals in {this.state.regionString}
+                    This week's best EV lease offers from dealerships in
+                    <Text style={{color: '#2191fb'}} onPress={() => this.props.navigation.navigate('SettingsScreen')}> {this.state.regionString}</Text>
                 </Text>
+                
               </View>
               {!this.state.loading ? 
                 <View>

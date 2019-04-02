@@ -56,10 +56,10 @@ export default class SubmitScreen extends React.Component {
       this.setState({loading: false})
       return
     }
-    else{
+    else {
       this.setState({loading: true})
-      // fetch('http://localhost:8080/api/leases/create/'+this.state.email+'/'+this.state.item.title, {
-      fetch('https://electrade-server.herokuapp.com/api/leases/create/'+this.state.email+'/'+this.state.item.title, {
+      // fetch('http://localhost:8080/api/leases/create/'+this.state.email+'/'+this.state.item["Make and Model"], {
+      fetch('https://electrade-server.herokuapp.com/api/leases/create/'+this.state.email+'/'+this.state.item["Make and Model"], {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -73,7 +73,7 @@ export default class SubmitScreen extends React.Component {
           Mixpanel.track("Lease Request Submitted")
           firebase.analytics().logEvent('Lease_Request_Submitted');
           this.setState({thanks: true})
-        } )
+        })
       .then(() => setTimeout(() => this.props.navigation.navigate('Lease'), 1000 ) )
     }
   }
