@@ -128,16 +128,17 @@ export default class HomeScreen extends React.Component {
 
       .then(() => this._getRegion())
 
-      
   }
-
 
   _getRegion(){
     AsyncStorage.getItem('region')
-    .then((region) => { if (region === null){
-                                    this.setState({region: 'Northern California', loading: false }),
+    .then((region) => { 
+                        // should the region be set as something from the last version or it be first open default to norcal
+                        if (region === null || region === '"SF Bay Area"'){
+                                    this.setState({region: 'CA(N)', loading: false, regionString: 'Northern California' })
                                     AsyncStorage.setItem('region', JSON.stringify('CA(N)'))
                         }
+                        // if it is set to a valid state, then make it pretty.
                         else {      let humanReadableRegion
                                     let regionString = JSON.parse(region)
                                     regionString === 'CA(N)' ? humanReadableRegion = 'Northern California' : null
