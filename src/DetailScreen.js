@@ -128,7 +128,7 @@ export default class DetailScreen extends React.Component {
                 {/* lease details */}
                   {this.state.type === 'Lease' ?
                     <View>
-                      <Text style={[styles.newsTitle, {fontSize: 20}]}>{ this.state.item["Make and Model"] }
+                      <Text style={[styles.newsTitle, {fontSize: 20}]}>{this.state.item["Year"]} { this.state.item["Make and Model"] }
                       </Text>
                       <Text style={{fontWeight: '500', fontSize: 17}}>
                         {this.state.item["$/mo"]}/month, {this.state.item["down+acq"]} down
