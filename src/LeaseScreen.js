@@ -4,7 +4,6 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Details from './DetailScreen';
 import Mixpanel from 'react-native-mixpanel'
 import * as Animatable from 'react-native-animatable';
 Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')
@@ -45,11 +44,7 @@ export default class HomeScreen extends React.Component {
       // get email, except if developer mode
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
-        if(this.state.email){ Mixpanel.identify(this.state.email); Mixpanel.set({"$email": this.state.email}); }
-        if(this.state.email !== 'niko'){Mixpanel.track("LeaseScreen Loaded"); firebase.analytics().setCurrentScreen('LeaseScreen') }
-        
-        firebase.analytics().setUserId(this.state.email)
-        firebase.analytics().logEvent('LeaseScreen_Loaded')
+        if(this.state.email !== 'niko'){Mixpanel.track("LeaseScreen Loaded"); firebase.analytics().logEvent('LeaseScreen_Loaded')}
       })
 
 

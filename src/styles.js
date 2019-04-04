@@ -105,7 +105,18 @@ export default styles = StyleSheet.create({
     bigButton:{
         backgroundColor: '#2191fb', 
         borderRadius: 10
-    }
+    },
+    outlineButton: {
+      fontSize: 20,
+      marginTop: 10,
+      borderWidth:1,
+      alignItems:'center',
+      justifyContent:'center',
+      borderRadius:5,
+      borderColor:'#2191fb',
+      padding: 8,
+      color: '#2191fb'
+    },
 
 
 }); 

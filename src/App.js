@@ -8,7 +8,7 @@ import NewsScreen from './NewsScreen';
 import NewsScreenDetails from './NewsScreenDetails';
 
 import LeaseScreen from './LeaseScreen';
-import DetailScreen from './DetailScreen';
+import DetailScreen from './LeaseScreenDetails';
 import LeaseScreenSubmitter from './LeaseScreenSubmitter';
 
 import SettingsScreen from './SettingsScreen';

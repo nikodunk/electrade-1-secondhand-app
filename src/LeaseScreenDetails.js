@@ -160,7 +160,7 @@ export default class DetailScreen extends React.Component {
                         type="solid"
                         buttonStyle={styles.bigButton}
                         onPress={() => this.props.navigation.navigate('Submit', {item: this.state.item, type: 'Lease'} )}
-                        title={`Reserve this deal`} 
+                        title={`Get this deal`} 
                         />
                     </View> : null }
 

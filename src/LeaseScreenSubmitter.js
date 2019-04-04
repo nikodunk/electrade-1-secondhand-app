@@ -24,7 +24,6 @@ export default class SubmitScreen extends React.Component {
       // get email, except if developer mode
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
-        {this.state.email ? Mixpanel.identify(this.state.email) : null }
         if(this.state.email !== 'niko'){Mixpanel.track("GetLease Touched") }
       })
 
@@ -70,8 +69,8 @@ export default class SubmitScreen extends React.Component {
           }),
       })
       .then(() => {
-          Mixpanel.track("Lease Request Submitted")
-          firebase.analytics().logEvent('Lease_Request_Submitted');
+          if(this.state.email !== 'niko'){ Mixpanel.track("Lease Request Submitted"); firebase.analytics().logEvent('Lease_Request_Submitted'); }
+          AsyncStorage.setItem('email', this.state.email)
           this.setState({thanks: true})
         })
       .then(() => setTimeout(() => this.props.navigation.navigate('Lease'), 1000 ) )
@@ -101,14 +100,28 @@ export default class SubmitScreen extends React.Component {
                 <View style={styles.deal}>
 
                 <Text style={[styles.newsTitle, {fontSize: 20}]}>
-                  Thanks for your interest!
+                  Enter Email & Submit
                   {'\n'}
                 </Text>
 
-                <Text>
-                  Unfortunately, we're dealing with higher demand than anticipated. We're expecting this deal to be live again very soon. Please enter your email below to join the waitlist, and we will notify you once it is available again.
-                  {'\n'}{'\n'}
+                <Text style={{fontWeight: '600'}}>
+                  What happens next?
                 </Text>
+                <Text>
+                  Please enter your email below, and we will put you in touch with the dealer via email once we've vetted that they are still offering the exact terms. 
+                </Text>
+                <Text></Text>
+                <Text style={{fontWeight: '600'}}>
+                  Why this way? This ensures:
+                </Text>
+                <Text> ✅ No hassles</Text>
+                <Text> ✅ No negotiation</Text>
+                <Text> ✅ No spam marketing</Text>
+                <Text></Text>
+                <Text>
+                  We earn commission only if you go through with the lease and everything is to your liking, so let us know if there's anything we can do to help or ask questions when we reach out to you.
+                </Text>
+                <Text></Text>
 
 
                 {/* EMAIL */}
@@ -124,13 +137,14 @@ export default class SubmitScreen extends React.Component {
                       onChangeText={ (text) => {  this.setState({email: text}) }}
                       />
                   </View>
-
+                {this.state.item ? 
                   <Button
                     type="solid"
                     buttonStyle={styles.bigButton}
                     onPress={() => this._onPress()} 
-                    title="Join Waitlist"
+                    title={`Request ${this.state.item["Make and Model"]}`}
                     />
+                : null }
 
                   {this.state.loading ? <ActivityIndicator /> : null}
 

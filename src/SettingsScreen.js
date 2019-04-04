@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
-import {Platform, Picker, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, ActivityIndicator, Switch, TextInput } from 'react-native';
+import {Platform, Picker, StyleSheet, Text, View, AsyncStorage, ScrollView, Image, FlatList, TouchableOpacity, Linking, ActivityIndicator, Switch, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Details from './DetailScreen';
 import Mixpanel from 'react-native-mixpanel'
 import * as Animatable from 'react-native-animatable';
 Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')
 import firebase from 'react-native-firebase';
-
+import { Button } from 'react-native-elements';
 
 export default class SettingsScreen extends React.Component {
 
@@ -29,8 +28,7 @@ export default class SettingsScreen extends React.Component {
       // get email, except if developer mode
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
-        if(this.state.email){ Mixpanel.identify(this.state.email); Mixpanel.set({"$email": this.state.email}); firebase.analytics().setUserId(this.state.email) }
-        if(this.state.email !== 'niko'){Mixpanel.track("AccountScreen Loaded"); firebase.analytics().setCurrentScreen('AccountScreen Loaded') }
+        if(this.state.email !== 'niko'){Mixpanel.track("AccountScreen Loaded"); firebase.analytics().logEvent('AccountScreen_Loaded') }
         // this seems to be android only but not sure yet 
         // Mixpanel.setPushRegistrationId("GCM/FCM push token")
       })
@@ -117,6 +115,7 @@ export default class SettingsScreen extends React.Component {
                   />
               </View>
 
+
               <View style={styles.separator} />
 
 
@@ -126,13 +125,18 @@ export default class SettingsScreen extends React.Component {
                     {'\n'}
                     Feature missing? Have feedback?
                   </Text>
-                <Button 
-                    title="Email Feedback to Developers" 
-                    onPress={() => Linking.openURL('mailto:n.dunkel@gmail.com')} 
-                    />
+                <Button
+                  type="solid"
+                  buttonStyle={styles.bigButton}
+                  onPress={() => Linking.openURL('mailto:n.dunkel@gmail.com')} 
+                  title="Email Feedback to Developers" 
+                  />
                 <Text></Text>
                 <Text>Email the developers with feature requests, ideas, bugs to fix or feedback!</Text>
               </View>
+
+
+              <View style={styles.separator} />
 
 
             {/* NOTIFICATIONS */}
@@ -144,6 +148,19 @@ export default class SettingsScreen extends React.Component {
 
                 </View>
               </View>*/}
+
+
+            {/* INVITE COLLEAGUES */}
+            <View style={{flex: 1, alignItems: 'center', padding: 10}}>
+              <Button
+                type="solid"
+                buttonStyle={styles.bigButton}
+                onPress={() => Platform.OS === 'ios' ? Linking.openURL('sms: &body=https://itunes.apple.com/us/app/id1445602414') : Linking.openURL('sms:?body=https://play.google.com/store/apps/details?id=com.bigset.electric')}
+                title="Invite friends to app" 
+                />
+            </View>
+
+            <View style={styles.separator} />
 
           </View>
         </ScrollView>
