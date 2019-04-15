@@ -24,13 +24,13 @@ export default class SubmitScreen extends React.Component {
       // get email, except if developer mode
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
-        if(this.state.email !== 'niko'){Mixpanel.track("GetLease Touched") }
+        if(this.state.email !== 'niko'){Mixpanel.track("GetLease Touched"); firebase.analytics().logEvent('GetLease_Touched') }
       })
 
       this.setState({item: this.props.navigation.getParam('item') })
       
       AsyncStorage.getItem('email').then(email => this.setState({email: email}) )
-      firebase.analytics().logEvent('GetLease_Touched')
+      
 
       this._getRegion()
 
@@ -108,18 +108,22 @@ export default class SubmitScreen extends React.Component {
                   What happens next?
                 </Text>
                 <Text>
-                  Please enter your email below, and we will put you in touch with the dealer via email once we've vetted that they are still offering the exact terms. 
+                  Please enter your email below, and we will put you in touch with the dealer via email once we've vetted that they are still offering the exact terms. Offers are valid for 2 days.
                 </Text>
                 <Text></Text>
                 <Text style={{fontWeight: '600'}}>
-                  Why this way? This ensures:
+                  Why this way?
                 </Text>
-                <Text> ✅ No hassles</Text>
-                <Text> ✅ No negotiation</Text>
-                <Text> ✅ No spam marketing</Text>
+                <Text>We're doing this to guarantee:</Text>
+                <Text style={{marginBottom: 3}}> ✅ No hassles</Text>
+                <Text style={{marginBottom: 3}}> ✅ No negotiation</Text>
+                <Text style={{marginBottom: 3}}> ✅ No spam marketing</Text>
                 <Text></Text>
+                <Text style={{fontWeight: '600'}}>
+                  What does electrade get from it?
+                </Text>
                 <Text>
-                  We earn commission only if you go through with the lease and everything is to your liking, so let us know if there's anything we can do to help or ask questions when we reach out to you.
+                  We earn commission. Only if you go through with the lease and everything is to your liking, though – we don't pass your email on. So let us know if there's anything we can do to help or ask questions when we reach out to you. Our mission is to make it easier to get EVs, thereby getting more EVs on the road, quickly.
                 </Text>
                 <Text></Text>
 

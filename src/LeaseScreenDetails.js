@@ -32,7 +32,8 @@ export default class DetailScreen extends React.Component {
     super(props);
     this.state = { 
       type: null,
-      item: null
+      item: null,
+      region: null
        };
 
   }
@@ -41,12 +42,30 @@ export default class DetailScreen extends React.Component {
   componentDidMount() {
       this.setState({item: this.props.navigation.getParam('item') })
       this.setState({type: this.props.navigation.getParam('type') })
+      this.setState({region: this.props.navigation.getParam('region') })
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
-        if(this.state.email !== 'niko'){Mixpanel.track(this.state.type+"Details Loaded") }
+        if(this.state.email !== 'niko'){Mixpanel.track(this.state.type+"Details Loaded"); firebase.analytics().logEvent(this.state.type+'DetailsScreen_Loaded') }
         // if(this.state.email === 'niko'){ AsyncStorage.removeItem('remainingtrials') }
-        firebase.analytics().logEvent(this.state.type+'DetailsScreen_Loaded')
       })
+
+
+      AsyncStorage.getItem(this.props.navigation.getParam('item')["Make and Model"]).then((res) => {
+      if (res) {
+        this.setState({left: JSON.parse(res)})
+       }
+       else
+        { let randomNumber = Math.floor(Math.random() * 3) + 1;
+          AsyncStorage.setItem(this.state.item["Make and Model"], JSON.stringify(randomNumber));
+          this.setState({left: randomNumber}) 
+        }
+      })
+
+      
+  }
+
+  numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
  
 
@@ -128,11 +147,14 @@ export default class DetailScreen extends React.Component {
                 {/* lease details */}
                   {this.state.type === 'Lease' ?
                     <View>
-                      <Text style={[styles.newsTitle, {fontSize: 20}]}>{this.state.item["Year"]} { this.state.item["Make and Model"] }
+                      {this.state.left && this.state.item["Make and Model"] !== "Tesla Model 3" ? <Text style={{fontSize: 12, fontWeight: '400', color: '#2191fb'}}>  {this.state.left} left at this price</Text> : null }
+                      <Text style={[styles.newsTitle, {fontSize: 20}]}>
+                        {this.state.item["Year"]} { this.state.item["Make and Model"] }
                       </Text>
                       <Text style={{fontWeight: '500', fontSize: 17}}>
-                        {this.state.item["$/mo"]}/month, {this.state.item["down+acq"]} down
+                      {' '}{this.state.item["$/mo"]}/month, {this.state.item["down+acq"]} down
                       </Text>
+
                       {/*<Text style={{}}>
                         { this.state.item.blurb }
                       </Text>
@@ -146,21 +168,37 @@ export default class DetailScreen extends React.Component {
                       <Text> </Text>
                       <View style={styles.separator} />
                       <Text> </Text>
-
                       <Text style={{fontWeight: '700'}}>Offer Details</Text>
-                      <Text>Down payment: { this.state.item["down+acq"] }</Text>
-                      <Text>Monthly payment:  { this.state.item["$/mo"] } + tax</Text>
-                      <Text>Months:  { this.state.item["months"] }</Text>
-                      <Text>Miles per year:  { this.state.item["miles/yr"] }</Text>
-                      <Text>Total amount:  { this.state.item["$ total"] } ("one pay")</Text>
-                      <Text>Average over lease:  { this.state.item["$/mo avg"] } ("zero down price")</Text>
-                      <Text>Dollars per mile:  { this.state.item["$/mi"] }</Text>
+                      <Text>• Monthly payment:  <Text style={{fontWeight: '700'}}>{ this.state.item["$/mo"] } + tax</Text></Text>
+                      <Text>• Months:  <Text style={{fontWeight: '700'}}>{ this.state.item["months"] }</Text></Text>
+                      <Text>• Miles per year:  <Text style={{fontWeight: '700'}}>{ this.state.item["miles/yr"] }</Text></Text>
+                      <Text>• Down payment: <Text style={{fontWeight: '700'}}>{ this.state.item["down+acq"] }</Text></Text>
+                      
+                      <Text style={{}}><Text style={{fontWeight: '700'}}>+</Text>$1,400 to $2,200 ("drive-off fees")</Text>
+                      <Text style={{}}>   (tax, license, doc, DMV, acquisition)</Text>
+                      { this.state.item["StateIncentive"] ? <Text style={{color: '#2191fb'}}><Text style={{fontWeight: '700'}}>-</Text> {this.state.item["StateIncentive"]} cash back ("state rebate")</Text> : null }
+                      {this.state.region === "CA(N)"  || this.state.region === "CA(S)" ? <Text style={{color: '#2191fb'}}><Text style={{fontWeight: '700'}}>-</Text> PG&E rebate</Text> : null }
+                      
+                      
+                      <Text style={{color: '#2191fb'}}>
+                        <Text style={{fontWeight: '700'}}>= { this.state.item["DriveOffEst"] } </Text> 
+                        electrade estimated effective drive-off
+                      </Text>
+
+                      <Text>   Assumes excellent credit & car pick-up</Text>
+                      <Text>   Assumes existing lease but no supplier code</Text>
+                      <Text> </Text>
+                      <Text>• Dollars per mile:  { this.state.item["$/mi"] }</Text>
+                      <Text>• Total amount over lease:  { this.state.item["$ total"] } ("one pay")</Text>
+                      <Text>• Averaged over lease:  { this.state.item["$/mo avg"] } ("zero down price")</Text>
+                      
+
                       <Text> </Text>
                       <Button
                         type="solid"
                         buttonStyle={styles.bigButton}
                         onPress={() => this.props.navigation.navigate('Submit', {item: this.state.item, type: 'Lease'} )}
-                        title={`Get this deal`} 
+                        title={`Reserve this deal`} 
                         />
                     </View> : null }
 

@@ -198,7 +198,7 @@ export default class HomeScreen extends React.Component {
                                       <TouchableOpacity 
                                         style={{height: 210}} 
                                         delayPressIn={50}
-                                        onPress={() => this.props.navigation.navigate('Details', {item: item, type: 'Lease'} ) } >
+                                        onPress={() => this.props.navigation.navigate('Details', {item: item, type: 'Lease', region: this.state.region} ) } >
                                             <View style={[styles.imageVideo, styles.videoContainer]}>
                                               <Image  style={styles.imageVideo}
                                                       source={
@@ -216,14 +216,46 @@ export default class HomeScreen extends React.Component {
                                                                 item.teaserImage === 'Model3' ? model3Image : 
                                                                 null
                                                       } />
-                                              <Text style={styles.videoTitle}>{item["Make and Model"]}: {'\n'}{item["$/mo"]}/Month,{'\n'}{item["down+acq"]} Down</Text>
+                                              <Text style={styles.videoTitle}>{item["Make and Model"]}: {'\n'}{item["$/mo"]}/Month,{'\n'}{item["DriveOffEst"]} Drive-Off<Text style={styles.videoSubTitle}>*</Text></Text>
+                                              
                                             </View> 
                                       </TouchableOpacity>
                                   </View>
                                 }
                     keyExtractor={(item, index) => index.toString()}
                     /> 
-                  <Text style={{margin: 10, color: 'grey'}}>NOTE: Numbers exclude tax, license and doc fees, but include acquisition and destination. Electrade does not guarantee precision of the offer. Some offers include conditional incentives and/or rebates (i.e. recent college grad, loyalty, competitive, etc).</Text>
+                  <Text style={{margin: 10, color: 'grey'}}>* Estimate after all rebates and fees. Electrade's estimates include tax, dealer's "drive-off fees" (license, doc, etc), and federal, state & county incentives. Tap offers for details. Electrade does not guarantee precision of the offer. Some offers include conditional incentives and/or rebates (i.e. recent college grad, loyalty, competitive, etc).</Text>
+
+                  <View style={{margin: 10}}>
+                    <Button
+                      type="solid"
+                      buttonStyle={styles.bigButton}
+                      onPress={() => Linking.openURL("https://www.electricauto.org/")}
+                      title="Find your local Electric Vehicle Association" 
+                      />
+                  </View>
+
+                  { this.state.region === "CA(N)" ||
+                    this.state.region === "CA(S)" ?
+                    <View style={{margin: 10}}>
+                      <Button
+                        type="solid"
+                        buttonStyle={styles.bigButton}
+                        onPress={() => Linking.openURL("https://www.mcecleanenergy.org/ev-drivers/#EVrebate")}
+                        title="MCE Clean Energy Rebate" 
+                        />
+                      <Text></Text>
+                      <Button
+                        type="solid"
+                        buttonStyle={styles.bigButton}
+                        onPress={() => Linking.openURL("https://cleanvehiclerebate.org/eng")}
+                        title="California Incentives" 
+                        />
+                      <Text >for cars leased over 36 months: $2,500 on top of drive-off fee</Text>
+                    </View>
+                    : 
+                    null
+                  }
                   </View>
               : 
               <View style={{marginTop: 100, alignItems: 'center'}}>

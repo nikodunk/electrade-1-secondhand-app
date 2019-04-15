@@ -62,9 +62,18 @@ export default styles = StyleSheet.create({
 
     videoTitle:{
         margin: 20, 
+        marginBottom: 2,
         justifyContent: 'center', 
         fontWeight: '700', 
         fontSize: 30, 
+        color: 'white'
+    },
+
+    videoSubTitle:{
+        marginLeft: 20, 
+        justifyContent: 'center', 
+        fontWeight: '200', 
+        fontSize: 25, 
         color: 'white'
     },
 

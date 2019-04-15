@@ -149,6 +149,26 @@ export default class SettingsScreen extends React.Component {
                 </View>
               </View>*/}
 
+            {/* CURRENT LEASE? */}
+            {/*<View style={{ padding: 10}}>
+              <View style={{flexDirection:'row' }}> 
+
+                <Text style={{fontWeight: 'bold', padding: 3}}>Notifications about new local lease deals</Text>
+                <Switch value={this.state.chiefcomplaintvisible} onValueChange={(value) => this._onSwitchChiefComplaintVisible(value)} />
+
+              </View>
+            </View>*/}
+
+          {/* SUPPLIER? */}
+            {/*<View style={{ padding: 10}}>
+              <View style={{flexDirection:'row' }}> 
+
+                <Text style={{fontWeight: 'bold', padding: 3}}>Notifications about new local lease deals</Text>
+                <Switch value={this.state.chiefcomplaintvisible} onValueChange={(value) => this._onSwitchChiefComplaintVisible(value)} />
+
+              </View>
+            </View>*/}
+
 
             {/* INVITE COLLEAGUES */}
             <View style={{flex: 1, alignItems: 'center', padding: 10}}>
