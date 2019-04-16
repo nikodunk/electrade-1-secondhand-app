@@ -73,8 +73,8 @@ export default styles = StyleSheet.create({
         marginLeft: 20, 
         justifyContent: 'center', 
         fontWeight: '200', 
-        fontSize: 25, 
-        color: 'white'
+        fontSize: 15, 
+        color: 'lightgrey'
     },
 
     newsTitle:{

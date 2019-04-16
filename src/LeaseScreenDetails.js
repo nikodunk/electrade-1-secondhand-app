@@ -35,7 +35,6 @@ export default class DetailScreen extends React.Component {
       item: null,
       region: null
        };
-
   }
 
 
@@ -122,7 +121,7 @@ export default class DetailScreen extends React.Component {
                                 name="ios-open"
                                 size={20}
                                 color="white"
-                                /> } 
+                                /> }
                               title={` Continue at ${this.state.item.source}`} 
                               buttonStyle={styles.bigButton} 
                               onPress={() => {Linking.openURL(this.state.item.link.toString()); if(this.state.email !== 'niko'){Mixpanel.track(this.state.item.link.toString()+" touched") }}}
