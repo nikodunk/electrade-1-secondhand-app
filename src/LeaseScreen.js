@@ -8,7 +8,7 @@ import Mixpanel from 'react-native-mixpanel'
 import * as Animatable from 'react-native-animatable';
 Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')
 import firebase from 'react-native-firebase';
-import { PaymentRequest } from 'react-native-payments';
+
 
 
 const model3Image = require('./img/model3.jpg')

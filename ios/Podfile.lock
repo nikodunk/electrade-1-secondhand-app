@@ -104,6 +104,7 @@ PODS:
   - RNVectorIcons (6.3.0):
     - React
   - RSKImageCropper (2.2.1)
+  - Stripe (14.0.0)
   - yoga (0.58.5.React)
 
 DEPENDENCIES:
@@ -125,6 +126,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler/`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - Stripe (~> 14.0.0)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga/yoga.podspec`)
 
 SPEC REPOS:
@@ -142,6 +144,7 @@ SPEC REPOS:
     - Protobuf
     - QBImagePickerController
     - RSKImageCropper
+    - Stripe
 
 EXTERNAL SOURCES:
   React:
@@ -176,8 +179,9 @@ SPEC CHECKSUMS:
   RNImageCropPicker: 32ca4b9fef4e1b7b85ba69494242122948117e06
   RNVectorIcons: 8c52e1e8da1153613fdef44748e865c25556cb9c
   RSKImageCropper: 98296ad26b41753f796b6898d015509598f13d97
+  Stripe: db29ad197c74aca6fb981e4e8355cf7ebd0fca5a
   yoga: 0885622311729a02c2bc02dca97167787a51488b
 
-PODFILE CHECKSUM: d4fb7bfb7443996f62e0dab63a315f65d3ea68de
+PODFILE CHECKSUM: f32b3e4f79e8c00e0d3b3d11acef76b260d77389
 
 COCOAPODS: 1.5.3

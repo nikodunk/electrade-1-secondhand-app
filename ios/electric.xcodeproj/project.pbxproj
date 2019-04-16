@@ -47,6 +47,7 @@
 		90B769FD0F764FEEB850D3CA /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 003A494237384871BB5095AC /* Zocial.ttf */; };
 		910EA7BF223724C8005E819D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 910EA7BE223724C8005E819D /* GoogleService-Info.plist */; };
 		9119F3C522273DAA006BC829 /* YTPlayerView-iframe-player.html in Resources */ = {isa = PBXBuildFile; fileRef = 9119F3C422273DAA006BC829 /* YTPlayerView-iframe-player.html */; };
+		91FBD636226640ED00EF9C39 /* libTPSStripe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FBD635226640A500EF9C39 /* libTPSStripe.a */; };
 		91FC6CBE22495DF7002C7437 /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FC6CBD22495DCB002C7437 /* libRNCWebView.a */; };
 		9CCF3EEAA2CC465185FFE871 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5E6BA53938DE4DF1A107CC23 /* SimpleLineIcons.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
@@ -336,6 +337,13 @@
 			remoteGlobalIDString = ED296FEE214C9CF800B7C4FE;
 			remoteInfo = "jsiexecutor-tvOS";
 		};
+		91FBD634226640A500EF9C39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 91FBD609226640A500EF9C39 /* TPSStripe.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3A3A7F1A1DC27B520030F9DC;
+			remoteInfo = TPSStripe;
+		};
 		91FC6CBC22495DCB002C7437 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 91FC6CB822495DCB002C7437 /* RNCWebView.xcodeproj */;
@@ -394,6 +402,7 @@
 		910EA7BE223724C8005E819D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9119F3C422273DAA006BC829 /* YTPlayerView-iframe-player.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "YTPlayerView-iframe-player.html"; sourceTree = "<group>"; };
 		91ECD06F2231D18200983AD3 /* electric.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = electric.entitlements; path = electric/electric.entitlements; sourceTree = "<group>"; };
+		91FBD609226640A500EF9C39 /* TPSStripe.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TPSStripe.xcodeproj; path = "../node_modules/tipsi-stripe/ios/TPSStripe.xcodeproj"; sourceTree = "<group>"; };
 		91FC6CB822495DCB002C7437 /* RNCWebView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCWebView.xcodeproj; path = "../node_modules/react-native-webview/ios/RNCWebView.xcodeproj"; sourceTree = "<group>"; };
 		94282671A89E4EFCCF134048 /* Pods-electric.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-electric.debug.xcconfig"; path = "Pods/Target Support Files/Pods-electric/Pods-electric.debug.xcconfig"; sourceTree = "<group>"; };
 		9C5F8440772F47E7A8A1F88F /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
@@ -422,6 +431,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91FBD636226640ED00EF9C39 /* libTPSStripe.a in Frameworks */,
 				91FC6CBE22495DF7002C7437 /* libRNCWebView.a in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
@@ -642,6 +652,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				91FBD609226640A500EF9C39 /* TPSStripe.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -710,6 +721,14 @@
 			isa = PBXGroup;
 			children = (
 				910EA805223727A4005E819D /* libRNFirebase.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		91FBD60A226640A500EF9C39 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				91FBD635226640A500EF9C39 /* libTPSStripe.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -833,6 +852,9 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = XFR45HGENZ;
 						SystemCapabilities = {
+							com.apple.ApplePay = {
+								enabled = 1;
+							};
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
@@ -920,6 +942,10 @@
 				{
 					ProductGroup = 910EA801223727A3005E819D /* Products */;
 					ProjectRef = 541FC4C41C974CF19D2086B4 /* RNFirebase.xcodeproj */;
+				},
+				{
+					ProductGroup = 91FBD60A226640A500EF9C39 /* Products */;
+					ProjectRef = 91FBD609226640A500EF9C39 /* TPSStripe.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1192,6 +1218,13 @@
 			remoteRef = 91DE704D221FCBDF0074791C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		91FBD635226640A500EF9C39 /* libTPSStripe.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libTPSStripe.a;
+			remoteRef = 91FBD634226640A500EF9C39 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		91FC6CBD22495DCB002C7437 /* libRNCWebView.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1315,6 +1348,7 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
 				"${PODS_ROOT}/RSKImageCropper/RSKImageCropper/RSKImageCropperStrings.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -1352,6 +1386,7 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RSKImageCropperStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Stripe.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

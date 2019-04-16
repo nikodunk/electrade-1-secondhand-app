@@ -195,17 +195,9 @@ export default class DetailScreen extends React.Component {
                       <Text> </Text>
                       <Button
                         type="solid"
-                        icon={
-                            <Icon
-                              name="ios-arrow-forward"
-                              size={20}
-                              style={{padding: 2}}
-                              color="white"
-                            />
-                          }
                         buttonStyle={styles.bigButton}
                         onPress={() => this.props.navigation.navigate('Submit', {item: this.state.item, type: 'Lease'} )}
-                        title={` Reserve this deal`} 
+                        title={` Reserve this deal ❱`} 
                         />
                     </View> : null }
 

@@ -6,6 +6,7 @@
  */
 
 #import "AppDelegate.h"
+#import <Stripe/Stripe.h>
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -36,6 +37,8 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  [[STPPaymentConfiguration sharedConfiguration] setPublishableKey:@"pk_test_w1fHSNJdm3G5cxjBrzEjS6PT"];
+  [[STPPaymentConfiguration sharedConfiguration] setAppleMerchantIdentifier:@"merchant.com.electrade.deposit"];
   return YES;
 }
 
