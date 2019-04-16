@@ -5,7 +5,44 @@ import Mixpanel from 'react-native-mixpanel'
 import styles from './styles'
 import firebase from 'react-native-firebase';
 import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Ionicons';
 
+// import { PaymentRequest } from 'react-native-payments';
+
+
+
+// const METHOD_DATA = [{
+//   supportedMethods: ['apple-pay', 'android-pay'],
+//   data: {
+//     merchantIdentifier: 'merchant.com.electrade.deposit',
+//     supportedNetworks: ['visa', 'mastercard', 'amex'],
+//     countryCode: 'US',
+//     currencyCode: 'USD',
+//     paymentMethodTokenizationParameters: {
+//         parameters: {
+//           gateway: 'stripe',
+//           'stripe:publishableKey': 'your_publishable_key',
+//           'stripe:version': '5.0.0' // Only required on Android
+//         }
+//     }
+//   }
+// }];
+
+// const DETAILS = {
+//   id: 'basic-example',
+//   displayItems: [
+//     {
+//       label: 'Deposit',
+//       amount: { currency: 'USD', value: '200.00' }
+//     }
+//   ],
+//   total: {
+//     label: 'Electrade',
+//     amount: { currency: 'USD', value: '200.00' }
+//   }
+// };
+
+// const paymentRequest = new PaymentRequest(METHOD_DATA, DETAILS);
 
 export default class SubmitScreen extends React.Component {
 
@@ -47,7 +84,7 @@ export default class SubmitScreen extends React.Component {
   }
 
   _onPress = async () => {
-    Mixpanel.track("Email Button Pressed");
+    // paymentRequest.show()
     this.setState({loading: true})
     console.log(this.state.email)
     if(this.state.email === '' || this.state.email === ' ' || this.state.email === null){
@@ -146,9 +183,19 @@ export default class SubmitScreen extends React.Component {
                     type="solid"
                     buttonStyle={styles.bigButton}
                     onPress={() => this._onPress()} 
-                    title={`Request ${this.state.item["Make and Model"]}`}
+                    icon={
+                        <Icon
+                          name="logo-apple"
+                          size={30}
+                          style={{padding: 10}}
+                          color="white"
+                        />
+                      }
+                    title={` Lock this ${this.state.item["Make and Model"]} \nprice with $200 deposit`}
                     />
                 : null }
+                  <Text></Text>
+                  <Text>Applied to lease deposit. Full refundable if car can't be delivered as above.</Text>
 
                   {this.state.loading ? <ActivityIndicator /> : null}
 

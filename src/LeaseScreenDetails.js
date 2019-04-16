@@ -7,7 +7,6 @@ import styles from './styles'
 import { Button } from 'react-native-elements';
 import firebase from 'react-native-firebase';
 
-
 const model3Image = require('./img/model3.jpg')
 const boltImage = require('./img/bolt.jpg')
 const leafImage = require('./img/leaf.jpg')
@@ -24,7 +23,6 @@ const niroImage = require('./img/niro.jpg')
 
 
 
-
 export default class DetailScreen extends React.Component {
 
 
@@ -38,6 +36,7 @@ export default class DetailScreen extends React.Component {
   }
 
 
+
   componentDidMount() {
       this.setState({item: this.props.navigation.getParam('item') })
       this.setState({type: this.props.navigation.getParam('type') })
@@ -48,6 +47,7 @@ export default class DetailScreen extends React.Component {
         // if(this.state.email === 'niko'){ AsyncStorage.removeItem('remainingtrials') }
       })
 
+      
 
       AsyncStorage.getItem(this.props.navigation.getParam('item')["Make and Model"]).then((res) => {
       if (res) {
@@ -180,7 +180,7 @@ export default class DetailScreen extends React.Component {
                       
                       
                       <Text style={{color: '#2191fb'}}>
-                        <Text style={{fontWeight: '700'}}>= { this.state.item["DriveOffEst"] } </Text> 
+                        <Text style={{fontWeight: '700'}}>={ this.state.item["DriveOffEst"] } </Text> 
                         electrade estimated effective drive-off
                       </Text>
 
@@ -195,9 +195,17 @@ export default class DetailScreen extends React.Component {
                       <Text> </Text>
                       <Button
                         type="solid"
+                        icon={
+                            <Icon
+                              name="ios-arrow-forward"
+                              size={20}
+                              style={{padding: 2}}
+                              color="white"
+                            />
+                          }
                         buttonStyle={styles.bigButton}
                         onPress={() => this.props.navigation.navigate('Submit', {item: this.state.item, type: 'Lease'} )}
-                        title={`Reserve this deal`} 
+                        title={` Reserve this deal`} 
                         />
                     </View> : null }
 
@@ -209,4 +217,3 @@ export default class DetailScreen extends React.Component {
 
   }
 }
-
