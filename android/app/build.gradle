@@ -101,7 +101,7 @@ android {
         applicationId "com.bigset.electric"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 93
+        versionCode 94
         versionName "4.8"
         vectorDrawables.useSupportLibrary = true
     }
