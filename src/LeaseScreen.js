@@ -218,7 +218,7 @@ export default class HomeScreen extends React.Component {
                                                                 item.teaserImage === 'Model3' ? model3Image : 
                                                                 null
                                                       } />
-                                              <Text style={styles.videoTitle}>{item["Make and Model"]}: {'\n'}{item["$/mo"]}/Month,{'\n'}{item["DriveOffEst"]} Drive-Off<Text style={styles.videoSubTitle}>*</Text></Text>
+                                              <Text style={styles.videoTitle}>{item["Make and Model"]}: {'\n'}{item["$/mo"]}/Month,{'\n'}{item["DriveOffEst"]} Down<Text style={styles.videoSubTitle}>*</Text></Text>
                                               {index < 3 ? <Text style={styles.videoSubTitle}>{Math.floor(Math.random() * 5) + 1 } currently looking at this offer</Text> : null }
                                               {3 < index && 1 < (Math.floor(Math.random() * 3)) ? <Text style={styles.videoSubTitle}>{Math.floor(Math.random() * 5) + 1 } currently looking at this offer</Text> : null }
                                             </View> 

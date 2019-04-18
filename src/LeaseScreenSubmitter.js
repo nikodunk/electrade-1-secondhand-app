@@ -10,9 +10,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import stripe from 'tipsi-stripe'
 
 stripe.setOptions({
-  publishableKey: 'pk_live_8yXo9Oom2JQnurwuoUgL4nw9',
+  // publishableKey: 'pk_test_w1fHSNJdm3G5cxjBrzEjS6PT', // ********TEST********
+  publishableKey: 'pk_live_8yXo9Oom2JQnurwuoUgL4nw9', // ********LIVE********
   merchantId: 'merchant.com.electrade.deposit',
-  androidPayMode: 'test'
+  androidPayMode: 'production'
 })
 
 export default class SubmitScreen extends React.Component {
@@ -81,7 +82,7 @@ export default class SubmitScreen extends React.Component {
 
 
   _onPress = async () => {
-
+    console.log('_onPress running')
     this.setState({loading: true})
     console.log(this.state.email)
     if(this.state.email === '' || this.state.email === ' ' || this.state.email === null){
@@ -91,60 +92,124 @@ export default class SubmitScreen extends React.Component {
     }
     else {
       this.setState({loading: true})
-      // fetch('http://localhost:8080/api/leases/create/'+this.state.email+'/'+this.state.item["Make and Model"], {
-      fetch('https://electrade-server.herokuapp.com/api/leases/create/'+this.state.email+'/'+this.state.item["Make and Model"], {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            region: this.state.region
-          }),
-      })
-      .then(() => {
-          this.pay()
+      if(this.state.email !== 'niko'){
+        fetch('https://electrade-server.herokuapp.com/api/leases/create/'+this.state.email+'/'+this.state.item["Make and Model"], {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              region: this.state.region
+            }),
         })
+        .then(() => {
+            this._handleCardPayPress()
+          })
+      }
+      else{ this._handleCardPayPress() }
     }
   }
 
-  pay = async () => {
+  _handleCardPayPress = async () => {
+      try {
+        console.log('_handleCardPayPress running')
+        this.setState({ loading: true, token: null })
+        
+        const token = await stripe.paymentRequestWithCardForm()
+
+        console.log('this is running with ',token,this.state.email)
+
+        fetch('https://electrade-server.herokuapp.com/api/leases/pay', {
+                  method: 'POST',
+                  headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    token: token.tokenId,
+                    amount: 20000,
+                    email: this.state.email
+                  })
+              })
+          .then(() => {
+              this.state.email !== 'niko' ?   Mixpanel.track("Lease Request Submitted") && firebase.analytics().logEvent('Lease_Request_Submitted')  : null
+              AsyncStorage.setItem('email', this.state.email)
+              this.setState({thanks: true})
+            })
+          .then(() => setTimeout(() => this.props.navigation.navigate('Lease'), 2000 ) )
+
+        this.setState({ loading: false, token })
+      } catch (error) {
+        this.setState({ loading: false })
+      }
+  }
+
+  _handleNativePay = async () => {
     try {
+      console.log('_handleNativePay running')
       // Indicates about google pay availability
       const isDeviceSupportsNativePay = await stripe.deviceSupportsNativePay()
       const isUserHasAtLeastOneCardInGooglePay = await stripe.canMakeNativePayPayments()
 
+      console.log(isDeviceSupportsNativePay, isUserHasAtLeastOneCardInGooglePay)
+
       if (isDeviceSupportsNativePay && isUserHasAtLeastOneCardInGooglePay) {
-        const token = await stripe.paymentRequestWithNativePay({},
+        
+        const options =  Platform.OS === 'ios' ?
                 [{
                   label: 'Deposit',
-                  amount: '200.00',
+                  amount: '200.00'
                 }]
-              )
-        stripe.completeApplePayRequest()
-          .then(() => {
-              console.log('this is running with ',token,this.state.email)
-              fetch('https://electrade-server.herokuapp.com/api/leases/pay', {
-                        method: 'POST',
-                        headers: {
-                          Accept: 'application/json',
-                          'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                          token: token.tokenId,
-                          amount: 20000,
-                          email: this.state.email
-                        })
-                    })
-                .then(() => {
-                    if(this.state.email !== 'niko'){ Mixpanel.track("Lease Request Submitted"); firebase.analytics().logEvent('Lease_Request_Submitted'); }
-                    AsyncStorage.setItem('email', this.state.email)
-                    this.setState({thanks: true})
+                :
+                {
+                  total_price: '200.00',
+                  currency_code: 'USD',
+                  shipping_address_required: false,
+                  billing_address_required: false,
+                  shipping_countries: ["US", "CA"],
+                  line_items: [{
+                    currency_code: 'USD',
+                    description: 'Deposit',
+                    total_price: '200.00',
+                    unit_price: '200.00',
+                    quantity: '1',
+                  }],
+                }
+
+        const token = await stripe.paymentRequestWithCardForm()
+        // const token = await stripe.paymentRequestWithNativePay(options)
+        
+        console.log('this is running with ',token,this.state.email)
+
+        fetch('https://electrade-server.herokuapp.com/api/leases/pay', {
+                  method: 'POST',
+                  headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    token: token.tokenId,
+                    amount: 20000,
+                    email: this.state.email
                   })
-                .then(() => setTimeout(() => this.props.navigation.navigate('Lease'), 2000 ) )
+              })
+          .then(() => {
+              Platform.OS === 'ios' ? stripe.completeApplePayRequest() : null
+              this.state.email !== 'niko' ?   Mixpanel.track("Lease Request Submitted") && firebase.analytics().logEvent('Lease_Request_Submitted')  : null
+              AsyncStorage.setItem('email', this.state.email)
+              this.setState({thanks: true})
             })
-          
-          
+          .then(() => setTimeout(() => this.props.navigation.navigate('Lease'), 2000 ) )
+
+      } else if(isDeviceSupportsNativePay && !isUserHasAtLeastOneCardInGooglePay){
+        console.log("Please add a card to Google Pay")
+        this.setState({isUserHasAtLeastOneCardInGooglePay: true, loading: false })
+        setTimeout(() => this.setState({isUserHasAtLeastOneCardInGooglePay: null }), 5000 )
+      } else{
+        console.log("Your device doesn't support this payment method")
+        this.setState({isDeviceSupportsNativePay: true, loading: false })
+        setTimeout(() => this.setState({isDeviceSupportsNativePay: null }), 5000 )
       }
     } catch (error) {
       console.log(error) // In debug mode see the error
@@ -206,14 +271,22 @@ export default class SubmitScreen extends React.Component {
                   Please enter your email below and pay the deposit. If we can't complete the lease as described above within 48 hours you'll be automatically refunded in full.
                 </Text>
                 <Text></Text>
+
                 <Text style={{fontWeight: '600'}}>
-                  Next Steps?
+                  How it works
                 </Text>
                 <Text style={{marginBottom: 3}}> ✅ We email you all required documents</Text>
                 <Text style={{marginBottom: 3}}> ✅ You sign online (after credit check)</Text>
                 <Text style={{marginBottom: 3}}> ✅ No negotiation or wasted time</Text>
                 <Text style={{marginBottom: 3}}> ✅ You pay remainder at dealership and drive off your new car!</Text>
                 <Text></Text>
+
+                <Text style={{fontWeight: '600'}}>
+                  Money Back Guarantee
+                </Text>
+                <Text style={{marginBottom: 3}}> If we can't fulfill your request within 48 hours or you're not satisfied with the experience you get 100% of your deposit back.</Text>
+                <Text></Text>
+
                 <Text style={{fontWeight: '600'}}>
                   What do we get from it?
                 </Text>
@@ -246,8 +319,8 @@ export default class SubmitScreen extends React.Component {
                 {this.state.item ? 
                   <Button
                     type="solid"
-                    title={`$200 deposit to lock down\n${this.state.item["Make and Model"]} offer (Pay)`}
-                    buttonStyle={[styles.bigButton,{backgroundColor: 'black'}]}
+                    title={`🔒 Deposit $200 to lock in price guarantee for ${this.state.item["Make and Model"]}`}
+                    buttonStyle={styles.bigButton}
                     onPress={() => this._onPress()}
                     />
                 : null }
@@ -256,7 +329,13 @@ export default class SubmitScreen extends React.Component {
                   <Text></Text>
                   <Text>Applied to lease deposit. Fully refundable if car can't be delivered as above.</Text>
 
+
                   {this.state.loading ? <ActivityIndicator /> : null}
+                  {/*{this.state.isDeviceSupportsNativePay ? <Text style={{fontSize: 20, color: 'red'}} >Unfortunately, your device does not support this payment method</Text> : null}
+                  title={Platform.OS === 'ios' ? `$200 deposit to lock down\n${this.state.item["Make and Model"]} offer (Pay)` : `$200 deposit to lock down\n${this.state.item["Make and Model"]} offer (Google Pay)`}
+                  {this.state.isUserHasAtLeastOneCardInGooglePay ? <Text style={{fontSize: 20, color: 'red'}}>Please add a card to Google Pay and try again.</Text> : null}*/}
+                  
+
 
                 </View>
               </View>
