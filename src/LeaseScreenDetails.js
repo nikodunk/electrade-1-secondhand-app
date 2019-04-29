@@ -43,8 +43,10 @@ export default class DetailScreen extends React.Component {
       this.setState({region: this.props.navigation.getParam('region') })
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
-        if(this.state.email !== 'niko'){Mixpanel.track(this.state.type+"Details Loaded"); firebase.analytics().logEvent(this.state.type+'DetailsScreen_Loaded') }
-        // if(this.state.email === 'niko'){ AsyncStorage.removeItem('remainingtrials') }
+        if(this.state.email !== 'niko'){
+          Mixpanel.track(this.state.type+"Details Loaded",{"Car": this.state.item["Make and Model"]});
+          firebase.analytics().logEvent(this.state.type+'DetailsScreen_Loaded')
+        }
       })
 
       
@@ -59,7 +61,6 @@ export default class DetailScreen extends React.Component {
           this.setState({left: randomNumber}) 
         }
       })
-
       
   }
 
@@ -84,11 +85,6 @@ export default class DetailScreen extends React.Component {
 
         {this.state.item ?
           <ScrollView>
-                { this.state.item.image ? 
-                  <Image
-                    style={styles.imageDetail}
-                    source={{uri: this.state.item.image}}
-                    /> : null }
 
                 { this.state.item.teaserImage ? 
                   <Image
@@ -112,94 +108,103 @@ export default class DetailScreen extends React.Component {
 
                 <View style={{padding: 20}}>
 
-                {/* NEWS options */}
-                  {this.state.item.text ? <Text>{ this.state.item.text.substring(0, this.state.item.text.indexOf('http')) } {'\n'}</Text> : null }
-                  {this.state.type === 'News' ? 
-                          <Button 
-                              icon={
-                                <Icon
-                                name="ios-open"
-                                size={20}
-                                color="white"
-                                /> }
-                              title={` Continue at ${this.state.item.source}`} 
-                              buttonStyle={styles.bigButton} 
-                              onPress={() => {Linking.openURL(this.state.item.link.toString()); if(this.state.email !== 'niko'){Mixpanel.track(this.state.item.link.toString()+" touched") }}}
-                          />  
-                  : null }
-
-                {/* marketplace & gallery options */}
-                  {this.state.type === 'Gallery' || this.state.type === 'Marketplace' ?
                     <View>
-                      {this.state.item.price ? <Text style={{fontWeight: '500', fontSize: 20}}>${ this.state.item.price }</Text> : null }
-                      {this.state.item.name ? <Text>{ this.state.item.name }</Text> : null }
-                      {this.state.item.mileageFromOdometer && this.state.item.mileageFromOdometer.value ? <Text style={styles.newsSource}>{this.state.item.mileageFromOdometer.value} miles</Text> : null}
-                      {this.state.item.description ? <Text style={styles.newsSource}>{this.state.item.description} {'\n'}</Text> : null}
-                      {this.state.type === 'Marketplace' ? <Button icon={
-                                <Icon
-                                name="ios-open"
-                                size={20}
-                                color="white"
-                                /> } title={` Contact Seller on Autotrader`} buttonStyle={styles.bigButton} onPress={() => Linking.openURL(this.state.item.url) }/>  : null }
-                    </View> : null }
-
-                {/* lease details */}
-                  {this.state.type === 'Lease' ?
-                    <View>
-                      {this.state.left && this.state.item["Make and Model"] !== "Tesla Model 3" ? <Text style={{fontSize: 12, fontWeight: '400', color: '#2191fb'}}>  {this.state.left} left at this price</Text> : null }
+                      {this.state.left && this.state.item["Make and Model"] !== "Tesla Model 3" ? 
+                        <Text style={{fontSize: 12, fontWeight: '400', color: '#2191fb'}}>  {this.state.left} left at this price</Text> 
+                          : null }
                       <Text style={[styles.newsTitle, {fontSize: 20}]}>
                         {this.state.item["Year"]} { this.state.item["Make and Model"] }
                       </Text>
-                      <Text style={{fontWeight: '500', fontSize: 17}}>
+                      {/*<Text style={{fontWeight: '500', fontSize: 17}}>
                       {' '}{this.state.item["$/mo"]}/month, {this.state.item["down+acq"]} down
-                      </Text>
-
-                      {/*<Text style={{}}>
-                        { this.state.item.blurb }
-                      </Text>
-                      <View style={styles.separator} />
-                      <Text> </Text>
-                      
-                      <Text style={{fontWeight: '500', color: '#1a2a3a'}}>
-                        { this.state.item.stats }
-                        {'\n'}
                       </Text>*/}
-                      <Text> </Text>
-                      <View style={styles.separator} />
-                      <Text> </Text>
-                      <Text style={{fontWeight: '700'}}>Offer Details</Text>
-                      <Text>• Monthly payment:  <Text style={{fontWeight: '700'}}>{ this.state.item["$/mo"] } + tax</Text></Text>
-                      <Text>• Months:  <Text style={{fontWeight: '700'}}>{ this.state.item["months"] }</Text></Text>
-                      <Text>• Miles per year:  <Text style={{fontWeight: '700'}}>{ this.state.item["miles/yr"] }</Text></Text>
-                      <Text>• Down payment: <Text style={{fontWeight: '700'}}>{ this.state.item["down+acq"] }</Text></Text>
-                      
-                      <Text style={{}}><Text style={{fontWeight: '700'}}>+</Text>$1,400 to $2,200 ("drive-off fees")</Text>
-                      <Text style={{}}>   (tax, license, doc, DMV, acquisition)</Text>
-                      { this.state.item["StateIncentive"] ? <Text style={{color: '#2191fb'}}><Text style={{fontWeight: '700'}}>-</Text> {this.state.item["StateIncentive"]} cash back ("state rebate")</Text> : null }
-                      {this.state.region === "CA(N)"  || this.state.region === "CA(S)" ? <Text style={{color: '#2191fb'}}><Text style={{fontWeight: '700'}}>-</Text> PG&E rebate</Text> : null }
-                      
-                      
-                      <Text style={{color: '#2191fb'}}>
-                        <Text style={{fontWeight: '700'}}>={ this.state.item["DriveOffEst"] } </Text> 
-                        electrade estimated effective drive-off
-                      </Text>
-
-                      <Text>   Assumes excellent credit & car pick-up</Text>
-                      <Text>   Assumes existing lease but no supplier code</Text>
-                      <Text> </Text>
-                      <Text>• Dollars per mile:  { this.state.item["$/mi"] }</Text>
-                      <Text>• Total amount over lease:  { this.state.item["$ total"] } ("one pay")</Text>
-                      <Text>• Averaged over lease:  { this.state.item["$/mo avg"] } ("zero down price")</Text>
-                      
 
                       <Text> </Text>
+                      {/*<View style={styles.separator} />
+                      <Text> </Text>*/}
+
+                      <View style={{flexDirection: 'row'}}>
+                        <Text style={[styles.infoBox, {borderColor: '#2191fb', color: '#2191fb'}]}>
+                          <Text style={{fontWeight: '700', fontSize: 17}}>{ this.state.item["$/mo"] } + tax</Text>{'\n'}
+                          Monthly payment
+                        </Text>
+                        <Text style={styles.infoBox}>
+                          <Text style={{fontWeight: '700', fontSize: 17}}>{ this.state.item["months"] } Months</Text>{'\n'}
+                          Lease Term
+                        </Text>
+                      </View>
+
+
+                      <View style={{flexDirection: 'row'}}>
+                        <Text style={styles.infoBox}>
+                          <Text style={{fontWeight: '700', fontSize: 17}}>{ this.state.item["down+acq"] }</Text>{'\n'}
+                          Down payment
+                        </Text>
+                        <Text style={[styles.infoBox, {borderColor: '#2191fb', color: '#2191fb'}]}>
+                          <Text style={{fontWeight: '700', fontSize: 17}}>{ this.state.item["DriveOffEst"] }</Text>{'\n'}
+                          Guaranteed drive-off incl. all fees & incentives *
+                        </Text>
+                      </View>
+
+                      <View style={{flexDirection: 'row'}}>
+                        <Text style={styles.infoBox}>
+                          <Text style={{fontWeight: '700', fontSize: 17}}>{ this.state.item["miles/yr"] }</Text>{'\n'}
+                          Miles per year
+                        </Text>
+                        <Text style={styles.infoBox}>
+                          <Text style={{fontWeight: '700', fontSize: 17}}>Excellent</Text>{'\n'}
+                          Credit
+                        </Text>
+                      </View>
+
+                      {this.state.left && this.state.item["Make and Model"] !== "Tesla Model 3" ? 
+                      <View style={{flexDirection: 'row'}}>
+                        <Text style={styles.infoBox}>
+                          Lease{'\n'}
+                          <Text style={{fontWeight: '700', fontSize: 17}}>Existing</Text>
+                        </Text>
+                        <Text style={styles.infoBox}>
+                          Delivery Type{'\n'}
+                          <Text style={{fontWeight: '700', fontSize: 17}}>Pick up at dealers</Text>
+                        </Text>
+                        <Text style={styles.infoBox}>
+                          Supplier Code{'\n'}
+                          <Text style={{fontWeight: '700', fontSize: 17}}>None</Text>
+                        </Text>
+                      </View> : null }
+                      
+                      {this.state.left && this.state.item["Make and Model"] !== "Tesla Model 3" ? 
+                      <Text>
+                        <Text>* Final drive-off includes:</Text>{'\n'}
+                        <Text>$650 acquisition fee</Text>{'\n'}
+                        <Text>$685 license/registration fee</Text>{'\n'}
+                        <Text>$122 doc processing/EVR/DMV tire fee</Text>{'\n'}
+                        <Text>$823 tax on incentive</Text>{'\n'}
+                        { this.state.item["StateIncentive"] ? <Text style={{}}>{this.state.item["StateIncentive"]} cash back ("state rebate")</Text> : null }{'\n'}
+                        {this.state.region === "CA(N)"  || this.state.region === "CA(S)" ? <Text style={{}}>PG&E rebate not yet included.</Text> : null }{'\n'}
+                      </Text> :
+                      <Text>
+                        <Text>* Final drive-off includes:</Text>{'\n'}
+                        <Text>$1,199 destination + doc charge</Text>{'\n'}
+                        { this.state.item["StateIncentive"] ? <Text style={{}}>{this.state.item["StateIncentive"]} cash back ("state rebate")</Text> : null }{'\n'}
+                        {this.state.region === "CA(N)"  || this.state.region === "CA(S)" ? <Text style={{}}>PG&E rebate</Text> : null }{'\n'}
+                      </Text> }
+
+                      <Text>That works out to:</Text>
+                      <Text>Dollars per mile:  { this.state.item["$/mi"] }</Text>
+                      <Text>Total amount over lease:  { this.state.item["$ total"] } ("one pay")</Text>
+                      <Text>Averaged over lease:  { this.state.item["$/mo avg"] } ("zero down price")</Text>
+                      
+
+                      <Text> </Text>
+                      {this.state.left && this.state.item["Make and Model"] !== "Tesla Model 3" ? 
                       <Button
                         type="solid"
                         buttonStyle={styles.bigButton}
                         onPress={() => this.props.navigation.navigate('Submit', {item: this.state.item, type: 'Lease'} )}
-                        title={` Reserve this deal ❱`} 
-                        />
-                    </View> : null }
+                        title={` Get this guaranteed price ❱`} 
+                        /> : null }
+                    </View>
 
                 </View>
            </ScrollView>

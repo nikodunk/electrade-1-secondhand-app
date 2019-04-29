@@ -16,7 +16,8 @@ export default class SettingsScreen extends React.Component {
       data: null,
       email: null,
       loading: null,
-      region: null
+      region: null,
+      thanks: false
        };
   }
 
@@ -47,9 +48,24 @@ export default class SettingsScreen extends React.Component {
                             })
   }
   
-  _onChangeEmail(text){
-      this.setState({email: text})
-      AsyncStorage.setItem('email', text)
+
+  
+  _onSubmitFeedback(){
+      
+    fetch('https://electrade-server.herokuapp.com/api/comments/create/', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            feedback: this.state.feedback
+          }),
+      }).then((res) => this.setState({thanks: true}))
+  }
+
+  _onSubmitEmail(){
+      AsyncStorage.setItem('email', this.state.email)
   }
 
   _onChangeRegion(newRegion){
@@ -63,13 +79,18 @@ export default class SettingsScreen extends React.Component {
       <View style={{flex: 1}}>
         <ScrollView style={{flex: 1}}>
           <View style={{marginBottom: 80, marginTop: 30}}>
+                  
+
+              <View style={styles.deal}>
+                <Text style={[styles.newsTitle, {fontSize: 20}]}>
+                    Your Account
+                </Text>
+              </View>
+
 
               {/* REGION */}
               <View style={styles.deal}>
-                  <Text style={[styles.newsTitle, {fontSize: 20}]}>
-                    Account
-                    {'\n'}
-                  </Text>
+                  
 
                   <Text style={styles.newsTitle}>
                     Your Region
@@ -77,7 +98,7 @@ export default class SettingsScreen extends React.Component {
                   <Picker
                     selectedValue={this.state.region}
                     itemStyle={{height: 100}}
-                    style={{ height: 100, width: '80%', borderColor: 'lightgrey', borderWidth: 1, borderRadius: 10, marginLeft: '10%', marginRight: '10%' }}
+                    style={{ height: 100, width: '100%', borderColor: 'lightgrey', borderWidth: 1, borderRadius: 10 }}
                     onValueChange={(itemValue, itemIndex) => this._onChangeRegion(itemValue)}>
                     <Picker.Item label="Northern California" value="CA(N)" />
                     <Picker.Item label="Southern California" value="CA(S)" />
@@ -92,11 +113,43 @@ export default class SettingsScreen extends React.Component {
                     <Picker.Item label="Oregon" value="OR" />
                     <Picker.Item label="Virginia" value="VA" />
                     <Picker.Item label="Washington" value="WA" />
+                    <Picker.Item label="Rhode Island" value="RI" />
                   </Picker>
 
               </View>
 
               <View style={styles.separator} />
+              <Text> </Text>
+              <Text> </Text>
+
+
+              {/* FEEDBACK */}
+                {this.state.thanks ? <View style={styles.deal}><Text style={styles.newsTitle}>Thanks!</Text><Text>We really appreciate your feedback! If you left an email, we may follow up with you.</Text></View>
+                  :
+                  <View style={styles.deal}>
+                    <Text style={styles.newsTitle}>
+                      Feedback?
+                    </Text>
+                    <TextInput 
+                      underlineColorAndroid="transparent"
+                      style={[styles.textInput, {height: 100, textAlign: 'left'}]}
+                      placeholder={'Please enter it here and hit Send Feedback. Include your email if you like.'}
+                      value={this.state.feedback}
+                      multiline={true}
+                      onChangeText={ (text) => this.setState({feedback: text})}
+                      />
+                    <Button
+                      type="solid"
+                      buttonStyle={styles.bigButton}
+                      onPress={() => this._onSubmitFeedback()} 
+                      title="Send Feedback" 
+                      />
+                </View> }
+
+
+              <View style={styles.separator} />
+              <Text> </Text>
+              <Text> </Text>
 
 
 
@@ -105,38 +158,31 @@ export default class SettingsScreen extends React.Component {
                 <Text style={styles.newsTitle}>
                   Your email:
                 </Text>
-                <TextInput 
-                  underlineColorAndroid="transparent"
-                  style={styles.textInput}
-                  placeholder={'Your email'}
-                  value={this.state.email}
-                  autoCapitalize = 'none'
-                  onChangeText={ (text) => this._onChangeEmail(text)}
-                  />
+                <View style={{flexDirection: 'row'}}>
+                  <TextInput 
+                    underlineColorAndroid="transparent"
+                    style={[styles.textInput, {flex: 3, marginTop: 0}]}
+                    placeholder={'Your email'}
+                    value={this.state.email}
+                    autoCapitalize = 'none'
+                    onChangeText={ (text) => this.setState({email: text})}
+                    />
+                  <Button
+                    type="solid"
+                    buttonStyle={[styles.bigButton, {flex: 1}]}
+                    onPress={() => this._onSubmitEmail()} 
+                    title="Change Email" 
+                    />
+                </View>
+
               </View>
 
 
               <View style={styles.separator} />
+              <Text> </Text>
+              <Text> </Text>
 
 
-            {/* FEEDBACK */}
-              <View style={{flex: 1, alignItems: 'center', padding: 10}}>
-                  <Text style={{fontWeight: 'bold', padding: 3}}>
-                    {'\n'}
-                    Feature missing? Have feedback?
-                  </Text>
-                <Button
-                  type="solid"
-                  buttonStyle={styles.bigButton}
-                  onPress={() => Linking.openURL('mailto:n.dunkel@gmail.com')} 
-                  title="Email Feedback to Developers" 
-                  />
-                <Text></Text>
-                <Text>Email the developers with feature requests, ideas, bugs to fix or feedback!</Text>
-              </View>
-
-
-              <View style={styles.separator} />
 
 
             {/* NOTIFICATIONS */}
@@ -171,12 +217,12 @@ export default class SettingsScreen extends React.Component {
 
 
             {/* INVITE COLLEAGUES */}
-            <View style={{flex: 1, alignItems: 'center', padding: 10}}>
+            <View style={styles.deal}>
               <Button
                 type="solid"
                 buttonStyle={styles.bigButton}
                 onPress={() => Platform.OS === 'ios' ? Linking.openURL('sms: &body=https://itunes.apple.com/us/app/id1445602414') : Linking.openURL('sms:?body=https://play.google.com/store/apps/details?id=com.bigset.electric')}
-                title="Invite friends to app" 
+                title="Send app to friends" 
                 />
             </View>
 

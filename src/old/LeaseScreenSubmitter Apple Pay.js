@@ -82,6 +82,7 @@ export default class SubmitScreen extends React.Component {
 
 
   _onPress = async () => {
+    console.log('_onPress running')
     this.setState({loading: true})
     console.log(this.state.email)
     if(this.state.email === '' || this.state.email === ' ' || this.state.email === null){
@@ -92,7 +93,6 @@ export default class SubmitScreen extends React.Component {
     else {
       this.setState({loading: true})
       if(this.state.email !== 'niko'){
-        // save order to server
         fetch('https://electrade-server.herokuapp.com/api/leases/create/'+this.state.email+'/'+this.state.item["Make and Model"], {
             method: 'POST',
             headers: {
@@ -104,7 +104,6 @@ export default class SubmitScreen extends React.Component {
             }),
         })
         .then(() => {
-            // Stripe payment
             this._handleCardPayPress()
           })
       }
@@ -113,7 +112,6 @@ export default class SubmitScreen extends React.Component {
   }
 
   _handleCardPayPress = async () => {
-      this.state.email !== 'niko' ?   Mixpanel.track("Stripe Opened") && firebase.analytics().logEvent('Stripe_Opened')  : null
       try {
         console.log('_handleCardPayPress running')
         this.setState({ loading: true, token: null })
@@ -145,6 +143,77 @@ export default class SubmitScreen extends React.Component {
       } catch (error) {
         this.setState({ loading: false })
       }
+  }
+
+  _handleNativePay = async () => {
+    try {
+      console.log('_handleNativePay running')
+      // Indicates about google pay availability
+      const isDeviceSupportsNativePay = await stripe.deviceSupportsNativePay()
+      const isUserHasAtLeastOneCardInGooglePay = await stripe.canMakeNativePayPayments()
+
+      console.log(isDeviceSupportsNativePay, isUserHasAtLeastOneCardInGooglePay)
+
+      if (isDeviceSupportsNativePay && isUserHasAtLeastOneCardInGooglePay) {
+        
+        const options =  Platform.OS === 'ios' ?
+                [{
+                  label: 'Deposit',
+                  amount: '200.00'
+                }]
+                :
+                {
+                  total_price: '200.00',
+                  currency_code: 'USD',
+                  shipping_address_required: false,
+                  billing_address_required: false,
+                  shipping_countries: ["US", "CA"],
+                  line_items: [{
+                    currency_code: 'USD',
+                    description: 'Deposit',
+                    total_price: '200.00',
+                    unit_price: '200.00',
+                    quantity: '1',
+                  }],
+                }
+
+        const token = await stripe.paymentRequestWithCardForm()
+        // const token = await stripe.paymentRequestWithNativePay(options)
+        
+        console.log('this is running with ',token,this.state.email)
+
+        fetch('https://electrade-server.herokuapp.com/api/leases/pay', {
+                  method: 'POST',
+                  headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    token: token.tokenId,
+                    amount: 20000,
+                    email: this.state.email
+                  })
+              })
+          .then(() => {
+              Platform.OS === 'ios' ? stripe.completeApplePayRequest() : null
+              this.state.email !== 'niko' ?   Mixpanel.track("Lease Request Submitted") && firebase.analytics().logEvent('Lease_Request_Submitted')  : null
+              AsyncStorage.setItem('email', this.state.email)
+              this.setState({thanks: true})
+            })
+          .then(() => setTimeout(() => this.props.navigation.navigate('Lease'), 2000 ) )
+
+      } else if(isDeviceSupportsNativePay && !isUserHasAtLeastOneCardInGooglePay){
+        console.log("Please add a card to Google Pay")
+        this.setState({isUserHasAtLeastOneCardInGooglePay: true, loading: false })
+        setTimeout(() => this.setState({isUserHasAtLeastOneCardInGooglePay: null }), 5000 )
+      } else{
+        console.log("Your device doesn't support this payment method")
+        this.setState({isDeviceSupportsNativePay: true, loading: false })
+        setTimeout(() => this.setState({isDeviceSupportsNativePay: null }), 5000 )
+      }
+    } catch (error) {
+      console.log(error) // In debug mode see the error
+    }
   }
 
   
@@ -185,13 +254,14 @@ export default class SubmitScreen extends React.Component {
               </View>
             </TouchableOpacity>
 
-          {!this.state.thanks && this.state.item ? 
+          {!this.state.thanks ? 
             <ScrollView style={{flex: 1}}>
               <View style={{marginBottom: 80}}>
                 <View style={styles.deal}>
 
                 <Text style={[styles.newsTitle, {fontSize: 20}]}>
-                  Checkout
+                  Enter Email & Submit
+                  {'\n'}
                 </Text>
 
                 <Text style={{fontWeight: '600'}}>
@@ -214,7 +284,7 @@ export default class SubmitScreen extends React.Component {
                 <Text style={{fontWeight: '600'}}>
                   Money Back Guarantee
                 </Text>
-                <Text style={{marginBottom: 3}}>If we can't fulfill your request within 48 hours or you're not satisfied with the experience you get 100% of your deposit back.</Text>
+                <Text style={{marginBottom: 3}}> If we can't fulfill your request within 48 hours or you're not satisfied with the experience you get 100% of your deposit back.</Text>
                 <Text></Text>
 
                 <Text style={{fontWeight: '600'}}>
@@ -233,12 +303,9 @@ export default class SubmitScreen extends React.Component {
                 <Text></Text>
 
 
-
                 {/* EMAIL */}
                   <View>
-                    <Text style={[styles.newsTitle, {fontSize: 20}]}>
-                        Email & Deposit
-                    </Text>
+                    <Text style={styles.newsTitle}>Email</Text>
                     <TextInput 
                       underlineColorAndroid="transparent"
                       style={styles.textInput}
@@ -249,27 +316,27 @@ export default class SubmitScreen extends React.Component {
                       onChangeText={ (text) => {  this.setState({email: text}) }}
                       />
                   </View>
-
-                  <TouchableOpacity
-                    onPress={() => this._onPress()} 
-                    style={[styles.bigButton, {flex: 1, padding: 5}]}>
-                      <Text style={{fontWeight: '700', color: 'white', fontSize: 18, textAlign: 'center'}}>
-                        🔒 Pay $200 deposit for price guarantee
-                      </Text>
-                      <Text style={{ color: 'white', fontSize: 15, textAlign: 'center'}}>
-                        (applied towards down payment)
-                      </Text>
-                  </TouchableOpacity>
+                {this.state.item ? 
+                  <Button
+                    type="solid"
+                    title={`🔒 Deposit $200 to lock in price guarantee for ${this.state.item["Make and Model"]}`}
+                    buttonStyle={styles.bigButton}
+                    onPress={() => this._onPress()}
+                    />
+                : null }
 
 
-
-                  <Text>
-                      {this.state.item["Make and Model"]} @ {this.state.item["$/mo"]}/month for {this.state.item["months"]} months, {this.state.item["DriveOffEst"]} guaranted drive-off. Deposit applied towards lease down payment. Automatically refunded in full if car isn't available as above within 48 hours or if you should change your mind.
-                  </Text>
+                  <Text></Text>
+                  <Text>Applied to lease deposit. Fully refundable if car can't be delivered as above.</Text>
 
 
                   {this.state.loading ? <ActivityIndicator /> : null}
+                  {/*{this.state.isDeviceSupportsNativePay ? <Text style={{fontSize: 20, color: 'red'}} >Unfortunately, your device does not support this payment method</Text> : null}
+                  title={Platform.OS === 'ios' ? `$200 deposit to lock down\n${this.state.item["Make and Model"]} offer (Pay)` : `$200 deposit to lock down\n${this.state.item["Make and Model"]} offer (Google Pay)`}
+                  {this.state.isUserHasAtLeastOneCardInGooglePay ? <Text style={{fontSize: 20, color: 'red'}}>Please add a card to Google Pay and try again.</Text> : null}*/}
                   
+
+
                 </View>
               </View>
             </ScrollView>:

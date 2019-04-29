@@ -853,7 +853,7 @@
 						DevelopmentTeam = XFR45HGENZ;
 						SystemCapabilities = {
 							com.apple.ApplePay = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.BackgroundModes = {
 								enabled = 1;

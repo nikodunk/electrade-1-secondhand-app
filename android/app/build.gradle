@@ -101,8 +101,8 @@ android {
         applicationId "com.bigset.electric"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100
-        versionName "5.0"
+        versionCode 109
+        versionName "5.4"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }

@@ -21,3 +21,6 @@ To build for android release, run:
 To build for iOS release, run:
 
 	cd ios && xcodebuild -scheme electric -workspace electric.xcworkspace/ build
+
+
+![](demo.png)

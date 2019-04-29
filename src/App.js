@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View, SafeAreaView } from 'react-native';
-import { createSwitchNavigator, createStackNavigator, createAppContainer, createMaterialTopTabNavigator, MaterialTopTabBar } from 'react-navigation';
+import { createSwitchNavigator, createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import SignInScreen from './SignInScreen';
@@ -10,6 +10,8 @@ import NewsScreenDetails from './NewsScreenDetails';
 import LeaseScreen from './LeaseScreen';
 import DetailScreen from './LeaseScreenDetails';
 import LeaseScreenSubmitter from './LeaseScreenSubmitter';
+
+import InsuranceScreen from './InsuranceScreen';
 
 import SettingsScreen from './SettingsScreen';
 
@@ -50,48 +52,24 @@ class AuthLoadingScreen extends React.Component {
 const AuthStack = createStackNavigator({ SignIn: SignInScreen}, { headerMode: 'none' } );
 
 
-const LeaseStack = createStackNavigator({ Lease: LeaseScreen, Details: DetailScreen, Submit: LeaseScreenSubmitter }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Local EV Deals', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-notifications" size={23} color="#4F8EF7" /> : <Icon name="ios-notifications" size={23} color="grey" /> } }) })
+const LeaseStack = createStackNavigator({ Lease: LeaseScreen, Details: DetailScreen, Submit: LeaseScreenSubmitter }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Leases', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-notifications" size={23} color="#4F8EF7" /> : <Icon name="ios-notifications" size={23} color="grey" /> } }) })
 const NewsStack = createStackNavigator({ News: NewsScreen, Details: NewsScreenDetails }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV News', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-paper" size={20} color="#4F8EF7" /> : <Icon name="ios-paper" size={20} color="grey" /> } }) })
+const InsuranceStack = createStackNavigator({ InsuranceScreen: InsuranceScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Insurance', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-wallet" size={23} color="#4F8EF7" /> : <Icon name="ios-wallet" size={23} color="grey" /> } }) })
 const SettingsStack = createStackNavigator({ SettingsScreen: SettingsScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Account', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-contact" size={23} color="#4F8EF7" /> : <Icon name="ios-contact" size={23} color="grey" /> } }) })
+
 
 // const VideoStack = createStackNavigator({ Video: VideoScreen, Details: DetailScreen}, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Daily Videos', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-videocam" size={25} color="#4F8EF7" /> : <Icon name="ios-videocam" size={25} color="grey" /> } })  })
 // const ShareStack = createStackNavigator({ Gallery: EVGallery, Details: DetailScreen, Submit: SubmitScreen}, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Gallery', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-photos" size={25} color="#4F8EF7" /> : <Icon name="ios-photos" size={25} color="grey" /> } })  })
 // const MarketStack = createStackNavigator({ Used: MarketplaceScreen, Details: DetailScreen, Submit: MarketplaceScreenSubmitter }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Buy & Sell', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-swap" size={23} color="#4F8EF7" /> : <Icon name="ios-swap" size={23} color="grey" /> } }) })
 
 
-function SafeAreaMaterialTopTabBar (props) {
-  return (
-    <SafeAreaView style={{backgroundColor: 'white'}}>
-      <MaterialTopTabBar {...props} />
-    </SafeAreaView>
-  )
-}
 
 
-const AppTabs = createMaterialTopTabNavigator(
-  { NewsStack, LeaseStack, SettingsStack },
+const AppTabs = createBottomTabNavigator(
+  { NewsStack, LeaseStack, InsuranceStack, SettingsStack },
   {
     initialRouteName: 'NewsStack',
-    animationEnabled: false,
-    swipeEnabled: false,
-    lazyLoad: true,
     optimizationsEnabled: true,
-    tabBarComponent: SafeAreaMaterialTopTabBar,
-    tabBarPosition: 'bottom',
-    tabBarOptions: {
-      activeTintColor: 'dodgerblue',
-      inactiveTintColor: 'grey',
-      pressOpacity: 1,
-      showIcon: true,
-      showLabel: true,
-      lazyLoad: true,
-      upperCaseLabel: false,
-      tabStyle: {padding: 0, margin: 0, borderTopColor: 'lightgrey', borderTopWidth: 1 },
-      style:{ backgroundColor: 'white'},
-      iconStyle: {padding: 0, margin: 0, marginBottom: 2},
-      labelStyle: {padding: 0, margin: 0, marginBottom: 2, fontSize: 11},
-      indicatorStyle: {backgroundColor: 'rgba(0, 0, 0, 0.0)'},
-    }
   }
 )
 

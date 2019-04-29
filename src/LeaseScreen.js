@@ -1,14 +1,14 @@
 // https://forum.leasehackr.com/t/bolt-ev-lease-bay-area-10k-36-mo-as-low-as-250-mo-plus-tax-w-3-300-drive-off-net-0-with-cvrp-and-pg-e-chevyphil-415-596-6262/100847/42
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, ActivityIndicator } from 'react-native';
+import {Platform, StyleSheet, Text, View, AsyncStorage, ScrollView, Image, FlatList, TouchableOpacity, Linking, ActivityIndicator, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Mixpanel from 'react-native-mixpanel'
 import * as Animatable from 'react-native-animatable';
 Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')
 import firebase from 'react-native-firebase';
-
+import { Button } from 'react-native-elements';
 
 
 const model3Image = require('./img/model3.jpg')
@@ -24,6 +24,10 @@ const bmwImage = require('./img/bmw330e.jpg')
 const primeImage = require('./img/prime.jpg')
 const voltImage = require('./img/volt.jpg')
 const niroImage = require('./img/niro.jpg')
+
+
+
+
 
 export default class HomeScreen extends React.Component {
 
@@ -151,6 +155,7 @@ export default class HomeScreen extends React.Component {
                                     regionString === 'OR' ? humanReadableRegion = 'Oregon' : null
                                     regionString === 'VA' ? humanReadableRegion = 'Virginia' : null
                                     regionString === 'WA' ? humanReadableRegion = 'Washington' : null
+                                    regionString === 'RI' ? humanReadableRegion = 'Rhode Island' : null
                                     this.setState({region: regionString, loading: false, regionString: humanReadableRegion })
                             }})
     .then(() => this._filter())
@@ -175,7 +180,19 @@ export default class HomeScreen extends React.Component {
   }
 
 
-  
+  _onSubmitFeedback(){
+      
+    fetch('https://electrade-server.herokuapp.com/api/comments/create/', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            feedback: this.state.feedback
+          }),
+      }).then((res) => this.setState({thanks: true}))
+  }
 
 
   render() {
@@ -218,7 +235,7 @@ export default class HomeScreen extends React.Component {
                                                                 item.teaserImage === 'Model3' ? model3Image : 
                                                                 null
                                                       } />
-                                              <Text style={styles.videoTitle}>{item["Make and Model"]}: {'\n'}{item["$/mo"]}/Month,{'\n'}{item["DriveOffEst"]} Down<Text style={styles.videoSubTitle}>*</Text></Text>
+                                              <Text style={styles.videoTitle}>{item["Make and Model"]}: {'\n'}{item["$/mo"]}/Month,{'\n'}{item["down+acq"]} Down<Text style={styles.videoSubTitle}>*</Text></Text>
                                               {index < 3 ? <Text style={styles.videoSubTitle}>{Math.floor(Math.random() * 5) + 1 } currently looking at this offer</Text> : null }
                                               {3 < index && 1 < (Math.floor(Math.random() * 3)) ? <Text style={styles.videoSubTitle}>{Math.floor(Math.random() * 5) + 1 } currently looking at this offer</Text> : null }
                                             </View> 
@@ -227,38 +244,73 @@ export default class HomeScreen extends React.Component {
                                 }
                     keyExtractor={(item, index) => index.toString()}
                     /> 
-                  <Text style={{margin: 10, color: 'grey'}}>* Estimate after all rebates and fees. Electrade's estimates include tax, dealer's "drive-off fees" (license, doc, etc), and federal, state & county incentives. Tap offers for details. Electrade does not guarantee precision of the offer. Some offers include conditional incentives and/or rebates (i.e. recent college grad, loyalty, competitive, etc).</Text>
+
+                  {/* FEEDBACK */}
+                    {this.state.thanks ? <View style={styles.deal}><Text style={styles.newsTitle}>Thanks!</Text><Text>We really appreciate your feedback! If you left an email, we may follow up with you.</Text></View>
+                      :
+                      <View style={styles.deal}>
+                        <Text style={styles.newsTitle}>
+                          Feedback about this page? Looking for something else?
+                        </Text>
+                        <TextInput 
+                          underlineColorAndroid="transparent"
+                          style={[styles.textInput, {height: 100, textAlign: 'left'}]}
+                          placeholder={'Please enter it here and hit Send Feedback. Include your email if you want us to get back to you.'}
+                          value={this.state.feedback}
+                          multiline={true}
+                          onChangeText={ (text) => this.setState({feedback: text})}
+                          />
+                        <Button
+                          type="solid"
+                          buttonStyle={styles.bigButton}
+                          onPress={() => this._onSubmitFeedback()} 
+                          title="Send Feedback" 
+                          />
+                    </View> }
+
+                  <View style={styles.separator} />
+                  <Text> </Text>
+
+                  <Text style={{margin: 10, color: 'grey'}}>* Down Payment. See offer details for guaranteed price including all fees.</Text>
+                  <Text> </Text>
+                  
+                  <View style={styles.separator} />
+                  <Text> </Text>
+
 
                   <View style={{margin: 10}}>
                     <Button
-                      type="solid"
-                      buttonStyle={styles.bigButton}
+                      type="clear"
                       onPress={() => Linking.openURL("https://www.electricauto.org/")}
                       title="Find your local Electric Vehicle Association" 
                       />
                   </View>
 
-                  { this.state.region === "CA(N)" ||
-                    this.state.region === "CA(S)" ?
-                    <View style={{margin: 10}}>
-                      <Button
-                        type="solid"
-                        buttonStyle={styles.bigButton}
-                        onPress={() => Linking.openURL("https://www.mcecleanenergy.org/ev-drivers/#EVrebate")}
-                        title="MCE Clean Energy Rebate" 
-                        />
-                      <Text></Text>
-                      <Button
-                        type="solid"
-                        buttonStyle={styles.bigButton}
-                        onPress={() => Linking.openURL("https://cleanvehiclerebate.org/eng")}
-                        title="California Incentives" 
-                        />
-                      <Text >for cars leased over 36 months: $2,500 on top of drive-off fee</Text>
-                    </View>
-                    : 
-                    null
-                  }
+
+
+                  {/*<View>
+                      { this.state.region === "CA(N)" ||
+                        this.state.region === "CA(S)" ?
+                        <View style={{margin: 10}}>
+                          <Button
+                            type="solid"
+                            buttonStyle={styles.bigButton}
+                            onPress={() => Linking.openURL("https://www.mcecleanenergy.org/ev-drivers/#EVrebate")}
+                            title="MCE Clean Energy Rebate" 
+                            />
+                          <Text></Text>
+                          <Button
+                            type="solid"
+                            buttonStyle={styles.bigButton}
+                            onPress={() => Linking.openURL("https://cleanvehiclerebate.org/eng")}
+                            title="California Incentives" 
+                            />
+                        </View>
+                        : 
+                        null
+                      }
+                  </View>*/}
+
                   </View>
               : 
               <View style={{marginTop: 100, alignItems: 'center'}}>
