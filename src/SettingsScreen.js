@@ -8,6 +8,8 @@ Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')
 import firebase from 'react-native-firebase';
 import { Button } from 'react-native-elements';
 
+import FeedbackComponent from './components/FeedbackComponent'
+
 export default class SettingsScreen extends React.Component {
 
   constructor(props) {
@@ -49,20 +51,6 @@ export default class SettingsScreen extends React.Component {
   }
   
 
-  
-  _onSubmitFeedback(){
-      
-    fetch('https://electrade-server.herokuapp.com/api/comments/create/', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            feedback: this.state.feedback
-          }),
-      }).then((res) => this.setState({thanks: true}))
-  }
 
   _onSubmitEmail(){
       AsyncStorage.setItem('email', this.state.email)
@@ -85,13 +73,8 @@ export default class SettingsScreen extends React.Component {
                 <Text style={[styles.newsTitle, {fontSize: 20}]}>
                     Your Account
                 </Text>
-              </View>
 
-
-              {/* REGION */}
-              <View style={styles.deal}>
-                  
-
+              {/* REGION */}                  
                   <Text style={styles.newsTitle}>
                     Your Region
                   </Text>
@@ -116,37 +99,18 @@ export default class SettingsScreen extends React.Component {
                     <Picker.Item label="Rhode Island" value="RI" />
                   </Picker>
 
-              </View>
 
+              <Text> </Text>
               <View style={styles.separator} />
               <Text> </Text>
               <Text> </Text>
 
 
-              {/* FEEDBACK */}
-                {this.state.thanks ? <View style={styles.deal}><Text style={styles.newsTitle}>Thanks!</Text><Text>We really appreciate your feedback! If you left an email, we may follow up with you.</Text></View>
-                  :
-                  <View style={styles.deal}>
-                    <Text style={styles.newsTitle}>
-                      Feedback?
-                    </Text>
-                    <TextInput 
-                      underlineColorAndroid="transparent"
-                      style={[styles.textInput, {height: 100, textAlign: 'left'}]}
-                      placeholder={'Please enter it here and hit Send Feedback. Include your email if you like.'}
-                      value={this.state.feedback}
-                      multiline={true}
-                      onChangeText={ (text) => this.setState({feedback: text})}
-                      />
-                    <Button
-                      type="solid"
-                      buttonStyle={styles.bigButton}
-                      onPress={() => this._onSubmitFeedback()} 
-                      title="Send Feedback" 
-                      />
-                </View> }
 
+            {/* FEEDBACK */}
+              <FeedbackComponent />
 
+              <Text> </Text>
               <View style={styles.separator} />
               <Text> </Text>
               <Text> </Text>
@@ -154,7 +118,7 @@ export default class SettingsScreen extends React.Component {
 
 
             {/* EMAIL */}
-              <View style={styles.deal}>
+
                 <Text style={styles.newsTitle}>
                   Your email:
                 </Text>
@@ -175,13 +139,31 @@ export default class SettingsScreen extends React.Component {
                     />
                 </View>
 
-              </View>
 
 
+              <Text> </Text>
               <View style={styles.separator} />
               <Text> </Text>
               <Text> </Text>
 
+
+            {/* MISSION STATEMENT */}
+              <Text style={{fontWeight: '600'}}>
+                Why are we doing this?
+              </Text>
+              <Text>
+                Our mission is to make it easier to buy EVs, thereby getting more EVs on the road, quickly.
+              </Text>
+              <Text></Text>
+
+              <Text style={{fontWeight: '600'}}>
+                How do we make money?
+              </Text>
+              <Text>
+                With our volume and focus on EVs we can pre-negotiate EV leases far below MSRP, and keep part of the savings (usually around 10%) while passing 90% of the savings on to you. This margin pays for us doing the paperwork for you, and being your buffer from the dealership practices and fees. We're constantly improving this model, so let us know if there is anything we can improve!
+              </Text>
+              <Text></Text>
+              
 
 
 
@@ -216,17 +198,21 @@ export default class SettingsScreen extends React.Component {
             </View>*/}
 
 
+            <Text> </Text>
+            <View style={styles.separator} />
+            <Text> </Text>
+            <Text> </Text>
+
             {/* INVITE COLLEAGUES */}
-            <View style={styles.deal}>
               <Button
                 type="solid"
                 buttonStyle={styles.bigButton}
                 onPress={() => Platform.OS === 'ios' ? Linking.openURL('sms: &body=https://itunes.apple.com/us/app/id1445602414') : Linking.openURL('sms:?body=https://play.google.com/store/apps/details?id=com.bigset.electric')}
-                title="Send app to friends" 
+                title="Tell a friend about this app" 
                 />
-            </View>
 
-            <View style={styles.separator} />
+
+            </View>
 
           </View>
         </ScrollView>

@@ -10,6 +10,7 @@ Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')
 import firebase from 'react-native-firebase';
 import { Button } from 'react-native-elements';
 
+import FeedbackComponent from './components/FeedbackComponent'
 
 const model3Image = require('./img/model3.jpg')
 const boltImage = require('./img/bolt.jpg')
@@ -24,8 +25,6 @@ const bmwImage = require('./img/bmw330e.jpg')
 const primeImage = require('./img/prime.jpg')
 const voltImage = require('./img/volt.jpg')
 const niroImage = require('./img/niro.jpg')
-
-
 
 
 
@@ -74,13 +73,13 @@ export default class HomeScreen extends React.Component {
             console.log(enabled)
           } else {
             // user doesn't have permission
-            firebase.messaging().requestPermission()
+            setTimeout(() => {firebase.messaging().requestPermission()
               .then(() => {
                 // User has authorised  
               })
               .catch(error => {
                 // User has rejected permissions  
-              });
+              })}, 3000)
           } 
         });
 
@@ -180,20 +179,6 @@ export default class HomeScreen extends React.Component {
   }
 
 
-  _onSubmitFeedback(){
-      
-    fetch('https://electrade-server.herokuapp.com/api/comments/create/', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            feedback: this.state.feedback
-          }),
-      }).then((res) => this.setState({thanks: true}))
-  }
-
 
   render() {
     return (
@@ -206,8 +191,10 @@ export default class HomeScreen extends React.Component {
                     This week's best EV lease offers from dealerships in
                     <Text style={{color: '#2191fb'}} onPress={() => this.props.navigation.navigate('SettingsScreen')}> {this.state.regionString}</Text>
                 </Text>
-                
               </View>
+
+
+
               {!this.state.loading ? 
                 <View>
                   <FlatList
@@ -245,46 +232,135 @@ export default class HomeScreen extends React.Component {
                     keyExtractor={(item, index) => index.toString()}
                     /> 
 
-                  {/* FEEDBACK */}
-                    {this.state.thanks ? <View style={styles.deal}><Text style={styles.newsTitle}>Thanks!</Text><Text>We really appreciate your feedback! If you left an email, we may follow up with you.</Text></View>
-                      :
-                      <View style={styles.deal}>
-                        <Text style={styles.newsTitle}>
-                          Feedback about this page? Looking for something else?
-                        </Text>
-                        <TextInput 
-                          underlineColorAndroid="transparent"
-                          style={[styles.textInput, {height: 100, textAlign: 'left'}]}
-                          placeholder={'Please enter it here and hit Send Feedback. Include your email if you want us to get back to you.'}
-                          value={this.state.feedback}
-                          multiline={true}
-                          onChangeText={ (text) => this.setState({feedback: text})}
-                          />
-                        <Button
-                          type="solid"
-                          buttonStyle={styles.bigButton}
-                          onPress={() => this._onSubmitFeedback()} 
-                          title="Send Feedback" 
-                          />
-                    </View> }
+
+                  <Text style={{margin: 10, color: 'grey'}}>* Down Payment. See offer details for guaranteed price including all fees.</Text>
+                  <Text> </Text>
+
+
+                  
 
                   <View style={styles.separator} />
                   <Text> </Text>
 
-                  <Text style={{margin: 10, color: 'grey'}}>* Down Payment. See offer details for guaranteed price including all fees.</Text>
-                  <Text> </Text>
+                  <Animatable.View style={styles.signin} animation="zoomInUp">
+                    <Text style={{fontWeight: '600', fontSize: 30}}>
+                      How this works
+                    </Text>
+                    <Text> </Text>
+
+                    <View style={{display: 'flex', flexDirection: 'row'}}>
+                      <View style={{flex: 1}}>
+                        <Icon
+                          name='ios-notifications'
+                          type='ionicon'
+                          color='#2191fb'
+                          size={40} />
+                      </View>
+                      <View style={{flex: 3}}>
+                        <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>1 – Find a lease</Text> 
+                        <Text style={{marginBottom: 3, fontSize: 12}}>
+                          Set your region, find a lease you like.
+                        </Text>
+                      </View>
+                    </View>
+
+                    <Text> </Text>
+
+
+                    <View style={{display: 'flex', flexDirection: 'row'}}>
+                      <View style={{flex: 1}}>
+                        <Icon
+                          name='ios-card'
+                          type='ionicon'
+                          color='#2191fb'
+                          size={40} />
+                      </View>
+                      <View style={{flex: 3}}>
+                        <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>2 – Pay Deposit</Text> 
+                        <Text style={{marginBottom: 3, fontSize: 12}}>
+                          Lock in lease price ($199 deposit) or request a test drive ($99 deposit).
+                        </Text>
+                      </View>
+                    </View>
+
+                    <Text></Text>
+
+                    <View style={{display: 'flex', flexDirection: 'row'}}>
+                      <View style={{flex: 1}}>
+                        <Icon
+                          name='ios-car'
+                          type='ionicon'
+                          color='#2191fb'
+                          size={40} />
+                      </View>
+                      <View style={{flex: 3}}>
+                        <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>3 – Sign online & drive</Text> 
+                        <Text style={{marginBottom: 3, fontSize: 12}}>
+                          We email you all required documents to sign, you pay remainder minus deposit at the dealership and drive off your new car!
+                        </Text>
+                      </View>
+                    </View>
+
+                    
+                    <Text></Text>
+                    <View style={styles.separator} />
+                    <Text></Text>
+
+                    <View style={{display: 'flex', flexDirection: 'row'}}>
+                      <View style={{flex: 1}}>
+                        <Icon
+                          name='ios-checkbox'
+                          type='ionicon'
+                          color='#2191fb'
+                          size={40} />
+                      </View>
+                      <View style={{flex: 3}}>
+                        <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
+                          Money Back Guarantee
+                        </Text>
+                        <Text style={{marginBottom: 3, fontSize: 12}}>If we can't fulfill your request within 48 hours or you're not satisfied with the experience you get 100% of your deposit back.</Text>
+                      </View>
+                    </View>
+
+
+                    <View style={{display: 'flex', flexDirection: 'row'}}>
+                      <View style={{flex: 1}}>
+                        <Icon
+                          name='ios-lock'
+                          type='ionicon'
+                          color='#2191fb'
+                          size={40} />
+                      </View>
+                      <View style={{flex: 3}}>
+                        <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
+                          Hassle-Free
+                        </Text>
+                        <Text style={{marginBottom: 3, fontSize: 12}}>We build in all fees so there's no last-minute negotiation.</Text>
+                        <Text></Text>
+                      </View>
+                    </View>
+
+                  </Animatable.View> 
+
+
+                  
                   
                   <View style={styles.separator} />
                   <Text> </Text>
 
+                  <View style={styles.deal}>
+                    <FeedbackComponent />
+                  </View>
 
-                  <View style={{margin: 10}}>
+                  
+
+                  {/*<View style={{margin: 10}}>
                     <Button
                       type="clear"
                       onPress={() => Linking.openURL("https://www.electricauto.org/")}
                       title="Find your local Electric Vehicle Association" 
                       />
-                  </View>
+                  </View>*/}
 
 
 

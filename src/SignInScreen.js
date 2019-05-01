@@ -54,10 +54,9 @@ export default class SignInScreen extends React.Component {
             email: email
           }),
       }).then(() => AsyncStorage.setItem('email', email ))
-        .then(() => this.props.navigation.navigate('App'))
+        .then(() => this.props.navigation.navigate('SignInScreen2'))
     }
   };
-
 
   render() {
     return (
@@ -90,17 +89,18 @@ export default class SignInScreen extends React.Component {
                             onPress={() => this._onPress(this.state.email)}
                             title="Sign up"
                             />
+                          </View>
+                          <Text style={{color: 'grey'}}>Your email will not be used for marketing purposes, and will not be given to third parties without your consent.</Text>
                           <Button
                             type="clear"
+                            titleStyle={{fontSize: 15}}
                             onPress={() => {this._onPress(' ')}}
                             title="Skip for now" />
-                          </View>
-                          <Text style={{color: 'grey'}}>Your email will not be used for marketing purposes, but this preset is required should you apply for a lease. It will not be given to third parties without your (later) consent.</Text>
                         </View>
 
                       </KeyboardAvoidingView>
                     }
-
+                    
         </Animatable.View>
       </SafeAreaView>
     );

@@ -4,10 +4,14 @@ import { SafeAreaView } from 'react-navigation';
 import Mixpanel from 'react-native-mixpanel'
 import styles from './styles'
 import firebase from 'react-native-firebase';
-import { Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Button, Icon } from 'react-native-elements';
+import * as Animatable from 'react-native-animatable';
+// import Icon from 'react-native-vector-icons/Ionicons';
 
 import stripe from 'tipsi-stripe'
+
+import FeedbackComponent from './components/FeedbackComponent'
+
 
 stripe.setOptions({
   // publishableKey: 'pk_test_w1fHSNJdm3G5cxjBrzEjS6PT' // ********TEST********
@@ -23,6 +27,7 @@ export default class SubmitScreen extends React.Component {
     this.state = { 
       email: '',
       thanks: false,
+      feedbackThanks: false,
       loading: '',
       region: null
        };
@@ -81,7 +86,7 @@ export default class SubmitScreen extends React.Component {
     )
 
 
-  _onPress = async () => {
+  _onPress = async (passedAmount) => {
     this.setState({loading: true})
     console.log(this.state.email)
     if(this.state.email === '' || this.state.email === ' ' || this.state.email === null){
@@ -105,14 +110,14 @@ export default class SubmitScreen extends React.Component {
         })
         .then(() => {
             // Stripe payment
-            this._handleCardPayPress()
+            this._handleCardPayPress(passedAmount)
           })
       }
-      else{ this._handleCardPayPress() }
+      else{ this._handleCardPayPress(passedAmount) }
     }
   }
 
-  _handleCardPayPress = async () => {
+  _handleCardPayPress = async (passedAmount) => {
       this.state.email !== 'niko' ?   Mixpanel.track("Stripe Opened") && firebase.analytics().logEvent('Stripe_Opened')  : null
       try {
         console.log('_handleCardPayPress running')
@@ -130,7 +135,7 @@ export default class SubmitScreen extends React.Component {
                   },
                   body: JSON.stringify({
                     token: token.tokenId,
-                    amount: 20000,
+                    amount: passedAmount,
                     email: this.state.email
                   })
               })
@@ -145,6 +150,20 @@ export default class SubmitScreen extends React.Component {
       } catch (error) {
         this.setState({ loading: false })
       }
+  }
+
+  _onSubmitFeedback(){
+      
+    fetch('https://electrade-server.herokuapp.com/api/comments/create/', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            feedback: this.state.feedback
+          }),
+      }).then((res) => this.setState({feedbackThanks: true}))
   }
 
   
@@ -190,54 +209,62 @@ export default class SubmitScreen extends React.Component {
               <View style={{marginBottom: 80}}>
                 <View style={styles.deal}>
 
-                <Text style={[styles.newsTitle, {fontSize: 20}]}>
+                <Text style={[styles.newsTitle, {fontSize: 30}]}>
                   Checkout
                 </Text>
 
-                <Text style={{fontWeight: '600'}}>
+                {/*<Text style={{fontWeight: '600'}}>
                   What happens next?
-                </Text>
-                <Text>
+                </Text>*/}
+                {/*<Text>
                   Please enter your email below and pay the deposit. If we can't complete the lease as described above within 48 hours you'll be automatically refunded in full.
-                </Text>
-                <Text></Text>
+                </Text>*/}
 
-                <Text style={{fontWeight: '600'}}>
-                  How it works
-                </Text>
-                <Text style={{marginBottom: 3}}> ✅ We email you all required documents</Text>
-                <Text style={{marginBottom: 3}}> ✅ You sign online (after credit check)</Text>
-                <Text style={{marginBottom: 3}}> ✅ No negotiation or wasted time</Text>
-                <Text style={{marginBottom: 3}}> ✅ You pay remainder at dealership and drive off your new car!</Text>
-                <Text></Text>
+                <Animatable.View style={styles.signin} animation="zoomInUp">
 
-                <Text style={{fontWeight: '600'}}>
-                  Money Back Guarantee
-                </Text>
-                <Text style={{marginBottom: 3}}>If we can't fulfill your request within 48 hours or you're not satisfied with the experience you get 100% of your deposit back.</Text>
-                <Text></Text>
+                  <View style={{display: 'flex', flexDirection: 'row'}}>
+                    <View style={{flex: 1}}>
+                      <Icon
+                        name='ios-checkbox'
+                        type='ionicon'
+                        color='#2191fb'
+                        size={40} />
+                    </View>
+                    <View style={{flex: 3}}>
+                      <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
+                        Money Back Guarantee
+                      </Text>
+                      <Text style={{marginBottom: 3, fontSize: 12}}>If we can't fulfill your request within 48 hours or you're not satisfied with the experience you get 100% of your deposit back.</Text>
+                    </View>
+                  </View>
 
-                <Text style={{fontWeight: '600'}}>
-                  What do we get from it?
-                </Text>
-                <Text>
-                  We earn commission. Only if you go through with the lease and everything is to your liking, though – we don't pass your email on. So let us know if there's anything we can do to help or ask questions when we reach out to you. 
-                </Text>
-                <Text></Text>
-                <Text style={{fontWeight: '600'}}>
-                  Why are we doing this?
-                </Text>
-                <Text>
-                  Our mission is to make it easier to buy EVs, thereby getting more EVs on the road, quickly.
-                </Text>
-                <Text></Text>
 
+                  <View style={{display: 'flex', flexDirection: 'row'}}>
+                    <View style={{flex: 1}}>
+                      <Icon
+                        name='ios-lock'
+                        type='ionicon'
+                        color='#2191fb'
+                        size={40} />
+                    </View>
+                    <View style={{flex: 3}}>
+                      <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
+                        Hassle-Free
+                      </Text>
+                      <Text style={{marginBottom: 3, fontSize: 12}}>We build in all fees so there's no last-minute negotiation.</Text>
+                      <Text></Text>
+                    </View>
+                  </View>
+
+                </Animatable.View>
+
+                <Text></Text>
 
 
                 {/* EMAIL */}
                   <View>
-                    <Text style={[styles.newsTitle, {fontSize: 20}]}>
-                        Email & Deposit
+                    <Text style={[styles.newsTitle]}>
+                        Email
                     </Text>
                     <TextInput 
                       underlineColorAndroid="transparent"
@@ -250,22 +277,50 @@ export default class SubmitScreen extends React.Component {
                       />
                   </View>
 
-                  <TouchableOpacity
-                    onPress={() => this._onPress()} 
-                    style={[styles.bigButton, {flex: 1, padding: 5}]}>
-                      <Text style={{fontWeight: '700', color: 'white', fontSize: 18, textAlign: 'center'}}>
-                        🔒 Pay $200 deposit for price guarantee
-                      </Text>
-                      <Text style={{ color: 'white', fontSize: 15, textAlign: 'center'}}>
-                        (applied towards down payment)
-                      </Text>
-                  </TouchableOpacity>
+                  <Text style={[styles.newsTitle]}>
+                      Deposit
+                  </Text>
 
+                  <Button
+                    type="solid"
+                    icon={
+                        <Icon
+                          name="credit-card"
+                          size={25}
+                          color="white"
+                        />
+                      }
+                    buttonStyle={styles.bigButton}
+                    containerStyle={{padding: 5}}
+                    onPress={() => this._onPress(19900)}
+                    title={` Lock in price ($199 refundable deposit)`} 
+                    />
+                  <Button
+                    type="outline"
+                    icon={
+                        <Icon
+                          name="directions-car"
+                          size={25}
+                          color="#2191fb"
+                        />
+                      }
+                    buttonStyle={{borderRadius: 10, margin: 5}}
+                    onPress={() => this._onPress(9900)}
+                    title={` Request test drive ($99 refundable deposit)`} 
+                    />
 
-
+                  <Text> </Text>
                   <Text>
                       {this.state.item["Make and Model"]} @ {this.state.item["$/mo"]}/month for {this.state.item["months"]} months, {this.state.item["DriveOffEst"]} guaranted drive-off. Deposit applied towards lease down payment. Automatically refunded in full if car isn't available as above within 48 hours or if you should change your mind.
                   </Text>
+
+                  <Text> </Text>
+                  <View style={styles.separator} />
+                  <Text> </Text>
+
+
+
+                  <FeedbackComponent />
 
 
                   {this.state.loading ? <ActivityIndicator /> : null}

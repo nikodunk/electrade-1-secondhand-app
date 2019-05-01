@@ -28,10 +28,11 @@ export default styles = StyleSheet.create({
     },
 
     imageDetail:{ 
-        height: 300,
+        height: 240,
         borderRadius: 10,
         margin: 5,
-        padding: 5
+        padding: 5,
+        width: 300
     },
 
     imageCar:{

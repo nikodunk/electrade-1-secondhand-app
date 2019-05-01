@@ -19,7 +19,8 @@ export default class HomeScreen extends React.Component {
     this.state = { 
       news: null,
       email: null,
-      loading: null
+      loading: null,
+      refreshing: false
        };
 
     this._getNews = this._getNews.bind(this)
@@ -88,7 +89,6 @@ export default class HomeScreen extends React.Component {
       .then((sorted) => { 
                       this.setState({news: sorted, loading: false, refreshing: false}); 
                       // console.log(sorted)
-
                       })
   }
 
