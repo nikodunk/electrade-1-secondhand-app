@@ -28,13 +28,8 @@ export default class SignInScreen extends React.Component {
   }
 
 
-  _onNext = async () => {
-    Mixpanel.track("Email Button Pressed");
-    this.setState({next: true})
-  };
-
   _onFinish = async () => {
-    Mixpanel.track("Email Button Pressed");
+    Mixpanel.track("Continue Pressed");
     this.props.navigation.navigate('App')
   };
 
@@ -149,7 +144,7 @@ export default class SignInScreen extends React.Component {
                   type="solid"
                   buttonStyle={styles.bigButton}
                   onPress={() => {this._onFinish()}}
-                  title="Finish" />
+                  title="Continue" />
 
               </Animatable.View> 
 
