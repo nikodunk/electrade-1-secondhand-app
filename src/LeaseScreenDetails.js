@@ -213,85 +213,69 @@ export default class DetailScreen extends React.Component {
                       
                       <Animatable.View animation="zoomInUp">
 
-                        <View style={{flexDirection: 'row'}}>
-                          <Text style={[styles.infoBox, {borderColor: '#2191fb', color: '#2191fb'}]}>
-                            <Text style={{fontWeight: '700', fontSize: 17}}>{ this.state.item["$/mo"] } + tax</Text>{'\n'}
-                            Monthly payment
-                          </Text>
-                          <Text style={styles.infoBox}>
-                            <Text style={{fontWeight: '700', fontSize: 17}}>{ this.state.item["months"] } Months</Text>{'\n'}
-                            Lease Term
-                          </Text>
+                        <View style={{flexDirection: 'row', borderBottomWidth: 1, borderColor: 'lightgrey', alignItems: 'center', justifyContent: 'space-around'}}>
+                          <View style={[styles.infoBox, {borderRightWidth: 1, borderColor: 'lightgrey'}]}>
+                            <Text style={{fontWeight: '700', fontSize: 17, textAlign: 'center', color: '#2191fb'}}>{ this.state.item["$/mo"] } + tax</Text>
+                            <Text style={{color: '#2191fb', textAlign: 'center'}} >Monthly payment</Text>
+                          </View>
+                          <View style={styles.infoBox}>
+                            <Text style={{fontWeight: '700', fontSize: 17, textAlign: 'center'}}>{ this.state.item["months"] } Months</Text>
+                            <Text style={{textAlign: 'center'}}>Lease Term</Text>
+                          </View>
+                        </View>
+
+                        <View style={{flexDirection: 'row', borderBottomWidth: 1, borderColor: 'lightgrey', alignItems: 'center', justifyContent: 'space-around'}}>
+                          <View style={[styles.infoBox, {borderRightWidth: 1, borderColor: 'lightgrey'}]}>
+                            <Text style={{fontWeight: '700', fontSize: 17, textAlign: 'center'}}>{ this.state.item["down+acq"] }</Text>
+                            <Text style={{textAlign: 'center'}} >Down payment</Text>
+                          </View>
+                          <View style={styles.infoBox}>
+                            <Text style={{fontWeight: '700', fontSize: 17, textAlign: 'center', color: '#2191fb'}}>{ this.state.item["DriveOffEst"] }</Text>
+                            <Text style={{color: '#2191fb', textAlign: 'center'}}>Drive-off *</Text>
+                          </View>
                         </View>
 
 
-                        <View style={{flexDirection: 'row'}}>
-                          <Text style={styles.infoBox}>
-                            <Text style={{fontWeight: '700', fontSize: 17}}>{ this.state.item["down+acq"] }</Text>{'\n'}
-                            Down payment
-                          </Text>
-                          <Text style={[styles.infoBox, {borderColor: '#2191fb', color: '#2191fb'}]}>
-                            <Text style={{fontWeight: '700', fontSize: 17}}>{ this.state.item["DriveOffEst"] }</Text>{'\n'}
-                            Guaranteed drive-off incl. all fees & incentives *
-                          </Text>
+                        <View style={{flexDirection: 'row', borderBottomWidth: 1, borderColor: 'lightgrey', alignItems: 'center', justifyContent: 'space-around'}}>
+                          <View style={[styles.infoBox, {borderRightWidth: 1, borderColor: 'lightgrey'}]}>
+                            <Text style={{fontWeight: '700', fontSize: 17, textAlign: 'center'}}>{ this.state.item["miles/yr"] }</Text>
+                            <Text style={{textAlign: 'center'}} >Miles per year</Text>
+                          </View>
+                          <View style={styles.infoBox}>
+                            <Text style={{fontWeight: '700', fontSize: 17, textAlign: 'center'}}>Excellent</Text>
+                            <Text style={{textAlign: 'center'}}>Credit Required</Text>
+                          </View>
                         </View>
 
-                        <View style={{flexDirection: 'row'}}>
-                          <Text style={styles.infoBox}>
-                            <Text style={{fontWeight: '700', fontSize: 17}}>{ this.state.item["miles/yr"] }</Text>{'\n'}
-                            Miles per year
-                          </Text>
-                          <Text style={styles.infoBox}>
-                            <Text style={{fontWeight: '700', fontSize: 17}}>Excellent</Text>{'\n'}
-                              Credit Required
-                          </Text>
-                        </View>
+
 
                         {this.state.left && this.state.item["Make and Model"] !== "Tesla Model 3" ? 
-                        <View style={{flexDirection: 'row'}}>
-                          {/*<Text style={styles.infoBox}>
-                            Lease{'\n'}
-                            <Text style={{fontWeight: '700', fontSize: 17}}>Existing</Text>
-                          </Text>*/}
-                          <Text style={styles.infoBox}>
-                            Pick Up Location:{'\n'}
-                            <Text style={{fontWeight: '700', fontSize: 17}}>{this.state.item["location"]}</Text>
-                          </Text>
-                          {/*<Text style={styles.infoBox}>
-                            Supplier Code{'\n'}
-                            <Text style={{fontWeight: '700', fontSize: 17}}>None</Text>
-                          </Text>*/}
-                        </View> : null }
                         
-                        <Text> </Text>
-                       {this.state.left && this.state.item["Make and Model"] !== "Tesla Model 3" ? 
-                         <Text style={{fontSize: 12, fontWeight: '400', textAlign: 'center', color: '#2191fb'}}>  {this.state.left} left at this price</Text> 
-                           : null }
-                        <Text> </Text>
-                        {this.state.left && this.state.item["Make and Model"] !== "Tesla Model 3" ? 
-                          <Button
-                            type="solid"
-                            buttonStyle={styles.bigButton}
-                            onPress={() => this.props.navigation.navigate('Submit', {item: this.state.item, type: 'Lease'} )}
-                            title={`Continue to reservation ❱`} 
-                            /> : null }
-                          
+                        <View style={{flexDirection: 'row', borderBottomWidth: 1, borderColor: 'lightgrey', alignItems: 'center', justifyContent: 'space-around'}}>
+                          <View style={[styles.infoBox]}>
+                            <Text style={{textAlign: 'center'}} >Pickup Location:</Text>
+                            <Text style={{fontWeight: '700', fontSize: 17, textAlign: 'center'}}>{this.state.item["location"]}</Text>
+                          </View>
+                        </View>
+
+                         : null }
+
                         <Text> </Text>
 
                         {this.state.left && this.state.item["Make and Model"] !== "Tesla Model 3" ? 
                         <Text style={{color: 'grey'}}>
-                          <Text>* Final drive-off includes:</Text>{'\n'}
-                          <Text>$650 acquisition fee</Text>{'\n'}
-                          <Text>$685 license/registration fee</Text>{'\n'}
-                          <Text>$122 doc processing/EVR/DMV tire fee</Text>{'\n'}
-                          <Text>$823 tax on incentive</Text>{'\n'}
-                          { this.state.item["StateIncentive"] ? <Text style={{}}>{this.state.item["StateIncentive"]} cash back ("state rebate")</Text> : null }{'\n'}
+                          <Text>* Guaranteed drive-off includes all fees & incentives:</Text>{'\n'}
+                          <Text>✓ $650 acquisition fee</Text>{'\n'}
+                          <Text>✓ $685 license/registration fee</Text>{'\n'}
+                          <Text>✓ $122 doc processing/EVR/DMV tire fee</Text>{'\n'}
+                          <Text>✓ $823 tax on incentive</Text>{'\n'}
+                          { this.state.item["StateIncentive"] ? <Text style={{}}>✓ {this.state.item["StateIncentive"]} cash back ("state rebate")</Text> : null }{'\n'}
                           {this.state.region === "CA(N)"  || this.state.region === "CA(S)" ? <Text style={{}}>PG&E rebate not yet included.</Text> : null }{'\n'}
                         </Text> :
                         <Text>
                           <Text>* Final drive-off includes:</Text>{'\n'}
-                          <Text>$1,199 destination + doc charge</Text>{'\n'}
-                          { this.state.item["StateIncentive"] ? <Text style={{}}>{this.state.item["StateIncentive"]} cash back ("state rebate")</Text> : null }{'\n'}
+                          <Text>✓ $1,199 destination + doc charge</Text>{'\n'}
+                          { this.state.item["StateIncentive"] ? <Text style={{}}>✓ {this.state.item["StateIncentive"]} cash back ("state rebate")</Text> : null }{'\n'}
                           {this.state.region === "CA(N)"  || this.state.region === "CA(S)" ? <Text style={{}}>PG&E rebate</Text> : null }{'\n'}
                         </Text> }
 
@@ -299,6 +283,23 @@ export default class DetailScreen extends React.Component {
                         <Text>Dollars per mile:  { this.state.item["$/mi"] }</Text>
                         <Text>Total amount over lease:  { this.state.item["$ total"] } ("one pay")</Text>
                         <Text>Averaged over lease:  { this.state.item["$/mo avg"] } ("zero down price")</Text>
+
+                        
+                        
+                        <Text> </Text>
+                       {this.state.left && this.state.item["Make and Model"] !== "Tesla Model 3" ? 
+                         <Text style={{fontSize: 12, fontWeight: '400', textAlign: 'center', color: 'salmon'}}>  {this.state.left} left at this price</Text> 
+                           : null }
+                        <Text> </Text>
+                        {this.state.left && this.state.item["Make and Model"] !== "Tesla Model 3" ? 
+                          <Button
+                            type="solid"
+                            buttonStyle={styles.bigButton}
+                            onPress={() => this.props.navigation.navigate('Submit', {item: this.state.item, type: 'Lease'} )}
+                            title={`Hold this offer ❱`}
+                            /> : null }
+                          
+                        <Text> </Text>
 
                       </Animatable.View>
                       

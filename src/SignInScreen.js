@@ -72,7 +72,7 @@ export default class SignInScreen extends React.Component {
                         <View style={styles.signin}>
                           <Text></Text>
                           <View>
-                            <Text style={{fontWeight: '500', color: 'dodgerblue', fontSize: 20}}>Be part of the oncoming electric revolution from here.</Text>
+                            <Text style={{fontWeight: '500', color: 'dodgerblue', fontSize: 25}}>Discover the power of electric vehicles.</Text>
                             <Text></Text>
                           <TextInput 
                               underlineColorAndroid="transparent"
@@ -90,12 +90,12 @@ export default class SignInScreen extends React.Component {
                             title="Sign up"
                             />
                           </View>
-                          <Text style={{color: 'grey'}}>Your email will not be used for marketing purposes, and will not be given to third parties without your consent.</Text>
+                          <Text style={{color: 'grey'}}>Your email will not be used for marketing purposes or shared with 3rd parties without your consent.</Text>
                           <Button
                             type="clear"
                             titleStyle={{fontSize: 15}}
                             onPress={() => {this._onPress(' ')}}
-                            title="Skip for now" />
+                            title="Skip" />
                         </View>
 
                       </KeyboardAvoidingView>

@@ -244,7 +244,7 @@ export default class HomeScreen extends React.Component {
 
                   <Animatable.View style={styles.signin} animation="zoomInUp">
                     <Text style={{fontWeight: '600', fontSize: 30}}>
-                      How this works
+                      How it works
                     </Text>
                     <Text> </Text>
 
@@ -257,9 +257,9 @@ export default class HomeScreen extends React.Component {
                           size={40} />
                       </View>
                       <View style={{flex: 3}}>
-                        <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>1 – Find a lease</Text> 
+                        <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>1 – Discover your lease.</Text> 
                         <Text style={{marginBottom: 3, fontSize: 12}}>
-                          Set your region, find a lease you like.
+                          Set your location to find the right car for you. Review the terms of your lease and car details. Get in touch – speak with our team to answer any questions.
                         </Text>
                       </View>
                     </View>
@@ -276,14 +276,15 @@ export default class HomeScreen extends React.Component {
                           size={40} />
                       </View>
                       <View style={{flex: 3}}>
-                        <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>2 – Pay Deposit</Text> 
+                        <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>2 – Select your lease.</Text> 
                         <Text style={{marginBottom: 3, fontSize: 12}}>
-                          Lock in lease price ($199 deposit) or request a test drive ($99 deposit).
+                          Hold your car at the set lease price ($199 deposit) or request a test drive first ($99 deposit).
                         </Text>
                       </View>
                     </View>
 
-                    <Text></Text>
+                    <Text> </Text>
+
 
                     <View style={{display: 'flex', flexDirection: 'row'}}>
                       <View style={{flex: 1}}>
@@ -294,17 +295,17 @@ export default class HomeScreen extends React.Component {
                           size={40} />
                       </View>
                       <View style={{flex: 3}}>
-                        <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>3 – Sign online & drive</Text> 
+                        <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>3 – Sign online and go.</Text> 
                         <Text style={{marginBottom: 3, fontSize: 12}}>
-                          We email you all required documents to sign, you pay remainder minus deposit at the dealership and drive off your new car!
+                          No rush! We send you all required lease documents to review and sign online via email. Finally, walk in to the dealership to pay the remainder and drive!
                         </Text>
                       </View>
                     </View>
 
-                    
                     <Text></Text>
                     <View style={styles.separator} />
                     <Text></Text>
+
 
                     <View style={{display: 'flex', flexDirection: 'row'}}>
                       <View style={{flex: 1}}>
@@ -318,7 +319,7 @@ export default class HomeScreen extends React.Component {
                         <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
                           Money Back Guarantee
                         </Text>
-                        <Text style={{marginBottom: 3, fontSize: 12}}>If we can't fulfill your request within 48 hours or you're not satisfied with the experience you get 100% of your deposit back.</Text>
+                        <Text style={{marginBottom: 3, fontSize: 12}}>If we can’t help you find the right electric vehicle within 48 hours, we’ll refund 100% of your deposit.</Text>
                       </View>
                     </View>
 
@@ -335,10 +336,16 @@ export default class HomeScreen extends React.Component {
                         <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
                           Hassle-Free
                         </Text>
-                        <Text style={{marginBottom: 3, fontSize: 12}}>We build in all fees so there's no last-minute negotiation.</Text>
+                        <Text style={{marginBottom: 3, fontSize: 12}}>We build in all fees so the lease price is exactly what you pay. No hidden extras, no stressful negotiations.</Text>
                         <Text></Text>
                       </View>
                     </View>
+
+                    {/*<Button
+                      type="solid"
+                      buttonStyle={styles.bigButton}
+                      onPress={() => {this._onFinish()}}
+                      title="Finish" />*/}
 
                   </Animatable.View> 
 

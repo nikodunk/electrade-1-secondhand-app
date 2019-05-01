@@ -128,14 +128,9 @@ export default styles = StyleSheet.create({
       color: '#2191fb'
     },
     infoBox:{
-        textAlign: 'center', 
-        flex: 1, 
-        padding: 5,
-        borderWidth:1,
-        borderRadius:5,
-        borderColor:'lightgrey',
-        padding: 8,
-        margin: 3
+            textAlign: 'center', 
+            flex: 1, 
+            padding: 11
     }
 
 

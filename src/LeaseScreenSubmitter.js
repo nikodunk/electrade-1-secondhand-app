@@ -220,43 +220,24 @@ export default class SubmitScreen extends React.Component {
                   Please enter your email below and pay the deposit. If we can't complete the lease as described above within 48 hours you'll be automatically refunded in full.
                 </Text>*/}
 
-                <Animatable.View style={styles.signin} animation="zoomInUp">
 
-                  <View style={{display: 'flex', flexDirection: 'row'}}>
-                    <View style={{flex: 1}}>
-                      <Icon
-                        name='ios-checkbox'
-                        type='ionicon'
-                        color='#2191fb'
-                        size={40} />
-                    </View>
-                    <View style={{flex: 3}}>
-                      <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
-                        Money Back Guarantee
-                      </Text>
-                      <Text style={{marginBottom: 3, fontSize: 12}}>If we can't fulfill your request within 48 hours or you're not satisfied with the experience you get 100% of your deposit back.</Text>
-                    </View>
-                  </View>
+                <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
+                  Car / lease details
+                </Text>
+                <Text>• {this.state.item["Make and Model"]}</Text>
+                <Text>• {this.state.item["$/mo"]}/month + tax</Text>
+                <Text>• {this.state.item["months"]} months</Text>
+                <Text>• {this.state.item["DriveOffEst"]} guaranted drive-off</Text>
+                <Text> </Text>
+
+                <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
+                  Deposit conditions
+                </Text>
+                <Text>✓ Deducted from final lease price</Text>
+                <Text>✓ Automatically refunded if your car is unavailable within 48hrs.</Text>
+                <Text>✓ Money-back guarantee if you change your mind.</Text>
 
 
-                  <View style={{display: 'flex', flexDirection: 'row'}}>
-                    <View style={{flex: 1}}>
-                      <Icon
-                        name='ios-lock'
-                        type='ionicon'
-                        color='#2191fb'
-                        size={40} />
-                    </View>
-                    <View style={{flex: 3}}>
-                      <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
-                        Hassle-Free
-                      </Text>
-                      <Text style={{marginBottom: 3, fontSize: 12}}>We build in all fees so there's no last-minute negotiation.</Text>
-                      <Text></Text>
-                    </View>
-                  </View>
-
-                </Animatable.View>
 
                 <Text></Text>
 
@@ -278,7 +259,7 @@ export default class SubmitScreen extends React.Component {
                   </View>
 
                   <Text style={[styles.newsTitle]}>
-                      Deposit
+                      Refundable Deposit
                   </Text>
 
                   <Button
@@ -308,11 +289,6 @@ export default class SubmitScreen extends React.Component {
                     onPress={() => this._onPress(9900)}
                     title={` Request test drive ($99 refundable deposit)`} 
                     />
-
-                  <Text> </Text>
-                  <Text>
-                      {this.state.item["Make and Model"]} @ {this.state.item["$/mo"]}/month for {this.state.item["months"]} months, {this.state.item["DriveOffEst"]} guaranted drive-off. Deposit applied towards lease down payment. Automatically refunded in full if car isn't available as above within 48 hours or if you should change your mind.
-                  </Text>
 
                   <Text> </Text>
                   <View style={styles.separator} />
