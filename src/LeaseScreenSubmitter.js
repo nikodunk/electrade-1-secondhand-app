@@ -274,7 +274,7 @@ export default class SubmitScreen extends React.Component {
                     buttonStyle={styles.bigButton}
                     containerStyle={{padding: 5}}
                     onPress={() => this._onPress(19900)}
-                    title={` Lock in price ($199 refundable deposit)`} 
+                    title={` Hold this lease price ($199)`} 
                     />
                   <Button
                     type="outline"
@@ -287,7 +287,7 @@ export default class SubmitScreen extends React.Component {
                       }
                     buttonStyle={{borderRadius: 10, margin: 5}}
                     onPress={() => this._onPress(9900)}
-                    title={` Request test drive ($99 refundable deposit)`} 
+                    title={` Book a test drive ($99)`} 
                     />
 
                   <Text> </Text>
