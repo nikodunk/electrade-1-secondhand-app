@@ -194,15 +194,7 @@ export default class SubmitScreen extends React.Component {
       <SafeAreaView style={{flex: 1}}>
         <KeyboardAvoidingView behavior="padding" enabled style={{flex: 1}}>
 
-            <TouchableOpacity 
-                  onPress={() => this.props.navigation.goBack()} 
-                  style={{left: 10}}>
-              <View style={{padding: 5}}>
-                <Text style={{fontSize: 18, color: 'dodgerblue'}}>
-                    Back
-                </Text>
-              </View>
-            </TouchableOpacity>
+           
 
           {!this.state.thanks && this.state.item ? 
             <ScrollView style={{flex: 1}}>
@@ -210,25 +202,9 @@ export default class SubmitScreen extends React.Component {
                 <View style={styles.deal}>
 
                 <Text style={[styles.newsTitle, {fontSize: 30}]}>
-                  Checkout
+                  Electrade Services
                 </Text>
 
-                {/*<Text style={{fontWeight: '600'}}>
-                  What happens next?
-                </Text>*/}
-                {/*<Text>
-                  Please enter your email below and pay the deposit. If we can't complete the lease as described above within 48 hours you'll be automatically refunded in full.
-                </Text>*/}
-
-
-                <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
-                  Car / lease details
-                </Text>
-                <Text>• {this.state.item["Make and Model"]}</Text>
-                <Text>• {this.state.item["$/mo"]}/month + tax</Text>
-                <Text>• {this.state.item["months"]} months</Text>
-                <Text>• {this.state.item["DriveOffEst"]} guaranted drive-off</Text>
-                <Text> </Text>
 
                 <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
                   Deposit conditions

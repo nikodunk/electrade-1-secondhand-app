@@ -13,10 +13,11 @@ import LeaseScreen from './LeaseScreen';
 import DetailScreen from './LeaseScreenDetails';
 import LeaseScreenSubmitter from './LeaseScreenSubmitter';
 
-import InsuranceScreen from './InsuranceScreen';
+
 
 import SettingsScreen from './SettingsScreen';
 
+// import InsuranceScreen from './InsuranceScreen';
 // import VideoScreen from './VideoScreen';
 // import EVGallery from './EVGallery';
 // import MarketplaceScreen from './MarketplaceScreen';
@@ -53,8 +54,8 @@ class AuthLoadingScreen extends React.Component {
 
 const AuthStack = createStackNavigator({ SignIn: SignInScreen, SignInScreen2: SignInScreen2}, { headerMode: 'none' } );
 
-const LeaseStack = createStackNavigator({ Lease: LeaseScreen, Details: DetailScreen, Submit: LeaseScreenSubmitter }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Leases', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-notifications" size={23} color="#4F8EF7" /> : <Icon name="ios-notifications" size={23} color="grey" /> } }) })
 const NewsStack = createStackNavigator({ News: NewsScreen, Details: NewsScreenDetails }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV News', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-paper" size={20} color="#4F8EF7" /> : <Icon name="ios-paper" size={20} color="grey" /> } }) })
+const LeaseStack = createStackNavigator({ Lease: LeaseScreen, Details: DetailScreen, Submit: LeaseScreenSubmitter }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Leases', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-notifications" size={23} color="#4F8EF7" /> : <Icon name="ios-notifications" size={23} color="grey" /> } }) })
 const SettingsStack = createStackNavigator({ SettingsScreen: SettingsScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Account', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-contact" size={23} color="#4F8EF7" /> : <Icon name="ios-contact" size={23} color="grey" /> } }) })
 
 // const InsuranceStack = createStackNavigator({ InsuranceScreen: InsuranceScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Insurance', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-wallet" size={23} color="#4F8EF7" /> : <Icon name="ios-wallet" size={23} color="grey" /> } }) })
