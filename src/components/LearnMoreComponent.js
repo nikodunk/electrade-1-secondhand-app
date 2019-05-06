@@ -21,12 +21,12 @@ export default class ServiceScreenLearnMore extends React.Component {
       this.setState({loading: false})
       
       // get email, except if developer mode
-      AsyncStorage.getItem('email').then((res) => {
-        this.setState({email: res})
-        if(this.state.email !== 'niko'){Mixpanel.track("Overlay Pressed"); firebase.analytics().logEvent('AccountScreen_Loaded') }
-        // this seems to be android only but not sure yet 
-        // Mixpanel.setPushRegistrationId("GCM/FCM push token")
-      })
+      // AsyncStorage.getItem('email').then((res) => {
+      //   this.setState({email: res})
+      //   if(this.state.email !== 'niko'){Mixpanel.track("Overlay Pressed"); firebase.analytics().logEvent('AccountScreen_Loaded') }
+      //   // this seems to be android only but not sure yet 
+      //   // Mixpanel.setPushRegistrationId("GCM/FCM push token")
+      // })
 
 
       

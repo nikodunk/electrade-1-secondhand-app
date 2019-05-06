@@ -138,7 +138,7 @@ export default class SettingsScreen extends React.Component {
               <Button
                 type="outline"
                 buttonStyle={styles.button}
-                onPress={() => this.setState({isVisible: true})}
+                onPress={() => {this.setState({isVisible: true}); if(this.state.email !== 'niko'){Mixpanel.track("Learn More Pressed"); firebase.analytics().logEvent('Learn_More_Pressed')} }}
                 title="Learn More"
                 />
 

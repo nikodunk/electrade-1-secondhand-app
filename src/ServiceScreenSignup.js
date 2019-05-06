@@ -103,10 +103,10 @@ export default class ServiceScreen extends React.Component {
                   <Button
                     type="outline"
                     buttonStyle={styles.button}
-                    onPress={() => this.setState({isVisible: true})}
-                    title="Learn More" 
+                    onPress={() => {this.setState({isVisible: true}); if(this.state.email !== 'niko'){Mixpanel.track("Learn More Pressed"); firebase.analytics().logEvent('Learn_More_Pressed')} }}
+                    title="Learn More"
                     />
-
+                  
                   <Text> </Text>
                   <View style={styles.separator} />
                   <Text> </Text>
