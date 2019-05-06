@@ -39,7 +39,7 @@ render() {
           :
           <View>
             <Text style={styles.newsTitle}>
-              Feedback about this page? Looking for something else?
+              Questions or feedback about this page? Let us know!
             </Text>
             <TextInput 
               underlineColorAndroid="transparent"

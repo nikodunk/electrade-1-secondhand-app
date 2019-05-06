@@ -4,9 +4,9 @@ import { SafeAreaView } from 'react-navigation';
 import Mixpanel from 'react-native-mixpanel'
 import styles from './styles'
 import firebase from 'react-native-firebase';
-import { Button, Icon, PricingCard } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
-// import Icon from 'react-native-vector-icons/Ionicons';
+
 
 import stripe from 'tipsi-stripe'
 
@@ -41,7 +41,7 @@ export default class SubmitScreen extends React.Component {
       // get email, except if developer mode
       AsyncStorage.getItem('email').then((res) => {
         this.setState({email: res})
-        if(this.state.email !== 'niko'){Mixpanel.track("GetLease Touched"); firebase.analytics().logEvent('GetLease_Touched') }
+        if(this.state.email !== 'niko'){Mixpanel.track("Club Pay Screen Opened"); firebase.analytics().logEvent('Club_Pay_Screen_Opened') }
       })
 
       this.setState({item: this.props.navigation.getParam('item') })
@@ -69,37 +69,19 @@ export default class SubmitScreen extends React.Component {
 
   _onPress = async (passedAmount) => {
     this.setState({loading: true})
-    console.log(this.state.email)
+
     if(this.state.email === '' || this.state.email === ' ' || this.state.email === null){
       Alert.alert('Please enter your email');
       this.setState({loading: false})
       return
     }
     else {
-      this.setState({loading: true})
-      if(this.state.email !== 'niko'){
-        // save order to server
-        fetch('https://electrade-server.herokuapp.com/api/leases/create/'+this.state.email+'/'+this.state.item["Make and Model"], {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              region: this.state.region
-            }),
-        })
-        .then(() => {
-            // Stripe payment
-            this._handleCardPayPress(passedAmount)
-          })
-      }
-      else{ this._handleCardPayPress(passedAmount) }
+      this._handleCardPayPress(passedAmount)
     }
   }
 
   _handleCardPayPress = async (passedAmount) => {
-      this.state.email !== 'niko' ?   Mixpanel.track("Stripe Opened") && firebase.analytics().logEvent('Stripe_Opened')  : null
+      this.state.email !== 'niko' ?   Mixpanel.track("Club Stripe Opened") && firebase.analytics().logEvent('Stripe_Opened')  : null
       try {
         console.log('_handleCardPayPress running')
         this.setState({ loading: true, token: null })
@@ -121,11 +103,11 @@ export default class SubmitScreen extends React.Component {
                   })
               })
           .then(() => {
-              this.state.email !== 'niko' ?   Mixpanel.track("Lease Request Submitted") && firebase.analytics().logEvent('Lease_Request_Submitted')  : null
+              this.state.email !== 'niko' ?   Mixpanel.track("Club Submitted") && firebase.analytics().logEvent('Club_Submitted')  : null
               AsyncStorage.setItem('email', this.state.email)
               this.setState({thanks: true})
             })
-          .then(() => setTimeout(() => this.props.navigation.navigate('Lease'), 2000 ) )
+          .then(() => setTimeout(() => this.props.navigation.navigate('ServiceScreen'), 2000 ) )
 
         this.setState({ loading: false, token })
       } catch (error) {
@@ -133,43 +115,10 @@ export default class SubmitScreen extends React.Component {
       }
   }
 
-  _onSubmitFeedback(){
-      
-    fetch('https://electrade-server.herokuapp.com/api/comments/create/', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            feedback: this.state.feedback
-          }),
-      }).then((res) => this.setState({feedbackThanks: true}))
-  }
 
   
 
   render() {
-
-    const {
-          loading,
-          allowed,
-          complete,
-          status,
-          token,
-          amexAvailable,
-          discoverAvailable,
-          masterCardAvailable,
-          visaAvailable,
-        } = this.state
-
-        const cards = {
-          americanExpressAvailabilityStatus: { name: 'American Express', isAvailable: amexAvailable },
-          discoverAvailabilityStatus: { name: 'Discover', isAvailable: discoverAvailable },
-          masterCardAvailabilityStatus: { name: 'Master Card', isAvailable: masterCardAvailable },
-          visaAvailabilityStatus: { name: 'Visa', isAvailable: visaAvailable },
-        }
-
 
     return (
       <SafeAreaView style={{flex: 1}}>
@@ -185,39 +134,28 @@ export default class SubmitScreen extends React.Component {
               </View>
             </TouchableOpacity>
 
-          {!this.state.thanks && this.state.item ? 
+          {!this.state.thanks  ? 
             <ScrollView style={{flex: 1}}>
               <View style={{marginBottom: 80}}>
                 <View style={styles.deal}>
 
                 <Text style={[styles.newsTitle, {fontSize: 30}]}>
-                  Checkout
+                  Sign Up
                 </Text>
 
-                {/*<Text style={{fontWeight: '600'}}>
-                  What happens next?
-                </Text>*/}
-                {/*<Text>
-                  Please enter your email below and pay the deposit. If we can't complete the lease as described above within 48 hours you'll be automatically refunded in full.
-                </Text>*/}
-
-
-                <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
-                  Car / lease details
-                </Text>
-                <Text>• {this.state.item["Make and Model"]}</Text>
-                <Text>• {this.state.item["$/mo"]}/month + tax</Text>
-                <Text>• {this.state.item["months"]} months</Text>
-                <Text>• {this.state.item["DriveOffEst"]} guaranted drive-off</Text>
-                <Text> </Text>
-
-
+                <Text></Text>
+                <Text style={{fontSize: 18}}>$35.00 due today</Text>
+                <Text></Text>
+                <Text style={{fontSize: 15, color: 'grey'}}>✓ 1-week money-back guarantee</Text>
+                <Text style={{fontSize: 15, color: 'grey'}}>✓ Cancel any time</Text>
+                <Text style={{fontSize: 15, color: 'grey'}}>✓ You will receive an email confirmation</Text>
+                <Text style={{fontSize: 15, color: 'grey'}}>✓ You can schedule an onboarding call.</Text>
                 <Text></Text>
 
 
                 {/* EMAIL */}
                   <View>
-                    <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
+                    <Text style={{fontWeight: '400'}}>
                       Your Email (required)
                     </Text>
                     <TextInput 
@@ -232,41 +170,26 @@ export default class SubmitScreen extends React.Component {
                   </View>
 
                   <Text></Text>
-                  <Text></Text>
 
-                  <Text style={{fontWeight: '400', fontSize: 20, color: '#2191fb'}}>
-                    Options
+                  <Text style={{fontWeight: '400'}}>
+                    First Month Membership Fee (required)
                   </Text>
 
                   {this.state.loading ? <ActivityIndicator /> : 
-
-                  <View>
-                    <PricingCard
-                      color="#4f9deb"
-                      title="Hold this lease price"
-                      price="$99 deposit"
-                      info={['✓ Deducted from final lease price', '✓ Refunded automatically if your car is unavailable within 48hrs.', '✓ Money-back guarantee if you change your mind.', '✓ EV Club included at no cost']}
-                      button={{ title:  ' Continue', icon: 'credit-card' }}
-                      onButtonPress={() => this._onPress(3500)}
-                    />
-
-                    <PricingCard
-                      color="salmon"
-                      title="Book test drive & hold this lease price"
-                      price="$199 deposit"
-                      info={['✓ Deducted from final lease price', '✓ Refunded automatically if your car is unavailable within 48hrs.', '✓ Money-back guarantee if you change your mind.', '✓ EV Club included at no cost']}
-                      button={{ title: ' Continue', icon: 'credit-card' }}
-                      onButtonPress={() => this._onPress(3500)}
-                    />
-                  </View> }
-
-                  
-
-                  <Text> </Text>
-                  <View style={styles.separator} />
-                  <Text> </Text>
-
-                  <FeedbackComponent />
+                  <Button
+                    type="solid"
+                    icon={
+                        <Icon
+                          name="credit-card"
+                          size={25}
+                          color="white"
+                        />
+                      }
+                    buttonStyle={styles.bigButton}
+                    containerStyle={{padding: 10}}
+                    onPress={() => this._onPress(3500)}
+                    title={` Open Card Reader & Subscribe`} 
+                  /> }
 
                   
                 </View>

@@ -131,6 +131,30 @@ export default styles = StyleSheet.create({
             textAlign: 'center', 
             flex: 1, 
             padding: 11
+    },
+    field: {
+        width: 300,
+        color: '#449aeb',
+        borderColor: '#000000',
+        borderWidth: 1,
+        borderRadius: 5,
+        backgroundColor: '#FFFFFF',
+        overflow: 'hidden',
+    },
+    checkoutContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    checkoutHeader: {
+      fontSize: 18,
+      textAlign: 'center',
+      margin: 10,
+    },
+
+    button:{
+        borderRadius: 10,
+        borderColor: '#2191fb',
     }
 
 
