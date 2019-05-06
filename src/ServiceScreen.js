@@ -87,7 +87,15 @@ export default class SettingsScreen extends React.Component {
         icon: 'local-car-wash'
       },
       {
-        title: 'Other deals',
+        title: 'Request Home Charger Install w/ camera',
+        icon: 'camera-alt'
+      },
+      {
+        title: 'Exclusive Club Houses & Meetups',
+        icon: 'home'
+      },
+      {
+        title: 'Other benefits',
         icon: 'redeem'
       }
     ]

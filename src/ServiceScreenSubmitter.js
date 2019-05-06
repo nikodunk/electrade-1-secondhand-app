@@ -119,7 +119,6 @@ export default class SubmitScreen extends React.Component {
   
 
   render() {
-
     return (
       <SafeAreaView style={{flex: 1}}>
         <KeyboardAvoidingView behavior="padding" enabled style={{flex: 1}}>
