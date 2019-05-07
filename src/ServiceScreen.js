@@ -36,67 +36,83 @@ export default class SettingsScreen extends React.Component {
 
 
   _navigate(serviceString){
-    Mixpanel.track(serviceString + " Touched");
+    if(this.state.email !== 'niko'){ Mixpanel.track(serviceString + " Touched"); firebase.analytics().logEvent(serviceString + ' Touched') }
     this.props.navigation.navigate('ServiceScreenSignup')
   }
  
 
   render() {
 
-    const services = ['EV parking in prime locations (1 point)', 
-                      'Request car wash at home or office (1 point)', 
-                      'Request Trusted Mechanic Nearby',
-                      'DMV Registration concierge service', 
-                      'Get roadside assistance', 
-                      'Get windshield replacement',
-                      'Request free EV test drive',
-                      'See Preferred EV Insurance Rates',
-                      'Go to EV forum (coming soon)',
-                      'Buy/sell/trade your EV (premium listings)', 
-                      'Rent an EV',
-                      'Go to home solar installation offers',
-                      'Go to EV accessory shop']
-
     const list = [
       {
-        title: 'Exclusive EV parking',
-        icon: 'map'
+        title: 'Premium EV parking locations',
+        icon: 'map',
+        color: '#2191fb'
       },
       {
         title: 'Get roadside assistance',
-        icon: 'battery-charging-full'
+        icon: 'battery-charging-full',
+        color: '#2191fb'
       },
       {
         title: 'DMV / Rebate Concierge',
-        icon: 'perm-identity'
+        icon: 'perm-identity',
+        color: '#2191fb'
       },
       {
         title: 'Schedule maintenance pick-up',
-        icon: 'build'
+        icon: 'build',
+        color: '#2191fb'
       },
       {
         title: 'Request EV test drive',
-        icon: 'directions-car'
+        icon: 'directions-car',
+        color: '#2191fb'
       },
       {
         title: 'See Preferred EV Insurance Rates',
-        icon: 'insert-chart'
+        icon: 'insert-chart',
+        color: 'lightgrey'
       },
       {
         title: 'Request car wash',
-        icon: 'local-car-wash'
+        icon: 'local-car-wash',
+        color: 'lightgrey'
       },
       {
         title: 'Request Home Charger Install w/ camera',
-        icon: 'camera-alt'
+        icon: 'camera-alt',
+        color: 'lightgrey'
       },
       {
         title: 'Exclusive Club Houses & Meetups',
-        icon: 'home'
+        icon: 'home',
+        color: 'lightgrey'
       },
       {
-        title: 'Other benefits',
-        icon: 'redeem'
+        title: 'Go to EV accessory shop',
+        icon: 'redeem',
+        color: 'lightgrey'
+      },
+      {
+        title: 'Go to home solar installation offers',
+        icon: 'wb-sunny',
+        color: 'lightgrey'
+      },
+      {
+        title: 'Go to EV forum (coming soon)',
+        icon: 'chat',
+        color: 'lightgrey'
+      },
+      {
+        title: 'Buy/sell/trade your EV (premium listings)',
+        icon: 'attach-money',
+        color: 'lightgrey'
+      },
+      {
+        title: 'Get windshield replacement',
+        icon: 'fullscreen'     ,
+        color: 'lightgrey'   
       }
     ]
 
@@ -123,7 +139,7 @@ export default class SettingsScreen extends React.Component {
                     <ListItem
                       key={i}
                       title={item.title}
-                      leftIcon={{ name: item.icon, color: '#2191fb' }}
+                      leftIcon={{ name: item.icon, color: item.color }}
                       titleStyle={{ color: '#303030'}}
                       chevron={true}
                       onPress={() => this._navigate(item.title)}
