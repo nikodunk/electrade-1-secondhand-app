@@ -83,7 +83,15 @@ export default class ServiceScreen extends React.Component {
               <View style={{marginBottom: 80}}>
                 <View style={styles.deal}>
 
+                  <Text style={[styles.newsTitle, {fontSize: 20}]}>
+                      {this.props.navigation.getParam('title')}
+                  </Text>
 
+                  <Text>
+                      {this.props.navigation.getParam('description')}
+                  </Text>
+
+                  
                   <PricingCard
                     color="#2191fb"
                     titleStyle={{fontSize: 30}}
@@ -103,8 +111,16 @@ export default class ServiceScreen extends React.Component {
                   <Button
                     type="outline"
                     buttonStyle={styles.button}
+                    icon={
+                      <Icon
+                        name="ios-information-circle-outline"
+                        size={25}
+                        color={"#2191fb"}
+                        type="ionicon"
+                      />
+                    }
                     onPress={() => {this.setState({isVisible: true}); if(this.state.email !== 'niko'){Mixpanel.track("Learn More Pressed"); firebase.analytics().logEvent('Learn_More_Pressed')} }}
-                    title="Learn More"
+                    title=" Learn More"
                     />
                   
                   <Text> </Text>

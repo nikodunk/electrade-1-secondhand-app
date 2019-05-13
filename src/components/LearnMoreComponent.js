@@ -79,6 +79,20 @@ export default class ServiceScreenLearnMore extends React.Component {
               <View style={{display: 'flex', alignItems: 'center'}}>
                 <Icon
                   style={{flex: 1}}
+                  name='adjust' />
+                <Text style={{fontWeight: '600', flex: 2}}>
+                  Request Charging Valet:
+                </Text>
+              </View>
+              <Text>
+              We’ll drive your car to the nearest fast charger, charge it to your requested percentage, and return it to wherever you like.
+              </Text>
+              <Text></Text>
+
+
+              <View style={{display: 'flex', alignItems: 'center'}}>
+                <Icon
+                  style={{flex: 1}}
                   name='map' />
                 <Text style={{fontWeight: '600', flex: 2}}>
                   Downtown EV parking and charging:

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View, SafeAreaView } from 'react-native';
 import { createSwitchNavigator, createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Icon } from 'react-native-elements';
 
 import SignInScreen from './SignInScreen';
 import SignInScreen2 from './SignInScreen2';
@@ -56,11 +56,11 @@ class AuthLoadingScreen extends React.Component {
 
 const AuthStack = createStackNavigator({ SignIn: SignInScreen, SignInScreen2: SignInScreen2}, { headerMode: 'none' } );
 
-const NewsStack = createStackNavigator({ News: NewsScreen, Details: NewsScreenDetails }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV News', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-paper" size={20} color="#2191fb" /> : <Icon name="ios-paper" size={20} color="grey" /> } }) })
-const LeaseStack = createStackNavigator({ Lease: LeaseScreen, Details: DetailScreen, Submit: LeaseScreenSubmitter }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Leases', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-notifications" size={23} color="#2191fb" /> : <Icon name="ios-notifications" size={23} color="grey" /> } }) })
-const ServiceStack = createStackNavigator({ ServiceScreen: ServiceScreen, ServiceScreenSignup: ServiceScreenSignup, ServiceScreenSubmitter: ServiceScreenSubmitter }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Club', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-checkbox" size={23} color="#2191fb" /> : <Icon name="ios-checkbox-outline" size={23} color="grey" /> } }) })
-const SettingsStack = createStackNavigator({ SettingsScreen: SettingsScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Account', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-contact" size={23} color="#2191fb" /> : <Icon name="ios-contact" size={23} color="grey" /> } }) })
+const NewsStack = createStackNavigator({ News: NewsScreen, Details: NewsScreenDetails }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV News', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-paper" size={20} color="#2191fb" type="ionicon" /> : <Icon name="ios-paper" size={20} color="grey" type="ionicon" /> } }) })
+const ServiceStack = createStackNavigator({ ServiceScreen: ServiceScreen, ServiceScreenSignup: ServiceScreenSignup, ServiceScreenSubmitter: ServiceScreenSubmitter }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Club', tabBarIcon: ({focused}) => { return focused ? <Icon name="flash-on" size={23} color="#2191fb" type="material" /> : <Icon name="flash-on" size={23} color="grey" type="material" /> } }) })
+const SettingsStack = createStackNavigator({ SettingsScreen: SettingsScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Account', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-contact" size={23} color="#2191fb" type="ionicon"/> : <Icon name="ios-contact" size={23} color="grey" type="ionicon" /> } }) })
 
+// const LeaseStack = createStackNavigator({ Lease: LeaseScreen, Details: DetailScreen, Submit: LeaseScreenSubmitter }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Leases', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-notifications" size={23} color="#2191fb" /> : <Icon name="ios-notifications" size={23} color="grey" /> } }) })
 // const InsuranceStack = createStackNavigator({ InsuranceScreen: InsuranceScreen }, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Insurance', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-wallet" size={23} color="#2191fb" /> : <Icon name="ios-wallet" size={23} color="grey" /> } }) })
 // const VideoStack = createStackNavigator({ Video: VideoScreen, Details: DetailScreen}, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'Daily Videos', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-videocam" size={25} color="#2191fb" /> : <Icon name="ios-videocam" size={25} color="grey" /> } })  })
 // const ShareStack = createStackNavigator({ Gallery: EVGallery, Details: DetailScreen, Submit: SubmitScreen}, { headerMode: 'none', navigationOptions: ({navigation}) => ({ title: 'EV Gallery', tabBarIcon: ({focused}) => { return focused ? <Icon name="ios-photos" size={25} color="#2191fb" /> : <Icon name="ios-photos" size={25} color="grey" /> } })  })
@@ -70,7 +70,7 @@ const SettingsStack = createStackNavigator({ SettingsScreen: SettingsScreen }, {
 
 
 const AppTabs = createBottomTabNavigator(
-  { NewsStack, ServiceStack, LeaseStack, SettingsStack },
+  { NewsStack, ServiceStack, SettingsStack },
   {
     initialRouteName: 'ServiceStack',
     optimizationsEnabled: true,

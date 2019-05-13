@@ -75,7 +75,7 @@ export default class SettingsScreen extends React.Component {
                 </Text>
 
               {/* REGION */}                  
-                  <Text style={styles.newsTitle}>
+                  {/* <Text style={styles.newsTitle}>
                     Your Region
                   </Text>
                   <Picker
@@ -97,13 +97,13 @@ export default class SettingsScreen extends React.Component {
                     <Picker.Item label="Virginia" value="VA" />
                     <Picker.Item label="Washington" value="WA" />
                     <Picker.Item label="Rhode Island" value="RI" />
-                  </Picker>
+                  </Picker> */}
 
 
-              <Text> </Text>
+              {/* <Text> </Text>
               <View style={styles.separator} />
               <Text> </Text>
-              <Text> </Text>
+              <Text> </Text> */}
 
 
 
@@ -152,17 +152,17 @@ export default class SettingsScreen extends React.Component {
                 Why are we doing this?
               </Text>
               <Text>
-                Our mission is to make it easier to buy EVs, thereby getting more EVs on the road, quickly.
+                Our mission is to make it easier to use EVs, thereby getting more EVs on the road, quickly.
               </Text>
               <Text></Text>
 
-              <Text style={{fontWeight: '600'}}>
+              {/* <Text style={{fontWeight: '600'}}>
                 How do we make money?
               </Text>
               <Text>
                 With our volume and focus on EVs we can pre-negotiate EV leases far below MSRP, and keep part of the savings (usually around 10%) while passing 90% of the savings on to you. This margin pays for us doing the paperwork for you, and being your buffer from the dealership practices and fees. We're constantly improving this model, so let us know if there is anything we can improve!
               </Text>
-              <Text></Text>
+              <Text></Text> */}
               
 
 
