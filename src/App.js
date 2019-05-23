@@ -9,10 +9,6 @@ import SignInScreen2 from './SignInScreen2';
 import NewsScreen from './NewsScreen';
 import NewsScreenDetails from './NewsScreenDetails';
 
-import LeaseScreen from './LeaseScreen';
-import DetailScreen from './LeaseScreenDetails';
-import LeaseScreenSubmitter from './LeaseScreenSubmitter';
-
 import ServiceScreen from './ServiceScreen';
 import ServiceScreenSignup from './ServiceScreenSignup';
 import ServiceScreenSubmitter from './ServiceScreenSubmitter';
@@ -24,6 +20,10 @@ import SettingsScreen from './SettingsScreen';
 // import EVGallery from './EVGallery';
 // import MarketplaceScreen from './MarketplaceScreen';
 // import MarketplaceScreenSubmitter from './MarketplaceScreenSubmitter';
+// import LeaseScreen from './LeaseScreen';
+// import DetailScreen from './LeaseScreenDetails';
+// import LeaseScreenSubmitter from './LeaseScreenSubmitter';
+
 
 import styles from './styles'
 

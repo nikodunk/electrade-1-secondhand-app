@@ -10,18 +10,30 @@ import { Button, ListItem, Overlay } from 'react-native-elements';
 
 import FeedbackComponent from './components/FeedbackComponent'
 import LearnMoreCompontent from './components/LearnMoreComponent'
+import MapView from 'react-native-maps';
+
 
 export default class SettingsScreen extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = { 
-      isVisible: false
+      isVisible: false,
+      region: {
+        latitude: 37.7749,
+        longitude: -122.4194,
+        latitudeDelta: 0.00922,
+        longitudeDelta: 0.00421,
+      }
        };
+    
+    this._getLocation = this._getLocation.bind(this)
   }
 
 
   componentDidMount() {
+
+      this._getLocation()
 
       this.setState({loading: false})
       
@@ -32,6 +44,8 @@ export default class SettingsScreen extends React.Component {
         // this seems to be android only but not sure yet 
         // Mixpanel.setPushRegistrationId("GCM/FCM push token")
       })
+
+      
   }
 
 
@@ -39,11 +53,45 @@ export default class SettingsScreen extends React.Component {
     if(this.state.email !== 'niko'){ Mixpanel.track(title + " Touched"); firebase.analytics().logEvent(title.replace(/ /g, '_') + '_Touched') }
     this.props.navigation.navigate('ServiceScreenSignup', {title: title, description: description})
   }
+
  
+  async _getLocation(){
+      navigator.geolocation.getCurrentPosition((position) => {
+                            let newRegion = {
+                              latitude: position.coords.latitude,
+                              longitude: position.coords.longitude,
+                              latitudeDelta: 0.00922,
+                              longitudeDelta: 0.00421
+                            }
+                            this.setState({
+                              region: newRegion
+                            });
+                          }, (err) => { 
+                            console.log(err)
+                            this.setState({
+                              latitude: 37.7749,
+                              longitude: -122.4194
+                            });
+                        })
+
+
+  }
+
+
+  onRegionChange(region) {
+    this.setState({ region });
+  }
+
 
   render() {
 
     const list = [
+      {
+        title: 'Request Delivery at Supercharger',
+        icon: 'flash-on',
+        color: '#2191fb',
+        description: 'We’ll drive your car to the nearest fast charger, charge it to your requested percentage, and return it to wherever you like.'
+      },
       {
         title: 'Request Charging Valet',
         icon: 'adjust',
@@ -130,22 +178,28 @@ export default class SettingsScreen extends React.Component {
 
 
     return (
-      <View style={{flex: 1}}>
-        <ScrollView style={{flex: 1}}>
-          <View style={{marginBottom: 80, marginTop: 30}}>
-                  
+      <View style={{marginTop: 30, flex: 1}}>
+        <View style={{marginLeft: 15}}>
+            <Text style={[styles.newsTitle, {fontSize: 20}]}>
+                My EV Services Dashboard
+            </Text>
+            <Text>
+                {' '}
+                Access your membership exclusives here
+            </Text>
+            <Text> </Text>
+        </View>
+        <View style={{flex: 1}}>
 
-              <View style={styles.deal}>
-                <Text style={[styles.newsTitle, {fontSize: 20}]}>
-                    My EV Services Dashboard
-                </Text>
+          <MapView
+                style={{flex: 1, width: '100%'}}
+                showsUserLocation={true}
+                region={this.state.region}
+                 />  
 
-                <Text>
-                    {' '}
-                    Access your membership exclusives here
-                </Text>
-
-             <Text> </Text>
+        </View>
+        
+        <ScrollView style={{flex: 1, marginTop: 5}}>
 
               {
                   list.map((item, i) => (
@@ -166,7 +220,7 @@ export default class SettingsScreen extends React.Component {
               <Text> </Text>
               <Button
                 type="outline"
-                buttonStyle={styles.button}
+                buttonStyle={[styles.button, {margin: 5}]}
                 icon={
                   <Icon
                     name="ios-information-circle-outline"
@@ -197,9 +251,6 @@ export default class SettingsScreen extends React.Component {
                 isVisible={this.state.isVisible}
                 dismiss={() => this.setState({ isVisible: false })} />
 
-            </View>
-
-          </View>
         </ScrollView>
       </View>
     );

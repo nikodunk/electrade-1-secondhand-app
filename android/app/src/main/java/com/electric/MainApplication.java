@@ -3,6 +3,7 @@ package com.electric;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.gettipsi.stripe.StripeReactPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import io.invertase.firebase.RNFirebasePackage;
@@ -36,6 +37,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new MapsPackage(),
             new StripeReactPackage(),
             new RNCWebViewPackage(),
             new RNFirebasePackage(),

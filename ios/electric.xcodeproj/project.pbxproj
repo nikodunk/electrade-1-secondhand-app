@@ -47,6 +47,7 @@
 		90B769FD0F764FEEB850D3CA /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 003A494237384871BB5095AC /* Zocial.ttf */; };
 		910EA7BF223724C8005E819D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 910EA7BE223724C8005E819D /* GoogleService-Info.plist */; };
 		9119F3C522273DAA006BC829 /* YTPlayerView-iframe-player.html in Resources */ = {isa = PBXBuildFile; fileRef = 9119F3C422273DAA006BC829 /* YTPlayerView-iframe-player.html */; };
+		91E34B9C229712E70053FC9E /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E34B9B229712DC0053FC9E /* libAirMaps.a */; };
 		91FBD636226640ED00EF9C39 /* libTPSStripe.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FBD635226640A500EF9C39 /* libTPSStripe.a */; };
 		91FC6CBE22495DF7002C7437 /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91FC6CBD22495DCB002C7437 /* libRNCWebView.a */; };
 		9CCF3EEAA2CC465185FFE871 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5E6BA53938DE4DF1A107CC23 /* SimpleLineIcons.ttf */; };
@@ -337,6 +338,13 @@
 			remoteGlobalIDString = ED296FEE214C9CF800B7C4FE;
 			remoteInfo = "jsiexecutor-tvOS";
 		};
+		91E34B9A229712DC0053FC9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 91E34B96229712DC0053FC9E /* AirMaps.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
+			remoteInfo = AirMaps;
+		};
 		91FBD634226640A500EF9C39 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 91FBD609226640A500EF9C39 /* TPSStripe.xcodeproj */;
@@ -401,6 +409,7 @@
 		8D0B238751290202E962CCE7 /* Pods-electric.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-electric.release.xcconfig"; path = "Pods/Target Support Files/Pods-electric/Pods-electric.release.xcconfig"; sourceTree = "<group>"; };
 		910EA7BE223724C8005E819D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9119F3C422273DAA006BC829 /* YTPlayerView-iframe-player.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "YTPlayerView-iframe-player.html"; sourceTree = "<group>"; };
+		91E34B96229712DC0053FC9E /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		91ECD06F2231D18200983AD3 /* electric.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = electric.entitlements; path = electric/electric.entitlements; sourceTree = "<group>"; };
 		91FBD609226640A500EF9C39 /* TPSStripe.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TPSStripe.xcodeproj; path = "../node_modules/tipsi-stripe/ios/TPSStripe.xcodeproj"; sourceTree = "<group>"; };
 		91FC6CB822495DCB002C7437 /* RNCWebView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCWebView.xcodeproj; path = "../node_modules/react-native-webview/ios/RNCWebView.xcodeproj"; sourceTree = "<group>"; };
@@ -431,6 +440,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91E34B9C229712E70053FC9E /* libAirMaps.a in Frameworks */,
 				91FBD636226640ED00EF9C39 /* libTPSStripe.a in Frameworks */,
 				91FC6CBE22495DF7002C7437 /* libRNCWebView.a in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
@@ -652,6 +662,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				91E34B96229712DC0053FC9E /* AirMaps.xcodeproj */,
 				91FBD609226640A500EF9C39 /* TPSStripe.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -721,6 +732,14 @@
 			isa = PBXGroup;
 			children = (
 				910EA805223727A4005E819D /* libRNFirebase.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		91E34B97229712DC0053FC9E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				91E34B9B229712DC0053FC9E /* libAirMaps.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -858,6 +877,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -887,6 +909,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 91E34B97229712DC0053FC9E /* Products */;
+					ProjectRef = 91E34B96229712DC0053FC9E /* AirMaps.xcodeproj */;
+				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -1216,6 +1242,13 @@
 			fileType = archive.ar;
 			path = "libjsiexecutor-tvOS.a";
 			remoteRef = 91DE704D221FCBDF0074791C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		91E34B9B229712DC0053FC9E /* libAirMaps.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAirMaps.a;
+			remoteRef = 91E34B9A229712DC0053FC9E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		91FBD635226640A500EF9C39 /* libTPSStripe.a */ = {
