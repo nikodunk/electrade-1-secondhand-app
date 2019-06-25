@@ -48,25 +48,41 @@ export default class OtherScreen extends React.Component {
 
 
   _getRegion(){
-      AsyncStorage.getItem('region').then((region) => {
-              if(region === null) {
-                                      this.setState({region: 'SF Bay Area', loading: false }),
-                                      AsyncStorage.setItem('region', JSON.stringify('SF Bay Area'))
-                                      this._getData()
 
-                                } else{
-                                      this.setState({region: JSON.parse(region), loading: false })
-                                      this._getData()
-                                }
-      })
+    AsyncStorage.getItem('region')
+    .then((region) => { 
+                        // should the region be set as something from the last version or it be first open default to norcal
+                        if (region === null || region === '"SF Bay Area"'){
+                                    this.setState({region: 'CA(N)', loading: false, regionString: 'Northern California' })
+                                    AsyncStorage.setItem('region', JSON.stringify('CA(N)'))
+                        }
+                        // if it is set to a valid state, then make it pretty.
+                        else {      let humanReadableRegion
+                                    let regionString = JSON.parse(region)
+                                    regionString === 'CA(N)' ? humanReadableRegion = 'Northern California' : null
+                                    regionString === 'CA(S)' ? humanReadableRegion = 'Southern California' : null
+                                    regionString === 'NY' ? humanReadableRegion = 'New York' : null
+                                    regionString === 'CO' ? humanReadableRegion = 'Colorado' : null
+                                    regionString === 'FL' ? humanReadableRegion = 'Florida' : null
+                                    regionString === 'GA' ? humanReadableRegion = 'Georgia' : null
+                                    regionString === 'IL' ? humanReadableRegion = 'Illinois' : null
+                                    regionString === 'MA' ? humanReadableRegion = 'Massachusetts' : null
+                                    regionString === 'MD' ? humanReadableRegion = 'Maryland' : null
+                                    regionString === 'NJ' ? humanReadableRegion = 'New Jersey' : null
+                                    regionString === 'OR' ? humanReadableRegion = 'Oregon' : null
+                                    regionString === 'VA' ? humanReadableRegion = 'Virginia' : null
+                                    regionString === 'WA' ? humanReadableRegion = 'Washington' : null
+                                    regionString === 'RI' ? humanReadableRegion = 'Rhode Island' : null
+                                    this.setState({region: regionString, loading: false, regionString: humanReadableRegion })
+                            }})
+    .then(() => this._getData())
 }
 
 
 
   _getData(){
-    this.state.region === 'SF Bay Area' ? this.setState({regionShort: 'SF'}) : null
-    this.state.region === 'Los Angeles' ? this.setState({regionShort: 'LA'}) : null
-    this.state.region === 'Sacramento' ? this.setState({regionShort: 'Sac'}) : null
+    this.state.region === 'CA(N)' ? this.setState({regionShort: 'SF'}) : null
+    this.state.region === 'CA(S)' ? this.setState({regionShort: 'LA'}) : null
 
     AsyncStorage.getItem('listingtype').then((res) => {
       console.log('listingtype from asyncstorage: ', JSON.parse(res))
