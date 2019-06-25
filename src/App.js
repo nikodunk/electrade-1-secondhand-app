@@ -71,7 +71,7 @@ const MarketplaceStack = createStackNavigator({ Used: MarketplaceScreen, Details
 
 
 const AppTabs = createBottomTabNavigator(
-  { NewsStack, ServiceStack, InsuranceStack, MarketplaceStack, LeaseStack, SettingsStack },
+  { NewsStack, ServiceStack, LeaseStack, InsuranceStack, MarketplaceStack, SettingsStack },
   {
     initialRouteName: 'NewsStack',
     optimizationsEnabled: true,
