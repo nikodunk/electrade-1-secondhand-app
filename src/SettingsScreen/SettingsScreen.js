@@ -8,7 +8,7 @@ Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')
 import firebase from 'react-native-firebase';
 import { Button } from 'react-native-elements';
 
-import FeedbackComponent from './components/FeedbackComponent'
+import FeedbackComponent from '../components/FeedbackComponent'
 
 export default class SettingsScreen extends React.Component {
 

@@ -5,7 +5,7 @@ import Mixpanel from 'react-native-mixpanel'
 import { Button } from 'react-native-elements';
 
 
-import styles from './styles'
+import styles from '../styles'
 
 
 import ImagePicker from 'react-native-image-crop-picker';

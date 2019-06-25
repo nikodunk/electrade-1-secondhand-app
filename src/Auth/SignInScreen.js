@@ -54,7 +54,7 @@ export default class SignInScreen extends React.Component {
             email: email
           }),
       }).then(() => AsyncStorage.setItem('email', email ))
-        .then(() => this.props.navigation.navigate('App'))
+        .then(() => this.props.navigation.navigate('SignInScreen2'))
     }
   };
 

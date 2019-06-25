@@ -10,7 +10,7 @@ Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')
 import firebase from 'react-native-firebase';
 import { Button } from 'react-native-elements';
 
-import FeedbackComponent from './components/FeedbackComponent'
+import FeedbackComponent from '../components/FeedbackComponent'
 
 const model3Image = require('./img/model3.jpg')
 const boltImage = require('./img/bolt.jpg')

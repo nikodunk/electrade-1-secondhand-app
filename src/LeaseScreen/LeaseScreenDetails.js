@@ -3,12 +3,12 @@ import {Platform, StyleSheet, Text, View, AsyncStorage, ScrollView, Image, FlatL
 import { SafeAreaView } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Mixpanel from 'react-native-mixpanel'
-import styles from './styles'
+import styles from '../styles'
 import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import firebase from 'react-native-firebase';
 
-import FeedbackComponent from './components/FeedbackComponent'
+import FeedbackComponent from '../components/FeedbackComponent'
 
 
 const model3Image = require('./img/model3.jpg')

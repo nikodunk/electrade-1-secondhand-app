@@ -8,8 +8,8 @@ Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')
 import firebase from 'react-native-firebase';
 import { Button, ListItem, Overlay } from 'react-native-elements';
 
-import FeedbackComponent from './components/FeedbackComponent'
-import LearnMoreCompontent from './components/LearnMoreComponent'
+import FeedbackComponent from '../components/FeedbackComponent'
+import LearnMoreCompontent from '../components/LearnMoreComponent'
 import MapView from 'react-native-maps';
 
 

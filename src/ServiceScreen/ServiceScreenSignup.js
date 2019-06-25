@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, AsyncStorage, ScrollView, Image, FlatList, TouchableOpacity, Linking, TextInput, ActivityIndicator, KeyboardAvoidingView, Alert} from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Mixpanel from 'react-native-mixpanel'
-import styles from './styles'
+import styles from '../styles'
 import firebase from 'react-native-firebase';
 import { Button, Icon, PricingCard } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
@@ -11,8 +11,8 @@ Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')
 
 import stripe from 'tipsi-stripe'
 
-import FeedbackComponent from './components/FeedbackComponent'
-import LearnMoreCompontent from './components/LearnMoreComponent'
+import FeedbackComponent from '../components/FeedbackComponent'
+import LearnMoreCompontent from '../components/LearnMoreComponent'
 
 stripe.setOptions({
   // publishableKey: 'pk_test_w1fHSNJdm3G5cxjBrzEjS6PT' // ********TEST********
