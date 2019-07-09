@@ -1,3 +1,9 @@
+# Electrify App
+
+
+![](demo_electrify.gif)
+
+
 How to install
 
 	cd node_modules/react-native
@@ -23,4 +29,3 @@ To build for iOS release, run:
 	cd ios && xcodebuild -scheme electric -workspace electric.xcworkspace/ build
 
 
-![](demo.png)
