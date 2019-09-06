@@ -1,11 +1,11 @@
 // twitter electrek
 // twitter cleantechnica
 // https://twitter.com/InsideEVs
+// twitter teslarati
+// https://api.apify.com/v2/actor-tasks/niko~ev-news-crawler/runs/last/dataset/items?token=uyrp24nvSzoRsBf2wM8Evv7q7&ui=1
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, AsyncStorage, Button, ScrollView, Image, FlatList, TouchableOpacity, Linking, ActivityIndicator, RefreshControl } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
-import Icon from 'react-native-vector-icons/Ionicons';
+import React from 'react';
+import {Text, View, AsyncStorage, Image, FlatList, TouchableOpacity, Linking, ActivityIndicator, RefreshControl } from 'react-native';
 import Mixpanel from 'react-native-mixpanel'
 import * as Animatable from 'react-native-animatable';
 Mixpanel.sharedInstanceWithToken('99a084449cc885327b81217f3433be3a')
@@ -60,7 +60,7 @@ export default class HomeScreen extends React.Component {
 
 
   _getNews(){
-    fetch('https://api.apify.com/v1/rG44NsjnfukCkKecE/crawlers/Z79rSy82LB9BxDyaa/lastExec/results?token=u8HqK39BcB8PKAFsjMtb9Bnnh')
+    fetch('https://api.apify.com/v2/actor-tasks/niko~ev-news-crawler/runs/last/dataset/items?token=uyrp24nvSzoRsBf2wM8Evv7q7&ui=1')
       .then(res => { return res.json()})
 
       // merge arrays from different sites
